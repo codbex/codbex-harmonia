@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="./dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="./dist/style.css" />
+</head>
+<body>
+
+  <div id="app" class="container">
+    <h1>Sample Form</h1>
+
+    <form id="sample-form" :model="form" label-width="auto" style="max-width: 600px" @submit.prevent="submitForm">
+        <!-- Text Input -->
+        <h-input type="text" label="Name" v-model="formData.name">
+        </h-input>
+
+        <!-- Date Picker -->
+        <h-date-picker label="Date" v-model="formData.date">
+        </h-date-picker>
+
+        <!-- Radio Buttons -->
+        <h-radio-group label="Gender">
+            <h-radio-button id="male" name="gender" value="male" label="Male" v-model="formData.gender"></h-radio-button>
+            <h-radio-button id="female" name="gender" value="female" label="Female" v-model="formData.gender"></h-radio-button>
+        </h-radio-group>
+
+        <!-- Slider -->
+        <h-slider label="Age" v-model="formData.age"></h-slider>
+       
+        <!-- Checkbox -->
+        <h-check-box label="Agree to terms" v-model="formData.agree" ></h-check-box>
+
+        <!-- Dropdown -->
+        <h-select v-model="formData.option" label="Option" placeholder="please select your option">
+            <h-option disabled value="">Please select</h-option>
+            <h-option label="Option 1" value="1"></h-option>
+            <h-option label="Option 2" value="2" /></h-option>
+            <h-option label="Option 3" value="3" /></h-option>
+        </h-select>
+
+      </form>
+
+      <!-- Submit Button -->
+      <h-button type="submit" form="sample-form">Click Me</h-button>
+
+        <!-- Output the Form Data -->
+        <div>
+            <pre>{{ formData }}</pre>
+        </div>
+
+        <!-- Table for Remote Data -->
+        <div>
+            <h2>Remote Data</h2>
+            <h-table :data="users" :default-sort="{ prop: 'name', order: 'descending' }" :page-size="3" stripe>
+                <h-table-column prop="id" label="ID" sortable="true"></h-table-column>
+                <h-table-column prop="name" label="Name" sortable="true"></h-table-column>
+                <h-table-column prop="email" label="Email"></h-table-column>
+            </h-table>
+        </div> 
+
+  </div>
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

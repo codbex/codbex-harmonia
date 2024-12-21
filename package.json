@@ -1,0 +1,33 @@
+{
+    "name": "codbex-harmonia",
+    "version": "1.0.0",
+    "description": "A Vue 3 component library with common UI controls for UMD usage.",
+    "main": "dist/codbex-harmonia.umd.js",
+    "module": "dist/codbex-harmonia.es.js",
+    "files": [
+      "dist"
+    ],
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "serve": "npx http-server ."
+    },
+    "keywords": [
+      "vue",
+      "vue3",
+      "component-library",
+      "ui-library",
+      "umd",
+      "codbex"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+      "vue": "^3.3.0"
+    },
+    "devDependencies": {
+      "@vitejs/plugin-vue": "^4.2.0",
+      "vite": "^4.3.0"
+    }
+  }
+  
