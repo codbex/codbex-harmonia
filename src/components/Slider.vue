@@ -8,7 +8,7 @@
         :max="max"
         :step="step"
         v-model="sliderValue"
-        class="h-slider__input"
+        class="h-slider__input w-full"
         :disabled="disabled"
         @input="handleInput"
       />

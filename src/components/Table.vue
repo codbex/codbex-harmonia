@@ -2,7 +2,7 @@
   <div class="h-table">
     <table :class="['table', { 'table-striped': stripe }]">
       <thead>
-        <tr>
+        <tr class="border">
           <th
             v-for="column in computedColumns"
             :key="column.prop"
@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
+        <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex" class="border">
           <td v-for="column in computedColumns" :key="column.prop">
             {{ getNestedValue(row, column.prop) }}
           </td>
@@ -27,6 +27,7 @@
     </table>
     <div class="pagination">
       <button
+        class="btn"
         :disabled="currentPage === 1"
         @click="changePage(currentPage - 1)"
       >
@@ -34,6 +35,7 @@
       </button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button
+        class="btn"
         :disabled="currentPage === totalPages"
         @click="changePage(currentPage + 1)"
       >

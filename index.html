@@ -7,8 +7,9 @@
   <script src="https://unpkg.com/vue@3"></script>
   <script src="./dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="./dist/style.css" />
+  <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
 </head>
-<body>
+<body data-color-mode="dark" data-dark-theme="dark">
 
   <div id="app" class="container">
     <h1>Sample Form</h1>
@@ -47,6 +48,8 @@
       <!-- Submit Button -->
       <h-button type="submit" form="sample-form">Click Me</h-button>
 
+      
+
         <!-- Output the Form Data -->
         <div>
             <pre>{{ formData }}</pre>
@@ -64,7 +67,20 @@
 
   </div>
 
+  <div class="Box">
+    <button id="theme-toggle" class="btn">Toggle Theme</button>
+  </div>
   <!-- Import JavaScript file as ES6 module -->
   <script type="module" src="app.js"></script>
+
+  <script>
+    const toggleButton = document.getElementById('theme-toggle');
+    toggleButton.addEventListener('click', () => {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-color-mode');
+      body.setAttribute('data-color-mode', currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+
 </body>
 </html>
