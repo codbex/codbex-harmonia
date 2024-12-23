@@ -1,30 +1,56 @@
-import Input from "./components/Input.vue";
-import Button from "./components/Button.vue";
-import DatePicker from "./components/DatePicker.vue";
-import CheckBox from "./components/CheckBox.vue";
-import Select from "./components/Select.vue";
-import Option from "./components/Option.vue";
-import RadioButton from "./components/RadioButton.vue";
-import RadioGroup from "./components/RadioGroup.vue";
-// import TextArea from "./components/TextArea.vue";
-import Slider from "./components/Slider.vue";
-import Table from "./components/Table.vue";
-import TableColumn from "./components/TableColumn.vue";
-import './styles/theme.css';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { DatePicker } from '@/components/ui/date-picker';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { RangeCalendar } from '@/components/ui/range-calendar';
+import { Command } from '@/components/ui/command';
+import { Combobox } from '@/components/ui/combobox';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Slider } from '@/components/ui/slider';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import './assets/index.css'
 
 const components = {
+  HForm: Form,
+  HFormField: FormField,
+  HFormItem: FormItem,
+  HFormLabel: FormLabel,
+  HFormControl: FormControl,
+  HFormDescription: FormDescription,
+  HFormMessage: FormMessage,
+  HLabel: Label,
   HInput: Input,
   HButton: Button,
   HDatePicker: DatePicker,
-  HCheckBox: CheckBox,
+  HPopover: Popover,
+  HPopoverTrigger: PopoverTrigger,
+  HPopoverContent: PopoverContent,
+  HCalendar: Calendar,
+  HRangeCalendar: RangeCalendar,
+  HCommand: Command,
+  HCombobox: Combobox,
+  HCheckbox: Checkbox,
   HSelect: Select,
-  HOption: Option,
-  HRadioButton: RadioButton,
+  HSelectTrigger: SelectTrigger,
+  HSelectContent: SelectContent,
+  HSelectGroup: SelectGroup,
+  HSelectItem: SelectItem,
+  HSelectValue: SelectValue,
   HRadioGroup: RadioGroup,
-//   HaTextArea: TextArea,
+  HRadioGroupItem: RadioGroupItem,
   HSlider: Slider,
   HTable: Table,
-  HTableColumn: TableColumn,
+  HTableBody: TableBody,
+  HTableCaption: TableCaption,
+  HTableCell: TableCell,
+  HTableHead: TableHead,
+  HTableHeader: TableHeader,
+  HTableRow: TableRow
 };
 
 const Harmonia = {

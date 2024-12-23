@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,80 +8,142 @@
   <script src="https://unpkg.com/vue@3"></script>
   <script src="./dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="./dist/style.css" />
-  <link href="https://unpkg.com/@primer/css@^20.2.4/dist/primer.css" rel="stylesheet" />
 </head>
-<body data-color-mode="dark" data-dark-theme="dark">
+
+<body>
 
   <div id="app" class="container">
     <h1>Sample Form</h1>
 
-    <form id="sample-form" :model="form" label-width="auto" style="max-width: 600px" @submit.prevent="submitForm">
-        <!-- Text Input -->
-        <h-input type="text" label="Name" v-model="formData.name">
-        </h-input>
+    <h-form id="sample-form" label-width="auto" class="w-2/3 space-y-6" style="max-width: 600px" @submit="submitForm">
 
-        <!-- Date Picker -->
-        <h-date-picker label="Date" v-model="formData.date">
-        </h-date-picker>
+      <!-- Text Input -->
+      <h-form-field v-slot="{ componentField }" name="name">
+        <h-form-item>
+          <h-form-label for="name">Name</h-form-label>
+          <h-form-control><h-input id="name" type="text" v-model="formData.name"></h-input></h-form-control>
+        </h-form-item>
+      </h-form-field>
 
-        <!-- Radio Buttons -->
-        <h-radio-group label="Gender">
-            <h-radio-button id="male" name="gender" value="male" label="Male" v-model="formData.gender"></h-radio-button>
-            <h-radio-button id="female" name="gender" value="female" label="Female" v-model="formData.gender"></h-radio-button>
-        </h-radio-group>
+      <!-- Date Picker -->
+      <h-form-field v-slot="{ componentField }" name="date" v-model="formData.date">
+        <h-form-item>
+          <h-form-label for="name">Date</h-form-label>
+          <!-- <h-form-control><h-date-picker v-model="formData.date"></h-date-picker></h-form-control> -->
+          <h-form-control><h-input id="name" type="date" v-model="formData.date"></h-input></h-form-control>
+        </h-form-item>
+      </h-form-field>
 
-        <!-- Slider -->
-        <h-slider label="Age" v-model="formData.age"></h-slider>
-       
-        <!-- Checkbox -->
-        <h-check-box label="Agree to terms" v-model="formData.agree" ></h-check-box>
+      <!-- Radio Buttons -->
+      <h-form-field v-slot="{ componentField }" type="radio" name="type" v-model="formData.gender">
+        <h-form-item class="space-y-3">
+          <h-form-label>Gender</h-form-label>
+          <h-form-control>
+            <h-radio-group id="gender" class="flex flex-col space-y-1" v-bind="componentField">
+              <h-form-item class="flex items-center space-y-0 gap-x-3">
+                <h-form-control>
+                  <h-radio-group-item id="male" name="gender" value="male"></h-radio-group-item>
+                </h-form-control>
+                <h-label for="male" class="font-normal">Male</h-label>
+              </h-form-item>
+              <h-form-item class="flex items-center space-y-0 gap-x-3">
+                <h-form-control>
+                  <h-radio-group-item id="female" name="gender" value="female"></h-radio-group-item>
+                </h-form-control>
+                <h-label for="female" class="font-normal">Female</h-label>
+              </h-form-item>
+            </h-radio-group>
+          </h-form-control>
+        </h-form-item>
+      </h-form-field>
 
-        <!-- Dropdown -->
-        <h-select v-model="formData.option" label="Option" placeholder="please select your option">
-            <h-option disabled value="">Please select</h-option>
-            <h-option label="Option 1" value="1"></h-option>
-            <h-option label="Option 2" value="2" /></h-option>
-            <h-option label="Option 3" value="3" /></h-option>
-        </h-select>
+      <!-- Slider -->
+      <h-form-field v-slot="{ componentField, value }" name="age" v-model="formData.age">
+        <h-form-item>
+          <h-form-label>Age</h-form-label>
+          <h-form-control>
+            <h-slider v-bind="componentField" :max="100" :min="0" :step="1"></h-slider>
+          </h-form-control>
+        </h-form-item>
+      </h-form-field>
 
-      </form>
+      <!-- Checkbox -->
+      <h-form-field v-slot="{ value, handleChange }" type="checkbox" name="mobile" v-model="formData.agree">
+        <h-form-item class="flex flex-row items-start gap-x-3 space-y-0 rounded-md border p-4">
+          <h-form-control>
+            <h-checkbox :checked="value" @update:checked="handleChange"></h-checkbox>
+          </h-form-control>
+          <div class="space-y-1 leading-none">
+            <h-form-label>Agree to terms</h-form-label>
+          </div>
+        </h-form-item>
+      </h-form-field>
 
-      <!-- Submit Button -->
-      <h-button type="submit" form="sample-form">Click Me</h-button>
+      <!-- Select -->
+      <h-form-field v-slot="{ componentField }" name="option" v-model="formData.option">
+        <h-form-item>
+          <h-form-label>Option</h-form-label>
+          <h-select v-bind="componentField">
+            <h-form-control>
+              <h-select-trigger>
+                <h-select-value placeholder="Select a verified email to display"></h-select-value>
+              </h-select-trigger>
+            </h-form-control>
+            <h-select-content>
+              <h-select-group>
+                <h-select-item value="1">
+                  Option 1
+                </h-select-item>
+                <h-select-item value="2">
+                  Option 2
+                </h-select-item>
+                <h-select-item value="3">
+                  Option 3
+                </h-select-item>
+              </h-select-group>
+            </h-select-content>
+          </h-select>
+        </h-form-item>
+      </h-form-field>
 
-      
+    </h-form>
 
-        <!-- Output the Form Data -->
-        <div>
-            <pre>{{ formData }}</pre>
-        </div>
+    <!-- Submit Button -->
+    <h-button type="submit" form="sample-form">Click Me</h-button>
 
-        <!-- Table for Remote Data -->
-        <div>
-            <h2>Remote Data</h2>
-            <h-table :data="users" :default-sort="{ prop: 'name', order: 'descending' }" :page-size="3" stripe>
-                <h-table-column prop="id" label="ID" sortable="true"></h-table-column>
-                <h-table-column prop="name" label="Name" sortable="true"></h-table-column>
-                <h-table-column prop="email" label="Email"></h-table-column>
-            </h-table>
-        </div> 
+    <!-- Output the Form Data -->
+    <div>
+      <pre>{{ formData }}</pre>
+    </div>
+
+    <!-- Table for Remote Data -->
+    <div class="w-2/3 space-y-6" style="max-width: 600px">
+      <h-table>
+        <h-table-caption>A list of your users.</h-table-caption>
+        <h-table-header>
+          <h-table-row>
+            <h-table-head class="w-[100px]">Id</h-table-head>
+            <h-table-head>Name</h-table-head>
+            <h-table-head class="text-center">e-mail</h-table-head>
+          </h-table-row>
+        </h-table-header>
+        <h-table-body>
+          <h-table-row v-for="user in users" :key="user.id">
+            <h-table-cell class="font-medium">
+              {{ user.id }}
+            </h-table-cell>
+            <h-table-cell>{{ user.name }}</h-table-cell>
+            <h-table-cell class="text-center">{{ user.email }}</h-table-cell>
+          </h-table-row>
+        </h-table-body>
+      </h-table>
+    </div>
 
   </div>
 
-  <div class="Box">
-    <button id="theme-toggle" class="btn">Toggle Theme</button>
-  </div>
   <!-- Import JavaScript file as ES6 module -->
   <script type="module" src="app.js"></script>
 
-  <script>
-    const toggleButton = document.getElementById('theme-toggle');
-    toggleButton.addEventListener('click', () => {
-      const body = document.body;
-      const currentTheme = body.getAttribute('data-color-mode');
-      body.setAttribute('data-color-mode', currentTheme === 'dark' ? 'light' : 'dark');
-    });
-  </script>
-
 </body>
+
 </html>

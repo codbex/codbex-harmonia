@@ -5,7 +5,7 @@ const app = Vue.createApp({
                 name: 'Some name',
                 date: '2024-12-12',
                 gender: 'male',
-                age: 18,
+                age: [15],
                 agree: false,
                 option: '2'
             },
