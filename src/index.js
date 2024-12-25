@@ -33,6 +33,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
   Card,
@@ -50,20 +51,208 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Checkbox } from '@/components/ui/checkbox';
-
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { DatePicker } from '@/components/ui/date-picker';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-import { RangeCalendar } from '@/components/ui/range-calendar';
-import { Command } from '@/components/ui/command';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import { Combobox } from '@/components/ui/combobox';
-import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from '@/components/ui/select';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from '@/components/ui/command';
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu';
+import { DataTable } from '@/components/ui/data-table';
+import { DatePicker } from '@/components/ui/date-picker';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogScrollContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage
+} from '@/components/ui/form';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from '@/components/ui/menubar';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from '@/components/ui/navigation-menu';
+import {
+  NumberField,
+  NumberFieldContent,
+  NumberFieldDecrement,
+  NumberFieldIncrement,
+  NumberFieldInput,
+} from '@/components/ui/number-field';
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationLast,
+  PaginationList,
+  PaginationListItem,
+  PaginationNext,
+  PaginationPrev,
+} from '@/components/ui/pagination';
+import {
+  PinInput,
+  PinInputGroup,
+  PinInputInput,
+} from '@/components/ui/pin-input';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent
+} from '@/components/ui/popover';
+import { Progress } from '@/components/ui/progress';
+import {
+  RadioGroup,
+  RadioGroupItem
+} from '@/components/ui/radio-group';
+import { RangeCalendar } from '@/components/ui/range-calendar';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectValue
+} from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Slider } from '@/components/ui/slider';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Toaster } from '@/components/ui/sonner';
+import {
+  Stepper,
+  StepperDescription,
+  StepperIndicator,
+  StepperItem,
+  StepperSeparator,
+  StepperTitle,
+  StepperTrigger
+} from '@/components/ui/stepper';
+import { Switch } from '@/components/ui/switch';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs';
+import {
+  TagsInput,
+  TagsInputInput,
+  TagsInputItem,
+  TagsInputItemDelete,
+  TagsInputItemText
+} from '@/components/ui/tags-input';
+import { Textarea } from '@/components/ui/textarea';
+import { Toggle } from '@/components/ui/toggle';
+import {
+  ToggleGroup,
+  ToggleGroupItem
+} from '@/components/ui/toggle-group';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+
 import './assets/index.css'
 
 const components = {
@@ -94,6 +283,7 @@ const components = {
   HBreadcrumbList: BreadcrumbList,
   HBreadcrumbPage: BreadcrumbPage,
   HBreadcrumbSeparator: BreadcrumbSeparator,
+  HButton: Button,
   HCalendar: Calendar,
   HCard: Card,
   HCardContent: CardContent,
@@ -107,7 +297,56 @@ const components = {
   HCarouselNext: CarouselNext,
   HCarouselPrevious: CarouselPrevious,
   HCheckbox: Checkbox,
-
+  HCollapsible: Collapsible,
+  HCollapsibleContent: CollapsibleContent,
+  HCollapsibleTrigger: CollapsibleTrigger,
+  HCombobox: Combobox,
+  HCommand: Command,
+  HCommandEmpty: CommandEmpty,
+  HCommandGroup: CommandGroup,
+  HCommandInput: CommandInput,
+  HCommandItem: CommandItem,
+  HCommandList: CommandList,
+  HCommandSeparator: CommandSeparator,
+  HCommandShortcut: CommandShortcut,
+  HContextMenu: ContextMenu,
+  HContextMenuCheckboxItem: ContextMenuCheckboxItem,
+  HContextMenuContent: ContextMenuContent,
+  HContextMenuItem: ContextMenuItem,
+  HContextMenuLabel: ContextMenuLabel,
+  HContextMenuRadioGroup: ContextMenuRadioGroup,
+  HContextMenuRadioItem: ContextMenuRadioItem,
+  HContextMenuSeparator: ContextMenuSeparator,
+  HContextMenuShortcut: ContextMenuShortcut,
+  HContextMenuSub: ContextMenuSub,
+  HContextMenuSubContent: ContextMenuSubContent,
+  HContextMenuSubTrigger: ContextMenuSubTrigger,
+  HContextMenuTrigger: ContextMenuTrigger,
+  HDataTable: DataTable,
+  HDatePicker: DatePicker,
+  HDialog: Dialog,
+  HDialogClose: DialogClose,
+  HDialogContent: DialogContent,
+  HDialogDescription: DialogDescription,
+  HDialogFooter: DialogFooter,
+  HDialogHeader: DialogHeader,
+  HDialogScrollContent: DialogScrollContent,
+  HDialogTitle: DialogTitle,
+  HDialogTrigger: DialogTrigger,
+  HDrawer: Drawer,
+  HDrawerClose: DrawerClose,
+  HDrawerContent: DrawerContent,
+  HDrawerDescription: DrawerDescription,
+  HDrawerFooter: DrawerFooter,
+  HDrawerHeader: DrawerHeader,
+  HDrawerTitle: DrawerTitle,
+  HDrawerTrigger: DrawerTrigger,
+  HDropdownMenu: DropdownMenu,
+  HDropdownMenuContent: DropdownMenuContent,
+  HDropdownMenuItem: DropdownMenuItem,
+  HDropdownMenuLabel: DropdownMenuLabel,
+  HDropdownMenuSeparator: DropdownMenuSeparator,
+  HDropdownMenuTrigger: DropdownMenuTrigger,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,
@@ -115,32 +354,102 @@ const components = {
   HFormControl: FormControl,
   HFormDescription: FormDescription,
   HFormMessage: FormMessage,
-  HLabel: Label,
+  HHoverCard: HoverCard,
+  HHoverCardContent: HoverCardContent,
+  HHoverCardTrigger: HoverCardTrigger,
   HInput: Input,
-  HButton: Button,
-  HDatePicker: DatePicker,
+  HLabel: Label,
+  HMenubar: Menubar,
+  HMenubarContent: MenubarContent,
+  HMenubarItem: MenubarItem,
+  HMenubarMenu: MenubarMenu,
+  HMenubarSeparator: MenubarSeparator,
+  HMenubarShortcut: MenubarShortcut,
+  HMenubarTrigger: MenubarTrigger,
+  HNavigationMenu: NavigationMenu,
+  HNavigationMenuContent: NavigationMenuContent,
+  HNavigationMenuItem: NavigationMenuItem,
+  HNavigationMenuLink: NavigationMenuLink,
+  HNavigationMenuList: NavigationMenuList,
+  HNavigationMenuTrigger: NavigationMenuTrigger,
+  HNavigationMenuViewport: NavigationMenuViewport,
+  HNumberField: NumberField,
+  HNumberFieldContent: NumberFieldContent,
+  HNumberFieldDecrement: NumberFieldDecrement,
+  HNumberFieldIncrement: NumberFieldIncrement,
+  HNumberFieldInput: NumberFieldInput,
+  HPagination: Pagination,
+  HPaginationEllipsis: PaginationEllipsis,
+  HPaginationFirst: PaginationFirst,
+  HPaginationLast: PaginationLast,
+  HPaginationList: PaginationList,
+  HPaginationListItem: PaginationListItem,
+  HPaginationNext: PaginationNext,
+  HPaginationPrev: PaginationPrev,
+  HPinInput: PinInput,
+  HPinInputGroup: PinInputGroup,
+  HPinInputInput: PinInputInput,
   HPopover: Popover,
   HPopoverTrigger: PopoverTrigger,
   HPopoverContent: PopoverContent,
+  HProgress: Progress,
+  HRadioGroup: RadioGroup,
+  HRadioGroupItem: RadioGroupItem,
   HRangeCalendar: RangeCalendar,
-  HCommand: Command,
-  HCombobox: Combobox,
+  HResizableHandle: ResizableHandle,
+  HResizablePanel: ResizablePanel,
+  HResizablePanelGroup: ResizablePanelGroup,
+  HScrollArea: ScrollArea,
   HSelect: Select,
   HSelectTrigger: SelectTrigger,
   HSelectContent: SelectContent,
   HSelectGroup: SelectGroup,
   HSelectItem: SelectItem,
   HSelectValue: SelectValue,
-  HRadioGroup: RadioGroup,
-  HRadioGroupItem: RadioGroupItem,
+  HSeparator: Separator,
+  HSheet: Sheet,
+  HSheetClose: SheetClose,
+  HSheetContent: SheetContent,
+  HSheetDescription: SheetDescription,
+  HSheetFooter: SheetFooter,
+  HSheetHeader: SheetHeader,
+  HSheetTitle: SheetTitle,
+  HSheetTrigger: SheetTrigger,
+  HSkeleton: Skeleton,
   HSlider: Slider,
+  HToaster: Toaster,
+  HStepper: Stepper,
+  HStepperDescription: StepperDescription,
+  HStepperIndicator: StepperIndicator,
+  HStepperItem: StepperItem,
+  HStepperSeparator: StepperSeparator,
+  HStepperTitle: StepperTitle,
+  HStepperTrigger: StepperTrigger,
+  HSwitch: Switch,
   HTable: Table,
   HTableBody: TableBody,
   HTableCaption: TableCaption,
   HTableCell: TableCell,
   HTableHead: TableHead,
   HTableHeader: TableHeader,
-  HTableRow: TableRow
+  HTableRow: TableRow,
+  HTabs: Tabs,
+  HTabsContent: TabsContent,
+  HTabsList: TabsList,
+  HTabsTrigger: TabsTrigger,
+  HTagsInput: TagsInput,
+  HTagsInputInput: TagsInputInput,
+  HTagsInputItem: TagsInputItem,
+  HTagsInputItemDelete: TagsInputItemDelete,
+  HTagsInputItemText: TagsInputItemText,
+  HTextarea: Textarea,
+  HToggle: Toggle,
+  HToggleGroup: ToggleGroup,
+  HToggleGroupItem: ToggleGroupItem,
+  HTooltip: Tooltip,
+  HTooltipContent: TooltipContent,
+  HTooltipProvider: TooltipProvider,
+  HTooltipTrigger: TooltipTrigger,
 };
 
 const Harmonia = {
