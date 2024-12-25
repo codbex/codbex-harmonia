@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body style="margin: 2em;">
+
+  <div id="app" class="container">
+    <h1>Card</h1>
+
+    <h-card style="width: 350px">
+      <h-card-header>
+        <h-card-title>Create project</h-card-title>
+        <h-card-description>Deploy your new project in one-click.</h-card-description>
+      </h-card-header>
+      <h-card-content>
+        <form>
+          <div class="grid items-center w-full gap-4">
+            <div class="flex flex-col space-y-1.5">
+              <h-label for="name">Name</h-label>
+              <h-input id="name" placeholder="Name of your project"></h-input>
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <h-label for="framework">Framework</h-label>
+              <h-select>
+                <h-select-trigger id="framework">
+                  <h-select-value placeholder="Select"></h-select-value>
+                </h-select-trigger>
+                <h-select-content position="popper">
+                  <h-select-item value="nuxt">Nuxt</h-select-item>
+                  <h-select-item value="next">Next.js</h-select-item>
+                  <h-select-item value="sveltekit">SvelteKit</h-select-item>
+                  <h-select-item value="astro">Astro</h-select-item>
+                </h-select-content>
+              </h-select>
+            </div>
+          </div>
+        </form>
+      </h-card-content>
+      <h-card-footer class="flex justify-between px-6 pb-6">
+        <h-button variant="outline">Cancel</h-button>
+        <h-button>Deploy</h-button>
+      </h-card-footer>
+    </h-card>
+
+  </div>
+
+  <br /><br /><textarea readonly rows="34" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-card style="width: 350px">
+      <h-card-header>
+        <h-card-title>Create project</h-card-title>
+        <h-card-description>Deploy your new project in one-click.</h-card-description>
+      </h-card-header>
+      <h-card-content>
+        <form>
+          <div class="grid items-center w-full gap-4">
+            <div class="flex flex-col space-y-1.5">
+              <h-label for="name">Name</h-label>
+              <h-input id="name" placeholder="Name of your project"></h-input>
+            </div>
+            <div class="flex flex-col space-y-1.5">
+              <h-label for="framework">Framework</h-label>
+              <h-select>
+                <h-select-trigger id="framework">
+                  <h-select-value placeholder="Select"></h-select-value>
+                </h-select-trigger>
+                <h-select-content position="popper">
+                  <h-select-item value="nuxt">Nuxt</h-select-item>
+                  <h-select-item value="next">Next.js</h-select-item>
+                  <h-select-item value="sveltekit">SvelteKit</h-select-item>
+                  <h-select-item value="astro">Astro</h-select-item>
+                </h-select-content>
+              </h-select>
+            </div>
+          </div>
+        </form>
+      </h-card-content>
+      <h-card-footer class="flex justify-between px-6 pb-6">
+        <h-button variant="outline">Cancel</h-button>
+        <h-button>Deploy</h-button>
+      </h-card-footer>
+    </h-card>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>

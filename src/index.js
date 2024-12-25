@@ -33,13 +33,22 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
 import { RangeCalendar } from '@/components/ui/range-calendar';
 import { Command } from '@/components/ui/command';
 import { Combobox } from '@/components/ui/combobox';
@@ -78,6 +87,14 @@ const components = {
   HBreadcrumbList: BreadcrumbList,
   HBreadcrumbPage: BreadcrumbPage,
   HBreadcrumbSeparator: BreadcrumbSeparator,
+  HCalendar: Calendar,
+  HCard: Card,
+  HCardContent: CardContent,
+  HCardDescription: CardDescription,
+  HCardFooter: CardFooter,
+  HCardHeader: CardHeader,
+  HCardTitle: CardTitle,
+
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,
@@ -92,7 +109,6 @@ const components = {
   HPopover: Popover,
   HPopoverTrigger: PopoverTrigger,
   HPopoverContent: PopoverContent,
-  HCalendar: Calendar,
   HRangeCalendar: RangeCalendar,
   HCommand: Command,
   HCombobox: Combobox,
