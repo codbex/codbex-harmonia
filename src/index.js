@@ -1,4 +1,5 @@
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -21,6 +22,9 @@ const components = {
   HAccordionItem: AccordionItem,
   HAccordionTrigger: AccordionTrigger,
   HAccordionContent: AccordionContent,
+  HAlert: Alert,
+  HAlertDescription: AlertDescription,
+  HAlertTitle: AlertTitle,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codbex-harmonia Example</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="/dist/codbex-harmonia.umd.js"></script>
+    <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body>
+
+    <div id="app" class="container">
+        <h1>Alert</h1>
+
+        <h-alert>
+            <i-terminal class="h-4 w-4"></i-terminal>
+            <h-alert-title>Heads up!</h-alert-title>
+            <h-alert-description>
+              You can add components to your app using the cli.
+            </h-alert-description>
+        </h-alert>
+
+        <h-alert variant="destructive">
+            <i-alert-circle class="w-4 h-4"></i-alert-circle>
+            <h-alert-title>Error</h-alert-title>
+            <h-alert-description>
+              Your session has expired. Please log in again.
+            </h-alert-description>
+          </h-alert>
+
+    </div>
+
+
+    <!-- Import JavaScript file as ES6 module -->
+    <script type="module" src="app.js"></script>
+
+</body>
+
+</html>
