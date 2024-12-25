@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
 
-<body>
+<body style="margin: 2em;">
 
   <div id="app" class="container">
     <h1>Breadcrumb</h1>
@@ -34,7 +34,6 @@
         </h-breadcrumb-item>
       </h-breadcrumb-list>
     </h-breadcrumb>
-
 
     <h-breadcrumb>
       <h-breadcrumb-list>
@@ -62,6 +61,53 @@
 
   </div>
 
+  <br /><br /><textarea readonly rows="43" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-breadcrumb>
+      <h-breadcrumb-list>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/">
+            Home
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator></h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/examples/accordion/">
+            Components
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator></h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <h-breadcrumb-page>Breadcrumb</h-breadcrumb-page>
+        </h-breadcrumb-item>
+      </h-breadcrumb-list>
+    </h-breadcrumb>
+
+    <h-breadcrumb>
+      <h-breadcrumb-list>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/">
+            Home
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator>
+          <i-slash></i-slash>
+        </h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/examples/accordion/">
+            Components
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator>
+          <i-slash></i-slash>
+        </h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </h-breadcrumb-item>
+      </h-breadcrumb-list>
+    </h-breadcrumb>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
   <!-- Import JavaScript file as ES6 module -->
   <script type="module" src="app.js"></script>

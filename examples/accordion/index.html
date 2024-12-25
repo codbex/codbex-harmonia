@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/dist/style.css" />
 </head>
 
-<body>
+<body style="margin: 2em;">
 
     <div id="app" class="container">
         <h1>Accordion</h1>
@@ -23,8 +23,21 @@
                 </h-accordion-content>
             </h-accordion-item>
         </h-accordion>
+
     </div>
 
+    <br /><br /><textarea readonly rows="8" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <h-accordion type="single" class="w-full" collapsible :default-value="defaultValue">
+            <h-accordion-item v-for="item in accordionItems" :key="item.value" :value="item.value">
+                <h-accordion-trigger>{{ item.title }}</h-accordion-trigger>
+                <h-accordion-content>
+                    {{ item.content }}
+                </h-accordion-content>
+            </h-accordion-item>
+        </h-accordion>
+    </textarea>
+
+    <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
     <!-- Import JavaScript file as ES6 module -->
     <script type="module" src="app.js"></script>

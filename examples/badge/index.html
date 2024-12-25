@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
 
-<body>
+<body style="margin: 2em;">
 
   <div id="app" class="container">
     <h1>Badge</h1>
@@ -22,6 +22,14 @@
 
   </div>
 
+  <br /><br /><textarea readonly rows="4" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-badge>Badge</h-badge>
+    <h-badge variant="secondary">Secondary</h-badge>
+    <h-badge variant="outline">Outline</h-badge>
+    <h-badge variant="destructive">Destructive</h-badge>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
   <!-- Import JavaScript file as ES6 module -->
   <script type="module" src="app.js"></script>

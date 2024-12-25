@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
 
-<body>
+<body style="margin: 2em;">
 
   <div id="app" class="container">
     <h1>Alert Dialog</h1>
@@ -38,6 +38,30 @@
 
   </div>
 
+  <br /><br /><textarea readonly rows="20" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-alert-dialog>
+      <h-alert-dialog-trigger as-child>
+        <h-button variant="outline">
+          Open
+        </h-button>
+      </h-alert-dialog-trigger>
+      <h-alert-dialog-content>
+        <h-alert-dialog-header>
+          <h-alert-dialog-title>Are you absolutely sure?</h-alert-dialog-title>
+          <h-alert-dialog-description>
+            This action cannot be undone. This will permanently delete your account
+            and remove your data from our servers.
+          </h-alert-dialog-description>
+        </h-alert-dialog-header>
+        <h-alert-dialog-footer>
+          <h-alert-dialog-cancel>Cancel</h-alert-dialog-cancel>
+          <h-alert-dialog-action>Continue</h-alert-dialog-action>
+        </h-alert-dialog-footer>
+      </h-alert-dialog-content>
+    </h-alert-dialog>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
   <!-- Import JavaScript file as ES6 module -->
   <script type="module" src="app.js"></script>

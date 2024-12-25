@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/dist/style.css" />
 </head>
 
-<body>
+<body style="margin: 2em;">
 
     <div id="app" class="container">
         <h1>Alert</h1>
@@ -33,6 +33,25 @@
 
     </div>
 
+    <br /><br /><textarea readonly rows="15" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <h-alert>
+            <i-terminal class="h-4 w-4"></i-terminal>
+            <h-alert-title>Heads up!</h-alert-title>
+            <h-alert-description>
+                You can add components to your app using the cli.
+            </h-alert-description>
+        </h-alert>
+
+        <h-alert variant="destructive">
+            <i-alert-circle class="w-4 h-4"></i-alert-circle>
+            <h-alert-title>Error</h-alert-title>
+            <h-alert-description>
+                Your session has expired. Please log in again.
+            </h-alert-description>
+        </h-alert>
+    </textarea>
+
+    <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
     <!-- Import JavaScript file as ES6 module -->
     <script type="module" src="app.js"></script>
