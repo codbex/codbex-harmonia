@@ -2,31 +2,32 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>codbex-harmonia Example</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="/dist/codbex-harmonia.umd.js"></script>
+    <link rel="stylesheet" href="/dist/style.css" />
 </head>
 
 <body>
 
-  <div id="app" class="container">
-    <h1>Accordion</h1>
+    <div id="app" class="container">
+        <h1>Accordion</h1>
 
-    <h-accordion type="single" class="w-full" collapsible :default-value="defaultValue">
-        <h-accordion-item v-for="item in accordionItems" :key="item.value" :value="item.value">
-            <h-accordion-trigger>{{ item.title }}</h-accordion-trigger>
-            <h-accordion-content>
-            {{ item.content }}
-            </h-accordion-content>
-        </h-accordion-item>
-    </h-accordion>
+        <h-accordion type="single" class="w-full" collapsible :default-value="defaultValue">
+            <h-accordion-item v-for="item in accordionItems" :key="item.value" :value="item.value">
+                <h-accordion-trigger>{{ item.title }}</h-accordion-trigger>
+                <h-accordion-content>
+                    {{ item.content }}
+                </h-accordion-content>
+            </h-accordion-item>
+        </h-accordion>
+    </div>
 
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
+    <!-- Import JavaScript file as ES6 module -->
+    <script type="module" src="app.js"></script>
 
 </body>
 
