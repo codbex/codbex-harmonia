@@ -49,6 +49,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import { Checkbox } from '@/components/ui/checkbox';
 
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
@@ -59,7 +60,6 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 import { RangeCalendar } from '@/components/ui/range-calendar';
 import { Command } from '@/components/ui/command';
 import { Combobox } from '@/components/ui/combobox';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Slider } from '@/components/ui/slider';
@@ -106,6 +106,7 @@ const components = {
   HCarouselItem: CarouselItem,
   HCarouselNext: CarouselNext,
   HCarouselPrevious: CarouselPrevious,
+  HCheckbox: Checkbox,
 
   HForm: Form,
   HFormField: FormField,
@@ -124,7 +125,6 @@ const components = {
   HRangeCalendar: RangeCalendar,
   HCommand: Command,
   HCombobox: Combobox,
-  HCheckbox: Checkbox,
   HSelect: Select,
   HSelectTrigger: SelectTrigger,
   HSelectContent: SelectContent,
