@@ -1,5 +1,23 @@
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent } from '@/components/ui/accordion';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle } from '@/components/ui/alert';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -25,6 +43,15 @@ const components = {
   HAlert: Alert,
   HAlertDescription: AlertDescription,
   HAlertTitle: AlertTitle,
+  HAlertDialog: AlertDialog,
+  HAlertDialogAction: AlertDialogAction,
+  HAlertDialogCancel: AlertDialogCancel,
+  HAlertDialogContent: AlertDialogContent,
+  HAlertDialogDescription: AlertDialogDescription,
+  HAlertDialogFooter: AlertDialogFooter,
+  HAlertDialogHeader: AlertDialogHeader,
+  HAlertDialogTitle: AlertDialogTitle,
+  HAlertDialogTrigger: AlertDialogTrigger,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,
