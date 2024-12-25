@@ -18,6 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -52,6 +53,7 @@ const components = {
   HAlertDialogHeader: AlertDialogHeader,
   HAlertDialogTitle: AlertDialogTitle,
   HAlertDialogTrigger: AlertDialogTrigger,
+  HAspectRatio: AspectRatio,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,
