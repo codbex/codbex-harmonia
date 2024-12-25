@@ -42,6 +42,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
@@ -94,6 +101,11 @@ const components = {
   HCardFooter: CardFooter,
   HCardHeader: CardHeader,
   HCardTitle: CardTitle,
+  HCarousel: Carousel,
+  HCarouselContent: CarouselContent,
+  HCarouselItem: CarouselItem,
+  HCarouselNext: CarouselNext,
+  HCarouselPrevious: CarouselPrevious,
 
   HForm: Form,
   HFormField: FormField,
