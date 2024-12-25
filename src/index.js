@@ -1,3 +1,4 @@
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -16,6 +17,10 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import './assets/index.css'
 
 const components = {
+  HAccordion: Accordion,
+  HAccordionItem: AccordionItem,
+  HAccordionTrigger: AccordionTrigger,
+  HAccordionContent: AccordionContent,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,
