@@ -25,6 +25,14 @@ import {
   AvatarImage
 } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -64,6 +72,12 @@ const components = {
   HAvatarFallback: AvatarFallback,
   HAvatarImage: AvatarImage,
   HBadge: Badge,
+  HBreadcrumb: Breadcrumb,
+  HBreadcrumbItem: BreadcrumbItem,
+  HBreadcrumbLink: BreadcrumbLink,
+  HBreadcrumbList: BreadcrumbList,
+  HBreadcrumbPage: BreadcrumbPage,
+  HBreadcrumbSeparator: BreadcrumbSeparator,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,

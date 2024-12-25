@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body>
+
+  <div id="app" class="container">
+    <h1>Breadcrumb</h1>
+
+    <h-breadcrumb>
+      <h-breadcrumb-list>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/">
+            Home
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator></h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/examples/accordion/">
+            Components
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator></h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <h-breadcrumb-page>Breadcrumb</h-breadcrumb-page>
+        </h-breadcrumb-item>
+      </h-breadcrumb-list>
+    </h-breadcrumb>
+
+
+    <h-breadcrumb>
+      <h-breadcrumb-list>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/">
+            Home
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator>
+          <i-slash></i-slash>
+        </h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <h-breadcrumb-link href="/examples/accordion/">
+            Components
+          </h-breadcrumb-link>
+        </h-breadcrumb-item>
+        <h-breadcrumb-separator>
+          <i-slash></i-slash>
+        </h-breadcrumb-separator>
+        <h-breadcrumb-item>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </h-breadcrumb-item>
+      </h-breadcrumb-list>
+    </h-breadcrumb>
+
+  </div>
+
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>
