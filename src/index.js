@@ -24,6 +24,7 @@ import {
   AvatarFallback,
   AvatarImage
 } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -62,6 +63,7 @@ const components = {
   HAvatar: Avatar,
   HAvatarFallback: AvatarFallback,
   HAvatarImage: AvatarImage,
+  HBadge: Badge,
   HForm: Form,
   HFormField: FormField,
   HFormItem: FormItem,
