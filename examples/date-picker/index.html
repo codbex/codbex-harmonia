@@ -13,31 +13,18 @@
 <body style="margin: 2em;">
 
   <div id="app" class="container">
-    <h1>Calendar</h1>
+    <h1>Date Picker</h1>
 
-    <h-calendar v-model="dateValue" 
-      :weekday-format="'short'" class="rounded-md border" style="width: 300px"
-      @update:model-value="(v) => {
-        debugger
-        if (v) {
-          dateValue = v
-          //setFieldValue('dob', toDate(v).toISOString())
-        }
-        else {
-          dateValue = undefined
-          //setFieldValue('dob', undefined)
-        }
-      }">
-    </h-calendar>
-
+    <h-date-picker v-model="formData.date"></h-date-picker>
+    
     <div>
-      <pre>{{ dateValue }}</pre>
+      <pre>{{ df.format(formData.date) }} </pre>
     </div>
 
   </div>
 
   <br /><br /><textarea readonly rows="1" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-calendar v-model="value" :weekday-format="'short'" class="rounded-md border" style="width: 300px"></h-calendar>
+    <h-date-picker v-model="formData.date"></h-date-picker>
   </textarea>
 
   <br /><br /><button onclick="history.back()">&lt; Go Back</button>

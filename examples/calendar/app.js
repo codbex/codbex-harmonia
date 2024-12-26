@@ -1,12 +1,12 @@
 import { getLocalTimeZone, today } from '@internationalized/date'
 import { ref } from 'vue'
 
-const value = ref(today(getLocalTimeZone()));
+const dateValue = ref(today(getLocalTimeZone()));
 
 const app = Vue.createApp({
     data() {
         return {
-            value: value
+            dateValue: dateValue
         };
     }
 });
