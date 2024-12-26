@@ -253,6 +253,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+import { Tree } from '@/components/ui/tree';
+
 import './assets/index.css'
 
 const components = {
@@ -450,6 +452,8 @@ const components = {
   HTooltipContent: TooltipContent,
   HTooltipProvider: TooltipProvider,
   HTooltipTrigger: TooltipTrigger,
+
+  HTree: Tree
 };
 
 const Harmonia = {
