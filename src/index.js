@@ -82,7 +82,11 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
-import { DataTable } from '@/components/ui/data-table';
+import {
+  DataTable,
+  DataTableColumnHeader,
+  DataTablePagination
+} from '@/components/ui/data-table';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
   Dialog,
@@ -325,6 +329,8 @@ const components = {
   HContextMenuSubTrigger: ContextMenuSubTrigger,
   HContextMenuTrigger: ContextMenuTrigger,
   HDataTable: DataTable,
+  HDataTableColumnHeader: DataTableColumnHeader,
+  HDataTablePagination: DataTablePagination,
   HDatePicker: DatePicker,
   HDialog: Dialog,
   HDialogClose: DialogClose,

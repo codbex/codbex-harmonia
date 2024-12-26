@@ -1,5 +1,9 @@
 <script setup lang="ts" generic="TData, TValue">
-import type { ColumnDef } from '@tanstack/vue-table'
+import type {
+  ColumnDef,
+  SortingState
+} from '@tanstack/vue-table'
+import { ref } from 'vue'
 import {
   Table,
   TableBody,
@@ -8,35 +12,45 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-
 import {
   FlexRender,
   getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
   useVueTable,
 } from '@tanstack/vue-table'
+import { valueUpdater } from '@/lib/utils'
+import DataTablePagination from './DataTablePagination.vue'
+import DataTableColumnHeader from './DataTableColumnHeader.vue'
 
 const props = defineProps<{
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }>()
 
+const sorting = ref<SortingState>([])
+
 const table = useVueTable({
   get data() { return props.data },
   get columns() { return props.columns },
   getCoreRowModel: getCoreRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
+  state: {
+    get sorting() { return sorting.value },
+  },
 })
 </script>
 
 <template>
+  <div class="space-y-4">
   <div class="border rounded-md">
     <Table>
       <TableHeader>
         <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
           <TableHead v-for="header in headerGroup.headers" :key="header.id">
-            <FlexRender
-              v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
-              :props="header.getContext()"
-            />
+            <DataTableColumnHeader :column="header.column" :title="header.column.columnDef.header"/>
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -60,5 +74,7 @@ const table = useVueTable({
         </template>
       </TableBody>
     </Table>
+  </div>
+  <DataTablePagination :table="table" />
   </div>
 </template>
