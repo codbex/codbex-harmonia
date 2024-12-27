@@ -3,7 +3,7 @@ const app = Vue.createApp({
         return {
             formData: {
                 name: 'Some name',
-                date: '2024-12-12',
+                date: new Date(),
                 gender: 'male',
                 age: [15],
                 agree: false,

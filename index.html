@@ -29,7 +29,7 @@
       <h-form-field v-slot="{ componentField, value }" name="date">
         <h-form-item>
           <h-form-label for="name">Date</h-form-label>
-          <h-form-control><h-input id="name" type="date" v-model="formData.date" style="width: 150px"></h-input></h-form-control>
+          <h-form-control><h-date-picker v-model="formData.date"></h-date-picker></h-form-control>
         </h-form-item>
       </h-form-field>
 
