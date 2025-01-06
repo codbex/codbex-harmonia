@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body style="margin: 2em;">
+
+  <div id="app" class="container">
+    <h1>Navigation Menu</h1>
+    
+    <div style="width: 250px; margin: 2em;">
+      <h-navigation-menu>
+        <h-navigation-menu-list>
+          <h-navigation-menu-item>
+            <h-navigation-menu-trigger>Item One</h-navigation-menu-trigger>
+            <h-navigation-menu-content>
+              <h-navigation-menu-link as-child>
+                <a href="/" style="width: 350px" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                  <div class="text-sm font-medium leading-none">Alert Dialog</div>
+                  <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    A modal dialog that interrupts the user with important content and expects a response.
+                  </p>
+                </a>
+              </h-navigation-menu-link>
+            </h-navigation-menu-content>
+          </h-navigation-menu-item>
+        </h-navigation-menu-list>
+      </h-navigation-menu>
+    </div>
+
+  </div>
+
+  <br /><br /><textarea readonly rows="17" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-navigation-menu>
+      <h-navigation-menu-list>
+        <h-navigation-menu-item>
+          <h-navigation-menu-trigger>Item One</h-navigation-menu-trigger>
+          <h-navigation-menu-content>
+            <h-navigation-menu-link as-child>
+              <a href="/" style="width: 350px" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                <div class="text-sm font-medium leading-none">Alert Dialog</div>
+                <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                  A modal dialog that interrupts the user with important content and expects a response.
+                </p>
+              </a>
+            </h-navigation-menu-link>
+          </h-navigation-menu-content>
+        </h-navigation-menu-item>
+      </h-navigation-menu-list>
+    </h-navigation-menu>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>
