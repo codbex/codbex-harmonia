@@ -201,10 +201,15 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectItemText,
+  SelectLabel,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
+  SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
@@ -220,7 +225,6 @@ import {
 } from '@/components/ui/sheet';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Slider } from '@/components/ui/slider';
-import { Toaster } from '@/components/ui/sonner';
 import {
   Stepper,
   StepperDescription,
@@ -254,6 +258,19 @@ import {
   TagsInputItemText
 } from '@/components/ui/tags-input';
 import { Textarea } from '@/components/ui/textarea';
+
+import {
+  Toast,
+  ToastAction,
+  ToastClose,
+  ToastDescription,
+  Toaster,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+  toast,
+  useToast
+} from '@/components/ui/toast';
 import { Toggle } from '@/components/ui/toggle';
 import {
   ToggleGroup,
@@ -427,10 +444,15 @@ const components = {
   HResizablePanelGroup: ResizablePanelGroup,
   HScrollArea: ScrollArea,
   HSelect: Select,
-  HSelectTrigger: SelectTrigger,
   HSelectContent: SelectContent,
   HSelectGroup: SelectGroup,
   HSelectItem: SelectItem,
+  HSelectItemText: SelectItemText,
+  HSelectLabel: SelectLabel,
+  HSelectScrollDownButton: SelectScrollDownButton,
+  HSelectScrollUpButton: SelectScrollUpButton,
+  HSelectSeparator: SelectSeparator,
+  HSelectTrigger: SelectTrigger,
   HSelectValue: SelectValue,
   HSeparator: Separator,
   HSheet: Sheet,
@@ -443,7 +465,6 @@ const components = {
   HSheetTrigger: SheetTrigger,
   HSkeleton: Skeleton,
   HSlider: Slider,
-  HToaster: Toaster,
   HStepper: Stepper,
   HStepperDescription: StepperDescription,
   HStepperIndicator: StepperIndicator,
@@ -469,6 +490,14 @@ const components = {
   HTagsInputItemDelete: TagsInputItemDelete,
   HTagsInputItemText: TagsInputItemText,
   HTextarea: Textarea,
+  HToast: Toast,
+  HToastAction: ToastAction,
+  HToastClose: ToastClose,
+  HToastDescription: ToastDescription,
+  HToaster: Toaster,
+  HToastProvider: ToastProvider,
+  HToastTitle: ToastTitle,
+  HToastViewport: ToastViewport,
   HToggle: Toggle,
   HToggleGroup: ToggleGroup,
   HToggleGroupItem: ToggleGroupItem,
@@ -476,7 +505,6 @@ const components = {
   HTooltipContent: TooltipContent,
   HTooltipProvider: TooltipProvider,
   HTooltipTrigger: TooltipTrigger,
-
   HTree: Tree
 };
 

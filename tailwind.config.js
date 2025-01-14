@@ -7,7 +7,7 @@ module.exports = {
   prefix: "",
   
   content: [
-    './pages/**/*.{ts,tsx,vue}',
+    './examples/**/*.{ts,tsx,vue,html}',
     './components/**/*.{ts,tsx,vue}',
     './app/**/*.{ts,tsx,vue}',
     './src/**/*.{ts,tsx,vue}',

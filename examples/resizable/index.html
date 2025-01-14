@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body style="margin: 2em;">
+
+  <div id="app" class="container">
+    <h1>Resizable</h1>
+    
+    <div style="width: 450px; height: 200px; margin: 2em;">
+      <h-resizable-panel-group direction="horizontal">
+        <h-resizable-panel>One</h-resizable-panel>
+        <h-resizable-handle></h-resizable-handle>
+        <h-resizable-panel>Two</h-resizable-panel>
+      </h-resizable-panel-group>
+    </div>
+
+  </div>
+
+  <br /><br /><textarea readonly rows="5" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-resizable-panel-group direction="horizontal">
+      <h-resizable-panel>One</h-resizable-panel>
+      <h-resizable-handle></h-resizable-handle>
+      <h-resizable-panel>Two</h-resizable-panel>
+    </h-resizable-panel-group>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>
