@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body style="margin: 2em;">
+
+  <div id="app" class="container">
+    <h1>Tooltip</h1>
+    
+    <h-tooltip-provider>
+      <h-tooltip>
+        <h-tooltip-trigger as-child>
+          <h-button variant="outline">
+            Hover
+          </h-button>
+        </h-tooltip-trigger>
+        <h-tooltip-content>
+          <p>Add to library</p>
+        </h-tooltip-content>
+      </h-tooltip>
+    </h-tooltip-provider>
+
+  </div>
+
+  <br /><br /><textarea readonly rows="12" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-tooltip-provider>
+      <h-tooltip>
+        <h-tooltip-trigger as-child>
+          <h-button variant="outline">
+            Hover
+          </h-button>
+        </h-tooltip-trigger>
+        <h-tooltip-content>
+          <p>Add to library</p>
+        </h-tooltip-content>
+      </h-tooltip>
+    </h-tooltip-provider>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>

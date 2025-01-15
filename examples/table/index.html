@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codbex-harmonia Example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/dist/codbex-harmonia.umd.js"></script>
+  <link rel="stylesheet" href="/dist/style.css" />
+</head>
+
+<body style="margin: 2em;">
+
+  <div id="app" class="container">
+    <h1>Table</h1>
+    
+    <!-- Table for Remote Data -->
+    <div class="w-2/3 space-y-6" style="max-width: 600px">
+      <h-table>
+        <h-table-caption>A list of your users.</h-table-caption>
+        <h-table-header>
+          <h-table-row>
+            <h-table-head class="w-[100px]">Id</h-table-head>
+            <h-table-head>Name</h-table-head>
+            <h-table-head class="text-center">e-mail</h-table-head>
+          </h-table-row>
+        </h-table-header>
+        <h-table-body>
+          <h-table-row v-for="user in users" :key="user.id">
+            <h-table-cell class="font-medium">
+              {{ user.id }}
+            </h-table-cell>
+            <h-table-cell>{{ user.name }}</h-table-cell>
+            <h-table-cell class="text-center">{{ user.email }}</h-table-cell>
+          </h-table-row>
+        </h-table-body>
+      </h-table>
+    </div>
+
+  </div>
+
+  <br /><br /><textarea readonly rows="19" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <h-table>
+      <h-table-caption>A list of your users.</h-table-caption>
+      <h-table-header>
+        <h-table-row>
+          <h-table-head class="w-[100px]">Id</h-table-head>
+          <h-table-head>Name</h-table-head>
+          <h-table-head class="text-center">e-mail</h-table-head>
+        </h-table-row>
+      </h-table-header>
+      <h-table-body>
+        <h-table-row v-for="user in users" :key="user.id">
+          <h-table-cell class="font-medium">
+            {{ user.id }}
+          </h-table-cell>
+          <h-table-cell>{{ user.name }}</h-table-cell>
+          <h-table-cell class="text-center">{{ user.email }}</h-table-cell>
+        </h-table-row>
+      </h-table-body>
+    </h-table>
+  </textarea>
+
+  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+
+  <!-- Import JavaScript file as ES6 module -->
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>
