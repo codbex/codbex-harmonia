@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
   <script src="/dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -14,7 +14,7 @@
 
   <div id="app" class="container">
     <h1>Pagination</h1>
-    
+
     <h-pagination v-slot="{ page }" :total="100" :sibling-count="1" show-edges :default-page="2">
       <h-pagination-list v-slot="{ items }" class="flex items-center gap-1">
         <h-pagination-first></h-pagination-first>
@@ -34,7 +34,8 @@
 
   </div>
 
-  <br /><br /><textarea readonly rows="16" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+  <br /><br /><textarea readonly rows="16"
+    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
     <h-pagination v-slot="{ page }" :total="100" :sibling-count="1" show-edges :default-page="2">
       <h-pagination-list v-slot="{ items }" class="flex items-center gap-1">
         <h-pagination-first></h-pagination-first>

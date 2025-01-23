@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>codbex-harmonia Example</title>
-    <script src="https://unpkg.com/vue@3"></script>
+    <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
     <script src="/dist/codbex-harmonia.umd.js"></script>
     <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -26,7 +26,8 @@
 
     </div>
 
-    <br /><br /><textarea readonly rows="8" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <br /><br /><textarea readonly rows="8"
+        style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
         <h-accordion type="single" class="w-full" collapsible :default-value="defaultValue">
             <h-accordion-item v-for="item in accordionItems" :key="item.value" :value="item.value">
                 <h-accordion-trigger>{{ item.title }}</h-accordion-trigger>

@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
   <script src="/dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -14,7 +14,7 @@
 
   <div id="app" class="container">
     <h1>Popover</h1>
-    
+
     <div style="width: 250px; margin: 2em;">
       <h-popover>
         <h-popover-trigger as-child>
@@ -30,7 +30,8 @@
 
   </div>
 
-  <br /><br /><textarea readonly rows="10" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+  <br /><br /><textarea readonly rows="10"
+    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
     <h-popover>
       <h-popover-trigger as-child>
         <h-button variant="outline">

@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
   <script src="/dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -15,17 +15,13 @@
   <div id="app" class="container">
     <h1>Calendar</h1>
 
-    <h-calendar v-model="dateValue" 
-      :weekday-format="'short'" class="rounded-md border" style="width: 300px"
+    <h-calendar v-model="dateValue" :weekday-format="'short'" class="rounded-md border" style="width: 300px"
       @update:model-value="(v) => {
-        debugger
         if (v) {
-          dateValue = v
-          //setFieldValue('dob', toDate(v).toISOString())
+          dateValue = v;
         }
         else {
-          dateValue = undefined
-          //setFieldValue('dob', undefined)
+          dateValue = undefined;
         }
       }">
     </h-calendar>
@@ -36,7 +32,8 @@
 
   </div>
 
-  <br /><br /><textarea readonly rows="1" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+  <br /><br /><textarea readonly rows="1"
+    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
     <h-calendar v-model="value" :weekday-format="'short'" class="rounded-md border" style="width: 300px"></h-calendar>
   </textarea>
 

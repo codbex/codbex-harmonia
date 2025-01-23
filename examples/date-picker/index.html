@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
   <script src="/dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -16,14 +16,15 @@
     <h1>Date Picker</h1>
 
     <h-date-picker v-model="formData.date"></h-date-picker>
-    
+
     <div>
       <pre>{{ df.format(formData.date) }} </pre>
     </div>
 
   </div>
 
-  <br /><br /><textarea readonly rows="1" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+  <br /><br /><textarea readonly rows="1"
+    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
     <h-date-picker v-model="formData.date"></h-date-picker>
   </textarea>
 

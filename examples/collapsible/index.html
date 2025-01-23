@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
   <script src="/dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -44,7 +44,8 @@
 
   </div>
 
-  <br /><br /><textarea readonly rows="24" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+  <br /><br /><textarea readonly rows="24"
+    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
     <h-collapsible v-model:open="isOpen" class="w-[350px] space-y-2">
       <div class="flex items-center justify-between space-x-4 px-4">
         <h4 class="text-sm font-semibold">

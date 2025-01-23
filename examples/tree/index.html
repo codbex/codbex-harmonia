@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>codbex-harmonia Example</title>
-  <script src="https://unpkg.com/vue@3"></script>
+  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
   <script src="/dist/codbex-harmonia.umd.js"></script>
   <link rel="stylesheet" href="/dist/style.css" />
 </head>
@@ -17,14 +17,15 @@
 
     <h-tree :nodes="treeData"></h-tree>
 
-  <br /><br /><textarea readonly rows="1" style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+    <br /><br /><textarea readonly rows="1"
+      style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
     <h-tree :nodes="treeData"></h-tree>
   </textarea>
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+    <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
+    <!-- Import JavaScript file as ES6 module -->
+    <script type="module" src="app.js"></script>
 
 </body>
 
