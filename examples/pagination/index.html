@@ -1,20 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Pagination</h1>
 
-<body style="margin: 2em;">
+            <h-pagination v-slot="{ page }" :total="100" :sibling-count="1" show-edges :default-page="2">
+                <h-pagination-list v-slot="{ items }" class="flex items-center gap-1">
+                    <h-pagination-first></h-pagination-first>
+                    <h-pagination-prev></h-pagination-prev>
+                    <template v-for="(item, index) in items">
+                        <h-pagination-list-item v-if="item.type === 'page'" :key="index" :value="item.value" as-child>
+                            <h-button class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'">
+                                {{ item.value }}
+                            </h-button>
+                        </h-pagination-list-item>
+                        <h-pagination-ellipsis v-else :key="item.type" :index="index"></h-pagination-ellipsis>
+                    </template>
+                    <h-pagination-next></h-pagination-next>
+                    <h-pagination-last></h-pagination-last>
+                </h-pagination-list>
+            </h-pagination>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Pagination</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="16"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-pagination v-slot="{ page }" :total="100" :sibling-count="1" show-edges :default-page="2">
       <h-pagination-list v-slot="{ items }" class="flex items-center gap-1">
         <h-pagination-first></h-pagination-first>
@@ -31,34 +52,12 @@
         <h-pagination-last></h-pagination-last>
       </h-pagination-list>
     </h-pagination>
+  </textarea
+        >
 
-  </div>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><textarea readonly rows="16"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-pagination v-slot="{ page }" :total="100" :sibling-count="1" show-edges :default-page="2">
-      <h-pagination-list v-slot="{ items }" class="flex items-center gap-1">
-        <h-pagination-first></h-pagination-first>
-        <h-pagination-prev></h-pagination-prev>
-        <template v-for="(item, index) in items">
-          <h-pagination-list-item v-if="item.type === 'page'" :key="index" :value="item.value" as-child>
-            <h-button class="w-10 h-10 p-0" :variant="item.value === page ? 'default' : 'outline'">
-              {{ item.value }}
-            </h-button>
-          </h-pagination-list-item>
-          <h-pagination-ellipsis v-else :key="item.type" :index="index"></h-pagination-ellipsis>
-        </template>
-        <h-pagination-next></h-pagination-next>
-        <h-pagination-last></h-pagination-last>
-      </h-pagination-list>
-    </h-pagination>
-  </textarea>
-
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

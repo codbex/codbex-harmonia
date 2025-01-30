@@ -1,47 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Checkbox</h1>
 
-<body style="margin: 2em;">
+            <div class="flex items-center space-x-2">
+                <h-checkbox id="terms"></h-checkbox>
+                <h-label
+                    for="terms"
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                    &nbsp;Accept terms and conditions
+                </h-label>
+            </div>
 
-  <div id="app" class="container">
-    <h1>Checkbox</h1>
+            <h-form-field v-slot="{ value, handleChange }" type="checkbox" name="mobile" v-model="formData.agree">
+                <h-form-item class="flex flex-row items-start gap-x-3 space-y-0 rounded-md border p-4">
+                    <h-form-control>
+                        <h-checkbox :checked="value" @update:checked="handleChange"></h-checkbox>
+                    </h-form-control>
+                    <div class="space-y-1 leading-none">
+                        <h-form-label>&nbsp;Agree to terms</h-form-label>
+                    </div>
+                </h-form-item>
+            </h-form-field>
 
-    <div class="flex items-center space-x-2">
-      <h-checkbox id="terms"></h-checkbox>
-      <h-label for="terms"
-        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-        &nbsp;Accept terms and conditions
-      </h-label>
-    </div>
-
-    <h-form-field v-slot="{ value, handleChange }" type="checkbox" name="mobile" v-model="formData.agree">
-      <h-form-item class="flex flex-row items-start gap-x-3 space-y-0 rounded-md border p-4">
-        <h-form-control>
-          <h-checkbox :checked="value" @update:checked="handleChange"></h-checkbox>
-        </h-form-control>
-        <div class="space-y-1 leading-none">
-          <h-form-label>&nbsp;Agree to terms</h-form-label>
+            <div>
+                <pre>Agree? {{ formData.agree }}</pre>
+            </div>
         </div>
-      </h-form-item>
-    </h-form-field>
 
-    <div>
-      <pre>Agree? {{ formData.agree }}</pre>
-    </div>
-
-  </div>
-
-  <br /><br /><textarea readonly rows="17"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="17"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <div class="flex items-center space-x-2">
       <h-checkbox id="terms"></h-checkbox>
       <h-label for="terms" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -59,13 +61,12 @@
         </div>
       </h-form-item>
     </h-form-field>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

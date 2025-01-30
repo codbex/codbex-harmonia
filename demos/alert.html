@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <h-alert>
+                <i-terminal class="h-4 w-4"></i-terminal>
+                <h-alert-title>Heads up!</h-alert-title>
+                <h-alert-description> You can add components to your app using the cli. </h-alert-description>
+            </h-alert>
+
+            <h-alert variant="destructive">
+                <i-alert-circle class="w-4 h-4"></i-alert-circle>
+                <h-alert-title>Error</h-alert-title>
+                <h-alert-description> Your session has expired. Please log in again. </h-alert-description>
+            </h-alert>
+
+            <h-alert-dialog>
+                <h-alert-dialog-trigger as-child>
+                    <h-button variant="outline"> Show Dialog </h-button>
+                </h-alert-dialog-trigger>
+                <h-alert-dialog-content>
+                    <h-alert-dialog-header>
+                        <h-alert-dialog-title>Are you absolutely sure?</h-alert-dialog-title>
+                        <h-alert-dialog-description>
+                            This action cannot be undone. This will permanently delete your account and remove your data
+                            from our servers.
+                        </h-alert-dialog-description>
+                    </h-alert-dialog-header>
+                    <h-alert-dialog-footer>
+                        <h-alert-dialog-cancel>Cancel</h-alert-dialog-cancel>
+                        <h-alert-dialog-action>Continue</h-alert-dialog-action>
+                    </h-alert-dialog-footer>
+                </h-alert-dialog-content>
+            </h-alert-dialog>
+        </div>
+        <script type="module">
+            import { Terminal, AlertCircle } from 'lucide-vue-next'
+            const app = Vue.createApp({})
+            app.use(Harmonia)
+            app.component('ITerminal', Terminal)
+            app.component('IAlertCircle', AlertCircle)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

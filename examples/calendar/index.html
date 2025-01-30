@@ -1,47 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Calendar</h1>
 
-<body style="margin: 2em;">
-
-  <div id="app" class="container">
-    <h1>Calendar</h1>
-
-    <h-calendar v-model="dateValue" :weekday-format="'short'" class="rounded-md border" style="width: 300px"
-      @update:model-value="(v) => {
+            <h-calendar
+                v-model="dateValue"
+                :weekday-format="'short'"
+                class="rounded-md border"
+                style="width: 300px"
+                @update:model-value="(v) => {
         if (v) {
           dateValue = v;
         }
         else {
           dateValue = undefined;
         }
-      }">
-    </h-calendar>
+      }"
+            >
+            </h-calendar>
 
-    <div>
-      <pre>{{ dateValue }}</pre>
-    </div>
+            <div>
+                <pre>{{ dateValue }}</pre>
+            </div>
+        </div>
 
-  </div>
-
-  <br /><br /><textarea readonly rows="1"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="1"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-calendar v-model="value" :weekday-format="'short'" class="rounded-md border" style="width: 300px"></h-calendar>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

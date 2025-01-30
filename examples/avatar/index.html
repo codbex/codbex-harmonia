@@ -1,40 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Avatar</h1>
 
-<body style="margin: 2em;">
+            <h-avatar>
+                <h-avatar-image src="https://www.codbex.com/logo.svg" alt="codbex"></h-avatar-image>
+                <h-avatar-fallback>codbex</h-avatar-fallback>
+            </h-avatar>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Avatar</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="4"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-avatar>
       <h-avatar-image src="https://www.codbex.com/logo.svg" alt="codbex"></h-avatar-image>
       <h-avatar-fallback>codbex</h-avatar-fallback>
     </h-avatar>
+  </textarea
+        >
 
-  </div>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><textarea readonly rows="4"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-avatar>
-      <h-avatar-image src="https://www.codbex.com/logo.svg" alt="codbex"></h-avatar-image>
-      <h-avatar-fallback>codbex</h-avatar-fallback>
-    </h-avatar>
-  </textarea>
-
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <div class="flex items-center space-x-2">
+                <h-checkbox id="terms"></h-checkbox>
+                <label
+                    for="terms"
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                    Accept terms and conditions
+                </label>
+            </div>
+
+            <div class="items-top flex space-x-2">
+                <h-checkbox id="terms1" disabled></h-checkbox>
+                <label
+                    for="terms2"
+                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                    Accept terms and conditions
+                </label>
+            </div>
+
+            <div class="items-top flex gap-x-2">
+                <h-checkbox id="terms1"></h-checkbox>
+                <div class="grid gap-1.5 leading-none">
+                    <label
+                        for="terms1"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                        Accept terms and conditions
+                    </label>
+                    <p class="text-sm text-muted-foreground">You agree to our Terms of Service and Privacy Policy.</p>
+                </div>
+            </div>
+
+            <form @submit="onSubmit">
+                <h-form-field name="items">
+                    <h-form-item>
+                        <div class="mb-4">
+                            <h-form-label class="text-base">Sidebar</h-form-label>
+                            <h-form-description>
+                                Select the items you want to display in the sidebar.
+                            </h-form-description>
+                        </div>
+
+                        <h-form-field
+                            v-for="item in items"
+                            v-slot="{ value, handleChange }"
+                            :key="item.id"
+                            type="checkbox"
+                            :value="item.id"
+                            :unchecked-value="false"
+                            name="items"
+                        >
+                            <h-form-item class="flex flex-row items-start space-x-3 space-y-0">
+                                <h-form-control>
+                                    <h-checkbox
+                                        :checked="value.includes(item.id)"
+                                        @update:checked="handleChange"
+                                    ></h-checkbox>
+                                </h-form-control>
+                                <h-form-label class="font-normal">{{ item.label }}</h-form-label>
+                            </h-form-item>
+                        </h-form-field>
+                        <h-form-message></h-form-message>
+                    </h-form-item>
+                </h-form-field>
+
+                <div class="flex justify-start mt-4">
+                    <h-button type="submit">Submit</h-button>
+                </div>
+            </form>
+
+            <form class="space-y-6" @submit="onSubmitSingle">
+                <h-form-field v-slot="{ value, handleChange }" type="checkbox" name="mobile">
+                    <h-form-item class="flex flex-row items-start gap-x-3 space-y-0 rounded-md border p-4">
+                        <h-form-control>
+                            <h-checkbox :checked="value" @update:checked="handleChange"></h-checkbox>
+                        </h-form-control>
+                        <div class="space-y-1 leading-none">
+                            <h-form-label>Use different settings for my mobile devices</h-form-label>
+                            <h-form-description>
+                                You can manage your mobile notifications in the
+                                <a href="/examples/forms">mobile settings</a> page.
+                            </h-form-description>
+                            <h-form-message></h-form-message>
+                        </div>
+                    </h-form-item>
+                </h-form-field>
+                <h-button type="submit">Submit</h-button>
+            </form>
+        </div>
+        <script type="module">
+            import { toTypedSchema } from '@vee-validate/zod'
+            import { useForm } from 'vee-validate'
+            import * as z from 'zod'
+
+            const formSchema = toTypedSchema(
+                z.object({
+                    items: z.array(z.string()).refine((value) => value.some((item) => item), {
+                        message: 'You have to select at least one item.',
+                    }),
+                }),
+            )
+            const formSchemaSingle = toTypedSchema(
+                z.object({
+                    mobile: z.boolean().default(false).optional(),
+                }),
+            )
+            const form = useForm({
+                validationSchema: formSchema,
+                initialValues: {
+                    items: ['recents', 'home'],
+                },
+            })
+            const formSingle = useForm({
+                validationSchema: formSchema,
+                initialValues: {
+                    mobile: true,
+                },
+            })
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        items: [
+                            {
+                                id: 'recents',
+                                label: 'Recents',
+                            },
+                            {
+                                id: 'home',
+                                label: 'Home',
+                            },
+                            {
+                                id: 'applications',
+                                label: 'Applications',
+                            },
+                            {
+                                id: 'desktop',
+                                label: 'Desktop',
+                            },
+                            {
+                                id: 'downloads',
+                                label: 'Downloads',
+                            },
+                            {
+                                id: 'documents',
+                                label: 'Documents',
+                            },
+                        ],
+                        value: Vue.ref(false),
+                    }
+                },
+                methods: {
+                    onSubmit(values) {
+                        form.handleSubmit((values) => {
+                            Harmonia.toast({
+                                title: 'You submitted the following values:',
+                                description: Vue.h(
+                                    'pre',
+                                    { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
+                                    Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
+                                ),
+                            })
+                        })
+                    },
+                    onSubmitSingle(values) {
+                        formSingle.handleSubmit((values) => {
+                            Harmonia.toast({
+                                title: 'You submitted the following values:',
+                                description: Vue.h(
+                                    'pre',
+                                    { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
+                                    Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
+                                ),
+                            })
+                        })
+                    },
+                },
+            })
+            app.use(Harmonia)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

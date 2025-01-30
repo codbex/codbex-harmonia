@@ -1,40 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Aspect Ratio</h1>
 
-<body style="margin: 2em;">
+            <h-aspect-ratio :ratio="16 / 9" class="bg-muted">
+                <img
+                    src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+                    alt="Photo by Drew Beamer"
+                    class="rounded-md object-cover w-full h-full"
+                />
+            </h-aspect-ratio>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Aspect Ratio</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="4"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-aspect-ratio :ratio="16 / 9" class="bg-muted">
       <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
         alt="Photo by Drew Beamer" class="rounded-md object-cover w-full h-full">
     </h-aspect-ratio>
+  </textarea
+        >
 
-  </div>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><textarea readonly rows="4"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-aspect-ratio :ratio="16 / 9" class="bg-muted">
-      <img src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-        alt="Photo by Drew Beamer" class="rounded-md object-cover w-full h-full">
-    </h-aspect-ratio>
-  </textarea>
-
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

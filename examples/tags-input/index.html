@@ -1,34 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Tags Input</h1>
 
-<body style="margin: 2em;">
+            <div style="width: 450px; margin: 2em">
+                <h-tags-input v-model="modelValue">
+                    <h-tags-input-item v-for="item in modelValue" :key="item" :value="item">
+                        <h-tags-input-item-text></h-tags-input-item-text>
+                        <h-tags-input-item-delete></h-tags-input-item-delete>
+                    </h-tags-input-item>
+                    <h-tags-input-input placeholder="Fruits..."></h-tags-input-input>
+                </h-tags-input>
+            </div>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Tags Input</h1>
-
-    <div style="width: 450px; margin: 2em;">
-      <h-tags-input v-model="modelValue">
-        <h-tags-input-item v-for="item in modelValue" :key="item" :value="item">
-          <h-tags-input-item-text></h-tags-input-item-text>
-          <h-tags-input-item-delete></h-tags-input-item-delete>
-        </h-tags-input-item>
-        <h-tags-input-input placeholder="Fruits..."></h-tags-input-input>
-      </h-tags-input>
-    </div>
-
-  </div>
-
-  <br /><br /><textarea readonly rows="15"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="15"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-tabs default-value="account" class="w-[400px]">
       <h-tabs-list>
         <h-tabs-trigger value="account">
@@ -45,13 +45,12 @@
         Change your password here.
       </h-tabs-content>
     </h-tabs>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

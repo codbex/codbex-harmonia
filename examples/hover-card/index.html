@@ -1,20 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Hover Card</h1>
 
-<body style="margin: 2em;">
+            <h-hover-card>
+                <h-hover-card-trigger as-child>
+                    <h-button variant="link"> @vuejs </h-button>
+                </h-hover-card-trigger>
+                <h-hover-card-content class="w-80">
+                    <div class="flex justify-between space-x-4">
+                        <h-avatar>
+                            <h-avatar-image src="https://github.com/vuejs.png" />
+                            <h-avatar-fallback>VC</h-avatar-fallback>
+                        </h-avatar>
+                        <div class="space-y-1">
+                            <h4 class="text-sm font-semibold">@vuejs</h4>
+                            <p class="text-sm">Progressive JavaScript framework for building modern web interfaces.</p>
+                            <div class="flex items-center pt-2">
+                                <i-calendar-days class="mr-2 h-4 w-4 opacity-70"></i-calendar-days>
+                                <span class="text-xs text-muted-foreground"> Joined January 2014 </span>
+                            </div>
+                        </div>
+                    </div>
+                </h-hover-card-content>
+            </h-hover-card>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Hover Card</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="29"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-hover-card>
       <h-hover-card-trigger as-child>
         <h-button variant="link">
@@ -44,47 +70,12 @@
         </div>
       </h-hover-card-content>
     </h-hover-card>
+  </textarea
+        >
 
-  </div>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><textarea readonly rows="29"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-hover-card>
-      <h-hover-card-trigger as-child>
-        <h-button variant="link">
-          @vuejs
-        </h-button>
-      </h-hover-card-trigger>
-      <h-hover-card-content class="w-80">
-        <div class="flex justify-between space-x-4">
-          <h-avatar>
-            <h-avatar-image src="https://github.com/vuejs.png" />
-            <h-avatar-fallback>VC</h-avatar-fallback>
-          </h-avatar>
-          <div class="space-y-1">
-            <h4 class="text-sm font-semibold">
-              @vuejs
-            </h4>
-            <p class="text-sm">
-              Progressive JavaScript framework for building modern web interfaces.
-            </p>
-            <div class="flex items-center pt-2">
-              <i-calendar-days class="mr-2 h-4 w-4 opacity-70"></i-calendar-days>
-              <span class="text-xs text-muted-foreground">
-                Joined January 2014
-              </span>
-            </div>
-          </div>
-        </div>
-      </h-hover-card-content>
-    </h-hover-card>
-  </textarea>
-
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

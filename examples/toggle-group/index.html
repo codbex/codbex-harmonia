@@ -1,20 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Toggle Group</h1>
 
-<body style="margin: 2em;">
+            <h-toggle-group type="multiple">
+                <h-toggle-group-item value="bold" aria-label="Toggle bold">
+                    <i-bold class="h-4 w-4"></i-bold>
+                </h-toggle-group-item>
+                <h-toggle-group-item value="italic" aria-label="Toggle italic">
+                    <i-italic class="h-4 w-4"></i-italic>
+                </h-toggle-group-item>
+                <h-toggle-group-item value="underline" aria-label="Toggle underline">
+                    <i-underline class="h-4 w-4"></i-underline>
+                </h-toggle-group-item>
+            </h-toggle-group>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Toggle Group</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="11"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-toggle-group type="multiple">
       <h-toggle-group-item value="bold" aria-label="Toggle bold">
         <i-bold class="h-4 w-4"></i-bold>
@@ -26,29 +42,12 @@
         <i-underline class="h-4 w-4"></i-underline>
       </h-toggle-group-item>
     </h-toggle-group>
+  </textarea
+        >
 
-  </div>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><textarea readonly rows="11"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-toggle-group type="multiple">
-      <h-toggle-group-item value="bold" aria-label="Toggle bold">
-        <i-bold class="h-4 w-4"></i-bold>
-      </h-toggle-group-item>
-      <h-toggle-group-item value="italic" aria-label="Toggle italic">
-        <i-italic class="h-4 w-4"></i-italic>
-      </h-toggle-group-item>
-      <h-toggle-group-item value="underline" aria-label="Toggle underline">
-        <i-underline class="h-4 w-4"></i-underline>
-      </h-toggle-group-item>
-    </h-toggle-group>
-  </textarea>
-
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

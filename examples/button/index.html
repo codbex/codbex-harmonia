@@ -1,20 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Button</h1>
 
-<body style="margin: 2em;">
+            <h-button>Button</h-button>
+            <h-button variant="secondary">Secondary</h-button>
+            <h-button variant="outline">Outline</h-button>
+            <h-button variant="destructive">Destructive</h-button>
+            <h-button variant="ghost">Ghost</h-button>
+            <h-button variant="link">Link</h-button>
+            <h-button><i-mail class="w-4 h-4"></i-mail> Login with Email</h-button>
+            <h-button disabled><i-loader class="w-4 h-4 mr-2 animate-spin"></i-loader> Please wait</h-button>
+            <h-button as-child><a href="/login">Login</a></h-button>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Button</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="9"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-button>Button</h-button>
     <h-button variant="secondary">Secondary</h-button>
     <h-button variant="outline">Outline</h-button>
@@ -24,26 +38,12 @@
     <h-button><i-mail class="w-4 h-4"></i-mail> Login with Email</h-button>
     <h-button disabled><i-loader class="w-4 h-4 mr-2 animate-spin"></i-loader> Please wait</h-button>
     <h-button as-child><a href="/login">Login</a></h-button>
-  </div>
+  </textarea
+        >
 
-  <br /><br /><textarea readonly rows="9"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-button>Button</h-button>
-    <h-button variant="secondary">Secondary</h-button>
-    <h-button variant="outline">Outline</h-button>
-    <h-button variant="destructive">Destructive</h-button>
-    <h-button variant="ghost">Ghost</h-button>
-    <h-button variant="link">Link</h-button>
-    <h-button><i-mail class="w-4 h-4"></i-mail> Login with Email</h-button>
-    <h-button disabled><i-loader class="w-4 h-4 mr-2 animate-spin"></i-loader> Please wait</h-button>
-    <h-button as-child><a href="/login">Login</a></h-button>
-  </textarea>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

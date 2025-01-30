@@ -1,65 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Command</h1>
 
-<body style="margin: 2em;">
+            <div class="flex items-center space-x-2">
+                <h-command class="rounded-lg border shadow-md max-w-[450px]" style="width: 300px">
+                    <h-command-input placeholder="Type a command or search..."></h-command-input>
+                    <h-command-list>
+                        <h-command-empty>No results found.</h-command-empty>
+                        <h-command-group heading="Suggestions">
+                            <h-command-item value="Calendar">
+                                <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+                                <span>Calendar</span>
+                            </h-command-item>
+                            <h-command-item value="Search Emoji">
+                                <i-smile class="mr-2 h-4 w-4"></i-smile>
+                                <span>Search Emoji</span>
+                            </h-command-item>
+                            <h-command-item value="Calculator">
+                                <i-calculator class="mr-2 h-4 w-4"></i-calculator>
+                                <span>Calculator</span>
+                            </h-command-item>
+                        </h-command-group>
+                        <h-command-separator></h-command-separator>
+                        <h-command-group heading="Settings">
+                            <h-command-item value="Profile">
+                                <i-user class="mr-2 h-4 w-4"></i-user>
+                                <span>Profile</span>
+                                <h-command-shortcut>⌘P</h-command-shortcut>
+                            </h-command-item>
+                            <h-command-item value="Billing">
+                                <i-credit-card class="mr-2 h-4 w-4"></i-credit-card>
+                                <span>Billing</span>
+                                <h-command-shortcut>⌘B</h-command-shortcut>
+                            </h-command-item>
+                            <h-command-item value="Settings">
+                                <i-settings class="mr-2 h-4 w-4"></i-settings>
+                                <span>Settings</span>
+                                <h-command-shortcut>⌘S</h-command-shortcut>
+                            </h-command-item>
+                        </h-command-group>
+                    </h-command-list>
+                </h-command>
+            </div>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Command</h1>
-
-    <div class="flex items-center space-x-2">
-      <h-command class="rounded-lg border shadow-md max-w-[450px]" style="width: 300px">
-        <h-command-input placeholder="Type a command or search..."></h-command-input>
-        <h-command-list>
-          <h-command-empty>No results found.</h-command-empty>
-          <h-command-group heading="Suggestions">
-            <h-command-item value="Calendar">
-              <i-calendar class="mr-2 h-4 w-4"></i-calendar>
-              <span>Calendar</span>
-            </h-command-item>
-            <h-command-item value="Search Emoji">
-              <i-smile class="mr-2 h-4 w-4"></i-smile>
-              <span>Search Emoji</span>
-            </h-command-item>
-            <h-command-item value="Calculator">
-              <i-calculator class="mr-2 h-4 w-4"></i-calculator>
-              <span>Calculator</span>
-            </h-command-item>
-          </h-command-group>
-          <h-command-separator></h-command-separator>
-          <h-command-group heading="Settings">
-            <h-command-item value="Profile">
-              <i-user class="mr-2 h-4 w-4"></i-user>
-              <span>Profile</span>
-              <h-command-shortcut>⌘P</h-command-shortcut>
-            </h-command-item>
-            <h-command-item value="Billing">
-              <i-credit-card class="mr-2 h-4 w-4"></i-credit-card>
-              <span>Billing</span>
-              <h-command-shortcut>⌘B</h-command-shortcut>
-            </h-command-item>
-            <h-command-item value="Settings">
-              <i-settings class="mr-2 h-4 w-4"></i-settings>
-              <span>Settings</span>
-              <h-command-shortcut>⌘S</h-command-shortcut>
-            </h-command-item>
-          </h-command-group>
-        </h-command-list>
-      </h-command>
-    </div>
-
-  </div>
-
-  <br /><br /><textarea readonly rows="39"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="39"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-command class="rounded-lg border shadow-md max-w-[450px]" style="width: 300px">
       <h-command-input placeholder="Type a command or search..."></h-command-input>
       <h-command-list>
@@ -98,13 +98,12 @@
         </h-command-group>
       </h-command-list>
     </h-command>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

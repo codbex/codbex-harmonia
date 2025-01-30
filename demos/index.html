@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+        <script type="module" src="/demos/app.js"></script>
+    </head>
+    <body id="app">
+        <h-sidebar-provider>
+            <h-sidebar>
+                <h-sidebar-header>
+                    <h-sidebar-menu>
+                        <h-sidebar-menu-item>
+                            <h-dropdown-menu>
+                                <h-dropdown-menu-trigger as-child>
+                                    <h-sidebar-menu-button
+                                        size="lg"
+                                        :class="{ 'data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground': dropdownOpen }"
+                                        @click="toggleDropdown"
+                                    >
+                                        <div class="aspect-square size-8" v-html="codbexLogo"></div>
+                                        <div class="flex flex-col gap-0.5 leading-none">
+                                            <span class="font-semibold">Harmonia UI</span>
+                                            <span>v{{ selectedVersion }}</span>
+                                        </div>
+                                        <i-hevrons-up-down class="ml-auto"></i-hevrons-up-down>
+                                    </h-sidebar-menu-button>
+                                </h-dropdown-menu-trigger>
+                                <h-dropdown-menu-content
+                                    v-if="dropdownOpen"
+                                    class="w-[--radix-dropdown-menu-trigger-width]"
+                                    align="start"
+                                >
+                                    <h-dropdown-menu-item
+                                        v-for="version in data.versions"
+                                        :key="version"
+                                        @click="setSelectedVersion(version)"
+                                    >
+                                        v{{ version }}
+                                        <i-check v-if="version === selectedVersion" class="ml-auto"></i-check>
+                                    </h-dropdown-menu-item>
+                                </h-dropdown-menu-content>
+                            </h-dropdown-menu>
+                        </h-sidebar-menu-item>
+                    </h-sidebar-menu>
+
+                    <form @submit.prevent>
+                        <h-sidebar-group class="py-0">
+                            <h-sidebar-group-content class="relative">
+                                <h-label for="search" class="sr-only">Search</h-label>
+                                <h-sidebar-input
+                                    id="search"
+                                    v-model="search"
+                                    placeholder="Search..."
+                                    class="pl-8"
+                                    @:change="filterComponents"
+                                ></h-sidebar-input>
+                                <i-search
+                                    class="pointer-events-none absolute left-2 top-1/2 size-4 -translate-y-1/2 select-none opacity-50"
+                                ></i-search>
+                            </h-sidebar-group-content>
+                        </h-sidebar-group>
+                    </form>
+                </h-sidebar-header>
+
+                <h-sidebar-content>
+                    <h-sidebar-group v-for="item in data.navMain" :key="item.title">
+                        <h-sidebar-group-label>{{ item.title }}</h-sidebar-group-label>
+                        <h-sidebar-group-content>
+                            <h-sidebar-menu>
+                                <h-sidebar-menu-item
+                                    v-for="subItem in item.items"
+                                    :key="subItem.title"
+                                    v-show="subItem.title.toLowerCase().includes(search.toLowerCase())"
+                                >
+                                    <h-sidebar-menu-button
+                                        :class="{ 'is-active': subItem.isActive }"
+                                        :variant="subItem.isActive ? 'outline': 'default'"
+                                        @click="setSelectedComponent(subItem)"
+                                    >
+                                        <a href="#">{{ subItem.title }}</a>
+                                    </h-sidebar-menu-button>
+                                </h-sidebar-menu-item>
+                            </h-sidebar-menu>
+                        </h-sidebar-group-content>
+                    </h-sidebar-group>
+                </h-sidebar-content>
+
+                <h-sidebar-rail></h-sidebar-rail>
+            </h-sidebar>
+
+            <h-sidebar-inset>
+                <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                    <h-sidebar-trigger class="-ml-1"></h-sidebar-trigger>
+                    <h-separator orientation="vertical" class="mr-2 h-4"></h-separator>
+                    <span>{{selectedComponent}}</span>
+                </header>
+                <iframe
+                    class="flex-1"
+                    :class="{ 'hidden': !item.isActive }"
+                    v-for="item in data.navMain[0].items"
+                    :key="item.title"
+                    :src="item.url"
+                ></iframe>
+            </h-sidebar-inset>
+        </h-sidebar-provider>
+    </body>
+</html>

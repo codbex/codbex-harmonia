@@ -1,20 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Dialog</h1>
 
-<body style="margin: 2em;">
+            <h-dialog>
+                <h-dialog-trigger as-child>
+                    <h-button variant="outline"> Edit Profile </h-button>
+                </h-dialog-trigger>
+                <h-dialog-content class="sm:max-w-[425px]">
+                    <h-dialog-header>
+                        <h-dialog-title>Edit profile</h-dialog-title>
+                        <h-dialog-description>
+                            Make changes to your profile here. Click save when you're done.
+                        </h-dialog-description>
+                    </h-dialog-header>
+                    <div class="grid gap-4 py-4">
+                        <div class="grid grid-cols-4 items-center gap-4">
+                            <h-label for="name" class="text-right"> Name </h-label>
+                            <h-input id="name" default-value="Pedro Duarte" class="col-span-3"></h-input>
+                        </div>
+                        <div class="grid grid-cols-4 items-center gap-4">
+                            <h-label for="username" class="text-right"> Username </h-label>
+                            <h-input id="username" default-value="@peduarte" class="col-span-3"></h-input>
+                        </div>
+                    </div>
+                    <h-dialog-footer>
+                        <h-button type="submit"> Save changes </h-button>
+                    </h-dialog-footer>
+                </h-dialog-content>
+            </h-dialog>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Dialog</h1>
-
+        <br /><br /><textarea
+            readonly
+            rows="34"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-dialog>
       <h-dialog-trigger as-child>
         <h-button variant="outline">
@@ -49,52 +80,12 @@
         </h-dialog-footer>
       </h-dialog-content>
     </h-dialog>
+  </textarea
+        >
 
-  </div>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <br /><br /><textarea readonly rows="34"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
-    <h-dialog>
-      <h-dialog-trigger as-child>
-        <h-button variant="outline">
-          Edit Profile
-        </h-button>
-      </h-dialog-trigger>
-      <h-dialog-content class="sm:max-w-[425px]">
-        <h-dialog-header>
-          <h-dialog-title>Edit profile</h-dialog-title>
-          <h-dialog-description>
-            Make changes to your profile here. Click save when you're done.
-          </h-dialog-description>
-        </h-dialog-header>
-        <div class="grid gap-4 py-4">
-          <div class="grid grid-cols-4 items-center gap-4">
-            <h-label for="name" class="text-right">
-              Name
-            </h-label>
-            <h-input id="name" default-value="Pedro Duarte" class="col-span-3"></h-input>
-          </div>
-          <div class="grid grid-cols-4 items-center gap-4">
-            <h-label for="username" class="text-right">
-              Username
-            </h-label>
-            <h-input id="username" default-value="@peduarte" class="col-span-3"></h-input>
-          </div>
-        </div>
-        <h-dialog-footer>
-          <h-button type="submit">
-            Save changes
-          </h-button>
-        </h-dialog-footer>
-      </h-dialog-content>
-    </h-dialog>
-  </textarea>
-
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
-
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

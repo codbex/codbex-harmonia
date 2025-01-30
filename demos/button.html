@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <h-button>Default</h-button>
+            <h-button as-child>
+                <a href="#">Login</a>
+            </h-button>
+            <h-button variant="destructive">Destructive</h-button>
+            <h-button variant="ghost">Ghost</h-button>
+            <h-button variant="outline" size="icon">
+                <i-chevron-right class="w-4 h-4"></i-chevron-right>
+            </h-button>
+            <h-button variant="link">Link</h-button>
+            <h-button disabled>
+                <i-loader2 class="w-4 h-4 mr-2 animate-spin"></i-loader2>
+                Please wait
+            </h-button>
+            <h-button variant="outline">Outline</h-button>
+            <h-button variant="secondary">Secondary</h-button>
+            <h-button><i-mail class="w-4 h-4 mr-2"></i-mail>Email</h-button>
+        </div>
+        <script type="module">
+            import { ChevronRight, Mail, Loader2 } from 'lucide-vue-next'
+            const app = Vue.createApp({})
+            app.use(Harmonia)
+            app.component('IChevronRight', ChevronRight)
+            app.component('IMail', Mail)
+            app.component('ILoader2', Loader2)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

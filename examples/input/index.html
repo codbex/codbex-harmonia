@@ -1,36 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Input</h1>
 
-<body style="margin: 2em;">
+            <div style="width: 250px; margin: 2em">
+                <h-input type="email" placeholder="Email"></h-input>
+            </div>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Input</h1>
-
-    <div style="width: 250px; margin: 2em;">
-      <h-input type="email" placeholder="Email"></h-input>
-    </div>
-
-  </div>
-
-  <br /><br /><textarea readonly rows="1"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="1"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-input type="email" placeholder="Email"></h-input>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

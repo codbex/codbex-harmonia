@@ -1,95 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Dropdown Menu</h1>
 
-<body style="margin: 2em;">
+            <div class="flex items-center space-x-2">
+                <h-dropdown-menu>
+                    <h-dropdown-menu-trigger as-child>
+                        <h-button variant="outline"> Open </h-button>
+                    </h-dropdown-menu-trigger>
+                    <h-dropdown-menu-content class="w-56">
+                        <h-dropdown-menu-label>My Account</h-dropdown-menu-label>
+                        <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                        <h-dropdown-menu-group>
+                            <h-dropdown-menu-item>
+                                <i-user class="mr-2 h-4 w-4"></i-user>
+                                <span>Profile</span>
+                                <h-dropdown-menu-shortcut>⇧⌘P</h-dropdown-menu-shortcut>
+                            </h-dropdown-menu-item>
+                        </h-dropdown-menu-group>
+                        <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                        <h-dropdown-menu-group>
+                            <h-dropdown-menu-item>
+                                <i-users class="mr-2 h-4 w-4"></i-users>
+                                <span>Team</span>
+                            </h-dropdown-menu-item>
+                            <h-dropdown-menu-sub>
+                                <h-dropdown-menu-sub-trigger>
+                                    <i-user-plus class="mr-2 h-4 w-4"></i-user-plus>
+                                    <span>Invite users</span>
+                                </h-dropdown-menu-sub-trigger>
+                                <h-dropdown-menu-portal>
+                                    <h-dropdown-menu-sub-content>
+                                        <h-dropdown-menu-item>
+                                            <i-mail class="mr-2 h-4 w-4"></i-mail>
+                                            <span>Email</span>
+                                        </h-dropdown-menu-item>
+                                        <h-dropdown-menu-item>
+                                            <i-message-square class="mr-2 h-4 w-4"></i-message-square>
+                                            <span>Message</span>
+                                        </h-dropdown-menu-item>
+                                        <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                                        <h-dropdown-menu-item>
+                                            <i-plus-circle class="mr-2 h-4 w-4"></i-plus-circle>
+                                            <span>More...</span>
+                                        </h-dropdown-menu-item>
+                                    </h-dropdown-menu-sub-content>
+                                </h-dropdown-menu-portal>
+                            </h-dropdown-menu-sub>
+                            <h-dropdown-menu-item>
+                                <i-plus class="mr-2 h-4 w-4"></i-plus>
+                                <span>New Team</span>
+                                <h-dropdown-menu-shortcut>⌘+T</h-dropdown-menu-shortcut>
+                            </h-dropdown-menu-item>
+                        </h-dropdown-menu-group>
+                        <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                        <h-dropdown-menu-item>
+                            <i-life-buoy class="mr-2 h-4 w-4"></i-life-buoy>
+                            <span>Support</span>
+                        </h-dropdown-menu-item>
+                        <h-dropdown-menu-item disabled>
+                            <i-cloud class="mr-2 h-4 w-4"></i-cloud>
+                            <span>API</span>
+                        </h-dropdown-menu-item>
+                        <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                        <h-dropdown-menu-item>
+                            <i-log-out class="mr-2 h-4 w-4"></i-log-out>
+                            <span>Log out</span>
+                            <h-dropdown-menu-shortcut>⇧⌘Q</h-dropdown-menu-shortcut>
+                        </h-dropdown-menu-item>
+                    </h-dropdown-menu-content>
+                </h-dropdown-menu>
+            </div>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Dropdown Menu</h1>
-
-    <div class="flex items-center space-x-2">
-      <h-dropdown-menu>
-        <h-dropdown-menu-trigger as-child>
-          <h-button variant="outline">
-            Open
-          </h-button>
-        </h-dropdown-menu-trigger>
-        <h-dropdown-menu-content class="w-56">
-          <h-dropdown-menu-label>My Account</h-dropdown-menu-label>
-          <h-dropdown-menu-separator></h-dropdown-menu-separator>
-          <h-dropdown-menu-group>
-            <h-dropdown-menu-item>
-              <i-user class="mr-2 h-4 w-4"></i-user>
-              <span>Profile</span>
-              <h-dropdown-menu-shortcut>⇧⌘P</h-dropdown-menu-shortcut>
-            </h-dropdown-menu-item>
-          </h-dropdown-menu-group>
-          <h-dropdown-menu-separator></h-dropdown-menu-separator>
-          <h-dropdown-menu-group>
-            <h-dropdown-menu-item>
-              <i-users class="mr-2 h-4 w-4"></i-users>
-              <span>Team</span>
-            </h-dropdown-menu-item>
-            <h-dropdown-menu-sub>
-              <h-dropdown-menu-sub-trigger>
-                <i-user-plus class="mr-2 h-4 w-4"></i-user-plus>
-                <span>Invite users</span>
-              </h-dropdown-menu-sub-trigger>
-              <h-dropdown-menu-portal>
-                <h-dropdown-menu-sub-content>
-                  <h-dropdown-menu-item>
-                    <i-mail class="mr-2 h-4 w-4"></i-mail>
-                    <span>Email</span>
-                  </h-dropdown-menu-item>
-                  <h-dropdown-menu-item>
-                    <i-message-square class="mr-2 h-4 w-4"></i-message-square>
-                    <span>Message</span>
-                  </h-dropdown-menu-item>
-                  <h-dropdown-menu-separator></h-dropdown-menu-separator>
-                  <h-dropdown-menu-item>
-                    <i-plus-circle class="mr-2 h-4 w-4"></i-plus-circle>
-                    <span>More...</span>
-                  </h-dropdown-menu-item>
-                </h-dropdown-menu-sub-content>
-              </h-dropdown-menu-portal>
-            </h-dropdown-menu-sub>
-            <h-dropdown-menu-item>
-              <i-plus class="mr-2 h-4 w-4"></i-plus>
-              <span>New Team</span>
-              <h-dropdown-menu-shortcut>⌘+T</h-dropdown-menu-shortcut>
-            </h-dropdown-menu-item>
-          </h-dropdown-menu-group>
-          <h-dropdown-menu-separator></h-dropdown-menu-separator>
-          <h-dropdown-menu-item>
-            <i-life-buoy class="mr-2 h-4 w-4"></i-life-buoy>
-            <span>Support</span>
-          </h-dropdown-menu-item>
-          <h-dropdown-menu-item disabled>
-            <i-cloud class="mr-2 h-4 w-4"></i-cloud>
-            <span>API</span>
-          </h-dropdown-menu-item>
-          <h-dropdown-menu-separator></h-dropdown-menu-separator>
-          <h-dropdown-menu-item>
-            <i-log-out class="mr-2 h-4 w-4"></i-log-out>
-            <span>Log out</span>
-            <h-dropdown-menu-shortcut>⇧⌘Q</h-dropdown-menu-shortcut>
-          </h-dropdown-menu-item>
-        </h-dropdown-menu-content>
-      </h-dropdown-menu>
-    </div>
-
-  </div>
-
-  <br /><br /><textarea readonly rows="68"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="68"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-dropdown-menu>
       <h-dropdown-menu-trigger as-child>
         <h-button variant="outline">
@@ -158,13 +156,12 @@
         </h-dropdown-menu-item>
       </h-dropdown-menu-content>
     </h-dropdown-menu>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

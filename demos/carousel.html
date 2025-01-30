@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <h-carousel class="relative w-full max-w-xs ml-12" @init-api="setApi">
+                <h-carousel-content>
+                    <h-carousel-item v-for="(_, index) in 5" :key="index">
+                        <div class="p-1">
+                            <h-card>
+                                <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                    <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+                                </h-card-content>
+                            </h-card>
+                        </div>
+                    </h-carousel-item>
+                </h-carousel-content>
+                <h-carousel-previous></h-carousel-previous>
+                <h-carousel-next></h-carousel-next>
+            </h-carousel>
+
+            <h-carousel v-slot="{ canScrollNext }" class="relative w-full max-w-xs ml-12">
+                <h-carousel-content>
+                    <h-carousel-item v-for="(_, index) in 5" :key="index">
+                        <div class="p-1">
+                            <h-card>
+                                <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                    <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+                                </h-card-content>
+                            </h-card>
+                        </div>
+                    </h-carousel-item>
+                </h-carousel-content>
+                <h-carousel-previous></h-carousel-previous>
+                <h-carousel-next v-if="canScrollNext"></h-carousel-next>
+            </h-carousel>
+
+            <h-carousel
+                orientation="vertical"
+                class="relative w-full max-w-xsw-full max-w-xs my-12"
+                :opts="{align: 'start'}"
+            >
+                <h-carousel-content class="mt-1 h-[200px]">
+                    <h-carousel-item v-for="(_, index) in 5" :key="index" class="p-1 md:basis-1/2">
+                        <div class="p-1">
+                            <h-card>
+                                <h-card-content class="flex items-center justify-center p-6">
+                                    <span class="text-3xl font-semibold">{{ index + 1 }}</span>
+                                </h-card-content>
+                            </h-card>
+                        </div>
+                    </h-carousel-item>
+                </h-carousel-content>
+                <h-carousel-previous></h-carousel-previous>
+                <h-carousel-next></h-carousel-next>
+            </h-carousel>
+
+            <h-carousel
+                v-slot="{ canScrollNext }"
+                class="relative w-full max-w-xs ml-12"
+                :plugins="[plugin]"
+                @mouseenter="plugin.stop"
+                @mouseleave="[plugin.reset(), plugin.play()];"
+            >
+                <h-carousel-content>
+                    <h-carousel-item v-for="(_, index) in 5" :key="index">
+                        <div class="p-1">
+                            <h-card>
+                                <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                    <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+                                </h-card-content>
+                            </h-card>
+                        </div>
+                    </h-carousel-item>
+                </h-carousel-content>
+                <h-carousel-previous></h-carousel-previous>
+                <h-carousel-next v-if="canScrollNext"></h-carousel-next>
+            </h-carousel>
+
+            <h-carousel class="relative w-full max-w-sm ml-12" :opts="{align: 'start'}">
+                <h-carousel-content>
+                    <h-carousel-item v-for="(_, index) in 5" :key="index" class="md:basis-1/2 lg:basis-1/3">
+                        <div class="p-1">
+                            <h-card>
+                                <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                    <span class="text-3xl font-semibold">{{ index + 1 }}</span>
+                                </h-card-content>
+                            </h-card>
+                        </div>
+                    </h-carousel-item>
+                </h-carousel-content>
+                <h-carousel-previous></h-carousel-previous>
+                <h-carousel-next></h-carousel-next>
+            </h-carousel>
+
+            <h-carousel class="relative w-full max-w-sm ml-12" :opts="{align: 'start'}">
+                <h-carousel-content class="-ml-1">
+                    <h-carousel-item v-for="(_, index) in 5" :key="index" class="pl-1 md:basis-1/2 lg:basis-1/3">
+                        <div class="p-1">
+                            <h-card>
+                                <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                    <span class="text-2xl font-semibold">{{ index + 1 }}</span>
+                                </h-card-content>
+                            </h-card>
+                        </div>
+                    </h-carousel-item>
+                </h-carousel-content>
+                <h-carousel-previous></h-carousel-previous>
+                <h-carousel-next></h-carousel-next>
+            </h-carousel>
+
+            <div class="w-full sm:w-auto ml-12">
+                <h-carousel class="relative w-full max-w-xs" @init-api="setEmblaMainApi">
+                    <h-carousel-content>
+                        <h-carousel-item v-for="(_, index) in 10" :key="index">
+                            <div class="p-1">
+                                <h-card>
+                                    <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                        <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+                                    </h-card-content>
+                                </h-card>
+                            </div>
+                        </h-carousel-item>
+                    </h-carousel-content>
+                    <h-carousel-previous></h-carousel-previous>
+                    <h-carousel-next></h-carousel-next>
+                </h-carousel>
+
+                <h-carousel class="relative w-full max-w-xs" @init-api="setEmblaThumbnaiApi">
+                    <h-carousel-content class="flex gap-1 ml-0">
+                        <h-carousel-item
+                            v-for="(_, index) in 10"
+                            :key="index"
+                            class="pl-0 basis-1/4 cursor-pointer"
+                            @click="onThumbClick(index)"
+                        >
+                            <div class="p-1" :class="index === selectedIndex ? '' : 'opacity-50'">
+                                <h-card>
+                                    <h-card-content class="flex aspect-square items-center justify-center p-6">
+                                        <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+                                    </h-card-content>
+                                </h-card>
+                            </div>
+                        </h-carousel-item>
+                    </h-carousel-content>
+                </h-carousel>
+            </div>
+        </div>
+        <script type="module">
+            import { watchOnce } from '@vueuse/core'
+            import Autoplay from 'embla-carousel-autoplay'
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        api: Vue.ref(),
+                        totalCount: Vue.ref(0),
+                        current: Vue.ref(0),
+                        plugin: Autoplay({
+                            delay: 2000,
+                            stopOnMouseEnter: true,
+                            stopOnInteraction: false,
+                        }),
+                        emblaMainApi: Vue.ref(),
+                        emblaThumbnailApi: Vue.ref(),
+                        selectedIndex: Vue.ref(0),
+                    }
+                },
+                methods: {
+                    setApi(val) {
+                        this.api = val
+                        this.totalCount = this.api.scrollSnapList().length
+                        this.current = this.api.selectedScrollSnap() + 1
+
+                        this.api.on('select', () => {
+                            this.current = this.api.selectedScrollSnap() + 1
+                        })
+                    },
+                    setEmblaMainApi(val) {
+                        this.emblaMainApi = val
+                        this.emblaMainApi.on('select', this.onSelect)
+                        this.emblaMainApi.on('reInit', this.onSelect)
+                    },
+                    setEmblaThumbnaiApi(val) {
+                        this.emblaThumbnailApi = val
+                    },
+                    onThumbClick(index) {
+                        console.log(index === this.selectedIndex)
+                        if (!this.emblaMainApi || !this.emblaThumbnailApi) return
+                        this.emblaMainApi.scrollTo(index)
+                    },
+                    onSelect() {
+                        if (!this.emblaMainApi || !this.emblaThumbnailApi) return
+                        this.selectedIndex = this.emblaMainApi.selectedScrollSnap()
+                        this.emblaThumbnailApi.scrollTo(this.emblaMainApi.selectedScrollSnap())
+                    },
+                },
+                mounted() {
+                    // Does not work. Don't know why
+                    // watchOnce(this.api, (api) => {
+                    //     if (!api) return
+                    //     this.totalCount.value = api.scrollSnapList().length
+                    //     this.current.value = api.selectedScrollSnap() + 1
+                    //     api.on('select', () => {
+                    //         this.current.value = api.selectedScrollSnap() + 1
+                    //     })
+                    // })
+                    // Does not work. Don't know why
+                    // watchOnce(this.emblaMainApi, (emblaMainApi) => {
+                    //     if (!emblaMainApi) return
+                    //     this.onSelect()
+                    //     emblaMainApi.on('select', this.onSelect)
+                    //     emblaMainApi.on('reInit', this.onSelect)
+                    // })
+                },
+            })
+            app.use(Harmonia)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

@@ -1,70 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Drawer</h1>
 
-<body style="margin: 2em;">
-
-  <div id="app" class="container">
-    <h1>Drawer</h1>
-
-    <h-drawer>
-      <h-drawer-trigger as-child>
-        <h-button variant="outline">
-          Open Drawer
-        </h-button>
-      </h-drawer-trigger>
-      <h-drawer-content>
-        <div class="mx-auto w-full max-w-sm">
-          <h-drawer-header>
-            <h-drawer-title>Move Goal</h-drawer-title>
-            <h-drawer-description>Set your daily activity goal.</h-drawer-description>
-          </h-drawer-header>
-          <div class="p-4 pb-0">
-            <div class="flex items-center justify-center space-x-2">
-              <h-button variant="outline" size="icon" class="h-8 w-8 shrink-0 rounded-full" :disabled="goal <= 200"
-                @click="goal -= 10">
-                <i-minus class="h-4 w-4"></i-minus>
-                <span class="sr-only">Decrease</span>
-              </h-button>
-              <div class="flex-1 text-center">
-                <div class="text-7xl font-bold tracking-tighter" style="font-size: 4.5rem;">
-                  {{ goal }}
-                </div>
-                <div class="text-[0.70rem] uppercase text-muted-foreground">
-                  Calories/day
-                </div>
-              </div>
-              <h-button variant="outline" size="icon" class="h-8 w-8 shrink-0 rounded-full" :disabled="goal >= 400"
-                @click="goal += 10">
-                <i-plus class="h-4 w-4"></i-plus>
-                <span class="sr-only">Increase</span>
-              </h-button>
-            </div>
-          </div>
-          <h-drawer-footer>
-            <h-button>Submit</h-button>
-            <h-drawer-close as-child>
-              <h-button variant="outline">
-                Cancel
-              </h-button>
-            </h-drawer-close>
-          </h-drawer-footer>
+            <h-drawer>
+                <h-drawer-trigger as-child>
+                    <h-button variant="outline"> Open Drawer </h-button>
+                </h-drawer-trigger>
+                <h-drawer-content>
+                    <div class="mx-auto w-full max-w-sm">
+                        <h-drawer-header>
+                            <h-drawer-title>Move Goal</h-drawer-title>
+                            <h-drawer-description>Set your daily activity goal.</h-drawer-description>
+                        </h-drawer-header>
+                        <div class="p-4 pb-0">
+                            <div class="flex items-center justify-center space-x-2">
+                                <h-button
+                                    variant="outline"
+                                    size="icon"
+                                    class="h-8 w-8 shrink-0 rounded-full"
+                                    :disabled="goal <= 200"
+                                    @click="goal -= 10"
+                                >
+                                    <i-minus class="h-4 w-4"></i-minus>
+                                    <span class="sr-only">Decrease</span>
+                                </h-button>
+                                <div class="flex-1 text-center">
+                                    <div class="text-7xl font-bold tracking-tighter" style="font-size: 4.5rem">
+                                        {{ goal }}
+                                    </div>
+                                    <div class="text-[0.70rem] uppercase text-muted-foreground">Calories/day</div>
+                                </div>
+                                <h-button
+                                    variant="outline"
+                                    size="icon"
+                                    class="h-8 w-8 shrink-0 rounded-full"
+                                    :disabled="goal >= 400"
+                                    @click="goal += 10"
+                                >
+                                    <i-plus class="h-4 w-4"></i-plus>
+                                    <span class="sr-only">Increase</span>
+                                </h-button>
+                            </div>
+                        </div>
+                        <h-drawer-footer>
+                            <h-button>Submit</h-button>
+                            <h-drawer-close as-child>
+                                <h-button variant="outline"> Cancel </h-button>
+                            </h-drawer-close>
+                        </h-drawer-footer>
+                    </div>
+                </h-drawer-content>
+            </h-drawer>
         </div>
-      </h-drawer-content>
-    </h-drawer>
 
-  </div>
-
-  <br /><br /><textarea readonly rows="53"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="53"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-drawer>
       <h-drawer-trigger as-child>
         <h-button variant="outline">
@@ -118,13 +122,12 @@
         </div>
       </h-drawer-content>
     </h-drawer>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>

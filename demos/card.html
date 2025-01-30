@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto gap-2 p-4">
+            <h-card class="w-[380px]">
+                <h-card-header>
+                    <h-card-title>Notifications</h-card-title>
+                    <h-card-description>You have 3 unread messages.</h-card-description>
+                </h-card-header>
+                <h-card-content class="grid gap-4">
+                    <div class="flex items-center space-x-4 rounded-md border p-4">
+                        <i-bell-ring></i-bell-ring>
+                        <div class="flex-1 space-y-1">
+                            <p class="text-sm font-medium leading-none">Push Notifications</p>
+                            <p class="text-sm text-muted-foreground">Send notifications to device.</p>
+                        </div>
+                        <h-switch></h-switch>
+                    </div>
+                    <div>
+                        <div
+                            v-for="(notification, index) in notifications"
+                            :key="index"
+                            class="mb-4 grid grid-cols-[25px_minmax(0,1fr)] items-start pb-4 last:mb-0 last:pb-0"
+                        >
+                            <span class="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500"></span>
+                            <div class="space-y-1">
+                                <p class="text-sm font-medium leading-none">{{ notification.title }}</p>
+                                <p class="text-sm text-muted-foreground">{{ notification.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </h-card-content>
+                <h-card-footer>
+                    <h-button class="w-full"><i-check class="mr-2 h-4 w-4"></i-check>Mark all as read</h-button>
+                </h-card-footer>
+            </h-card>
+
+            <h-card>
+                <h-card-header class="flex flex-row items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <h-avatar>
+                            <h-avatar-image src="https://www.codbex.com/logo.svg" alt="Image"></h-avatar-image>
+                            <h-avatar-fallback>OM</h-avatar-fallback>
+                        </h-avatar>
+                        <div>
+                            <p class="text-sm font-medium leading-none">Sofia Davis</p>
+                            <p class="text-sm text-muted-foreground">m@example.com</p>
+                        </div>
+                    </div>
+                    <h-tooltip-provider>
+                        <h-tooltip :delay-duration="200">
+                            <h-tooltip-trigger as-child>
+                                <h-button
+                                    variant="outline"
+                                    class="rounded-full p-2.5 flex items-center justify-center"
+                                    @click="open = true"
+                                >
+                                    <i-plus class="w-4 h-4"></i-plus>
+                                </h-button>
+                            </h-tooltip-trigger>
+                            <h-tooltip-content :side-offset="10"> New message </h-tooltip-content>
+                        </h-tooltip>
+                    </h-tooltip-provider>
+                </h-card-header>
+                <h-card-content>
+                    <div class="space-y-4">
+                        <div
+                            v-for="(message, index) in messages"
+                            :key="index"
+                            class="flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm"
+                            :class="message.role === 'user' ? 'ml-auto bg-primary text-primary-foreground' : 'bg-muted'"
+                        >
+                            {{ message.content }}
+                        </div>
+                    </div>
+                </h-card-content>
+                <h-card-footer>
+                    <form class="flex w-full items-center space-x-2" @submit.prevent="() => submitPrevent()">
+                        <h-input v-model="input" placeholder="Type a message..." class="flex-1"></h-input>
+                        <h-button class="p-2.5 flex items-center justify-center" :disabled="inputLength === 0">
+                            <i-send class="w-4 h-4"></i-send>
+                            <span class="sr-only">Send</span>
+                        </h-button>
+                    </form>
+                </h-card-footer>
+            </h-card>
+
+            <h-dialog v-model:open="open">
+                <h-dialog-content class="gap-0 p-0 outline-none">
+                    <h-dialog-header class="px-4 pb-4 pt-5">
+                        <h-dialog-title>New message</h-dialog-title>
+                        <h-dialog-description>
+                            Invite a user to this thread. This will create a new group message.
+                        </h-dialog-description>
+                    </h-dialog-header>
+                    <h-command
+                        class="overflow-hidden rounded-t-none border-t"
+                        :filter-function="(list, search) => list.filter(l => l.name.toLowerCase().includes(search.toLowerCase()))"
+                    >
+                        <h-command-input placeholder="Search user..."></h-command-input>
+                        <h-command-list>
+                            <h-command-empty>No users found.</h-command-empty>
+                            <h-command-group class="p-2">
+                                <h-command-item
+                                    v-for="user in users"
+                                    :key="user.email"
+                                    :value="user"
+                                    class="flex items-center px-2"
+                                    @select="() => commandSelect(user)"
+                                >
+                                    <h-avatar>
+                                        <h-avatar-image :src="user.avatar" alt="Image"></h-avatar-image>
+                                        <h-avatar-fallback>{{ user.name[0] }}</h-avatar-fallback>
+                                    </h-avatar>
+                                    <div class="ml-2">
+                                        <p class="text-sm font-medium leading-none">{{ user.name }}</p>
+                                        <p class="text-sm text-muted-foreground">{{ user.email }}</p>
+                                    </div>
+                                    <i-check
+                                        v-if="selectedUsers.includes(user)"
+                                        class="ml-auto flex h-5 w-5 text-primary"
+                                    ></i-check>
+                                </h-command-item>
+                            </h-command-group>
+                        </h-command-list>
+                    </h-command>
+                    <h-dialog-footer class="flex items-center border-t p-4 sm:justify-between">
+                        <div v-if="selectedUsers.length > 0" class="flex -space-x-2 overflow-hidden">
+                            <h-avatar
+                                v-for="user in selectedUsers"
+                                :key="user.email"
+                                class="inline-block border-2 border-background"
+                            >
+                                <h-avatar-image :src="user.avatar"></h-avatar-image>
+                                <h-avatar-fallback>{{ user.name[0] }}</h-avatar-fallback>
+                            </h-avatar>
+                        </div>
+
+                        <p v-else class="text-sm text-muted-foreground">Select users to add to this thread.</p>
+
+                        <h-button :disabled="selectedUsers.length < 2" @click="open = false"> Continue </h-button>
+                    </h-dialog-footer>
+                </h-dialog-content>
+            </h-dialog>
+
+            <h-card class="w-[350px]">
+                <h-card-header>
+                    <h-card-title>Create project</h-card-title>
+                    <h-card-description>Deploy your new project in one-click.</h-card-description>
+                </h-card-header>
+                <h-card-content>
+                    <form>
+                        <div class="grid items-center w-full gap-4">
+                            <div class="flex flex-col gap-2 space-y-1.5">
+                                <h-label for="name">Name</h-label>
+                                <h-input id="name" placeholder="Name of your project"></h-input>
+                            </div>
+                            <div class="flex flex-col gap-2 space-y-1.5">
+                                <h-label for="framework">Framework</h-label>
+                                <h-select>
+                                    <h-select-trigger id="framework">
+                                        <h-select-value placeholder="Select"></h-select-value>
+                                    </h-select-trigger>
+                                    <h-select-content position="popper">
+                                        <h-select-item value="nuxt"> Nuxt </h-select-item>
+                                        <h-select-item value="next"> Next.js </h-select-item>
+                                        <h-select-item value="sveltekit"> SvelteKit </h-select-item>
+                                        <h-select-item value="astro"> Astro </h-select-item>
+                                    </h-select-content>
+                                </h-select>
+                            </div>
+                        </div>
+                    </form>
+                </h-card-content>
+                <h-card-footer class="flex justify-between px-6 pb-6">
+                    <h-button variant="outline">Cancel</h-button>
+                    <h-button>Deploy</h-button>
+                </h-card-footer>
+            </h-card>
+        </div>
+        <script type="module">
+            import { useMediaQuery } from '@vueuse/core'
+            import { BellRing, Check, Plus, Send } from 'lucide-vue-next'
+            const items = [
+                { href: '#', label: 'Home' },
+                { href: '#', label: 'Documentation' },
+                { href: '#', label: 'Building Your Application' },
+                { href: '#', label: 'Data Fetching' },
+                { label: 'Caching and Revalidating' },
+            ]
+            const input = Vue.ref('')
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        notifications: [
+                            {
+                                title: 'Your call has been confirmed.',
+                                description: '1 hour ago',
+                            },
+                            {
+                                title: 'You have a new message!',
+                                description: '1 hour ago',
+                            },
+                            {
+                                title: 'Your subscription is expiring soon!',
+                                description: '2 hours ago',
+                            },
+                        ],
+                        input: input,
+                        inputLength: Vue.computed(() => input.value.trim().length),
+                        users: Vue.ref([
+                            {
+                                name: 'Olivia Martin',
+                                email: 'm@example.com',
+                                avatar: 'https://www.codbex.com/logo.svg',
+                            },
+                            {
+                                name: 'Isabella Nguyen',
+                                email: 'isabella.nguyen@email.com',
+                                avatar: 'https://www.codbex.com/logo.svg',
+                            },
+                            {
+                                name: 'Emma Wilson',
+                                email: 'emma@example.com',
+                                avatar: 'https://www.codbex.com/logo.svg',
+                            },
+                            {
+                                name: 'Jackson Lee',
+                                email: 'lee@example.com',
+                                avatar: 'https://www.codbex.com/logo.svg',
+                            },
+                            {
+                                name: 'William Kim',
+                                email: 'will@email.com',
+                                avatar: 'https://www.codbex.com/logo.svg',
+                            },
+                        ]),
+                        messages: Vue.ref([
+                            { role: 'agent', content: 'Hi, how can I help you today?' },
+                            { role: 'user', content: "Hey, I'm having trouble with my account." },
+                            { role: 'agent', content: 'What seems to be the problem?' },
+                            { role: 'user', content: "I can't log in." },
+                        ]),
+                        open: Vue.ref(false),
+                        selectedUsers: Vue.ref([]),
+                    }
+                },
+                methods: {
+                    submitPrevent() {
+                        if (this.inputLength === 0) return
+                        this.messages.push({
+                            role: 'user',
+                            content: this.input,
+                        })
+                    },
+                    commandSelect(user) {
+                        const index = this.selectedUsers.findIndex((u) => u === user)
+                        if (index !== -1) {
+                            this.selectedUsers.splice(index, 1)
+                        } else {
+                            this.selectedUsers.push(user)
+                        }
+                    },
+                },
+            })
+            app.use(Harmonia)
+            app.component('IBellRing', BellRing)
+            app.component('ICheck', Check)
+            app.component('IPlus', Plus)
+            app.component('ISend', Send)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

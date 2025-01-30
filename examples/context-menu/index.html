@@ -1,79 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>codbex-harmonia Example</title>
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>codbex-harmonia Example</title>
-  <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
-  <script src="/dist/codbex-harmonia.umd.js"></script>
-  <link rel="stylesheet" href="/dist/style.css" />
-</head>
+    <body style="margin: 2em">
+        <div id="app" class="container">
+            <h1>Context Menu</h1>
 
-<body style="margin: 2em;">
+            <h-context-menu>
+                <h-context-menu-trigger
+                    class="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm"
+                >
+                    Right click here
+                </h-context-menu-trigger>
+                <h-context-menu-content class="w-64">
+                    <h-context-menu-item inset>
+                        Back
+                        <h-context-menu-shortcut>⌘[</h-context-menu-shortcut>
+                    </h-context-menu-item>
+                    <h-context-menu-item inset disabled>
+                        Forward
+                        <h-context-menu-shortcut>⌘]</h-context-menu-shortcut>
+                    </h-context-menu-item>
+                    <h-context-menu-item inset>
+                        Reload
+                        <h-context-menu-shortcut>⌘R</h-context-menu-shortcut>
+                    </h-context-menu-item>
+                    <h-context-menu-sub>
+                        <h-context-menu-sub-trigger inset> More Tools </h-context-menu-sub-trigger>
+                        <h-context-menu-sub-content class="w-48">
+                            <h-context-menu-item>
+                                Save Page As...
+                                <h-context-menu-shortcut>⇧⌘S</h-context-menu-shortcut>
+                            </h-context-menu-item>
+                            <h-context-menu-item>Create Shortcut...</h-context-menu-item>
+                            <h-context-menu-item>Name Window...</h-context-menu-item>
+                            <h-context-menu-separator></h-context-menu-separator>
+                            <h-context-menu-item>Developer Tools</h-context-menu-item>
+                        </h-context-menu-sub-content>
+                    </h-context-menu-sub>
+                    <h-context-menu-separator></h-context-menu-separator>
+                    <h-context-menu-checkbox-item checked>
+                        Show Bookmarks Bar
+                        <h-context-menu-shortcut>⌘⇧B</h-context-menu-shortcut>
+                    </h-context-menu-checkbox-item>
+                    <h-context-menu-checkbox-item>Show Full URLs</h-context-menu-checkbox-item>
+                    <h-context-menu-separator></h-context-menu-separator>
+                    <h-context-menu-radio-group model-value="pedro">
+                        <h-context-menu-label inset> People </h-context-menu-label>
+                        <h-context-menu-separator></h-context-menu-separator>
+                        <h-context-menu-radio-item value="pedro"> Pedro Duarte </h-context-menu-radio-item>
+                        <h-context-menu-radio-item value="colm"> Colm Tuite </h-context-menu-radio-item>
+                    </h-context-menu-radio-group>
+                </h-context-menu-content>
+            </h-context-menu>
+        </div>
 
-  <div id="app" class="container">
-    <h1>Context Menu</h1>
-
-    <h-context-menu>
-      <h-context-menu-trigger
-        class="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
-        Right click here
-      </h-context-menu-trigger>
-      <h-context-menu-content class="w-64">
-        <h-context-menu-item inset>
-          Back
-          <h-context-menu-shortcut>⌘[</h-context-menu-shortcut>
-        </h-context-menu-item>
-        <h-context-menu-item inset disabled>
-          Forward
-          <h-context-menu-shortcut>⌘]</h-context-menu-shortcut>
-        </h-context-menu-item>
-        <h-context-menu-item inset>
-          Reload
-          <h-context-menu-shortcut>⌘R</h-context-menu-shortcut>
-        </h-context-menu-item>
-        <h-context-menu-sub>
-          <h-context-menu-sub-trigger inset>
-            More Tools
-          </h-context-menu-sub-trigger>
-          <h-context-menu-sub-content class="w-48">
-            <h-context-menu-item>
-              Save Page As...
-              <h-context-menu-shortcut>⇧⌘S</h-context-menu-shortcut>
-            </h-context-menu-item>
-            <h-context-menu-item>Create Shortcut...</h-context-menu-item>
-            <h-context-menu-item>Name Window...</h-context-menu-item>
-            <h-context-menu-separator></h-context-menu-separator>
-            <h-context-menu-item>Developer Tools</h-context-menu-item>
-          </h-context-menu-sub-content>
-        </h-context-menu-sub>
-        <h-context-menu-separator></h-context-menu-separator>
-        <h-context-menu-checkbox-item checked>
-          Show Bookmarks Bar
-          <h-context-menu-shortcut>⌘⇧B</h-context-menu-shortcut>
-        </h-context-menu-checkbox-item>
-        <h-context-menu-checkbox-item>Show Full URLs</h-context-menu-checkbox-item>
-        <h-context-menu-separator></h-context-menu-separator>
-        <h-context-menu-radio-group model-value="pedro">
-          <h-context-menu-label inset>
-            People
-          </h-context-menu-label>
-          <h-context-menu-separator></h-context-menu-separator>
-          <h-context-menu-radio-item value="pedro">
-            Pedro Duarte
-          </h-context-menu-radio-item>
-          <h-context-menu-radio-item value="colm">
-            Colm Tuite
-          </h-context-menu-radio-item>
-        </h-context-menu-radio-group>
-      </h-context-menu-content>
-    </h-context-menu>
-
-  </div>
-
-  <br /><br /><textarea readonly rows="53"
-    style="background:#fafafa; border:none; resize:none; outline:none; width:100%;">
+        <br /><br /><textarea
+            readonly
+            rows="53"
+            style="background: #fafafa; border: none; resize: none; outline: none; width: 100%"
+        >
     <h-context-menu>
       <h-context-menu-trigger class="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
         Right click here
@@ -127,13 +120,12 @@
         </h-context-menu-radio-group>
       </h-context-menu-content>
     </h-context-menu>
-  </textarea>
+  </textarea
+        >
 
-  <br /><br /><button onclick="history.back()">&lt; Go Back</button>
+        <br /><br /><button onclick="history.back()">&lt; Go Back</button>
 
-  <!-- Import JavaScript file as ES6 module -->
-  <script type="module" src="app.js"></script>
-
-</body>
-
+        <!-- Import JavaScript file as ES6 module -->
+        <script type="module" src="app.js"></script>
+    </body>
 </html>
