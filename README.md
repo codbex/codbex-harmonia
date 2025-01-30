@@ -14,4 +14,10 @@ Run the sample page:
 
         npm run dev
 
-Open the browser at: http://localhost:5173/
+For demos:
+
+Open the browser at: http://localhost:5173/demos/
+
+For examples:
+
+Open the browser at: http://localhost:5173/examples/
