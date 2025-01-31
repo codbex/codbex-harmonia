@@ -23,13 +23,19 @@
 
             <div v-else>Loading...</div>
 
-            <h-auto-form class="w-2/3 space-y-6" :schema="schema2" @submit="onSubmit2">
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Array Schema</div>
+
+            <h-auto-form class="w-2/3 space-y-6" :schema="schemaArray" @submit="onSubmitArray">
                 <h-button type="submit">Submit</h-button>
             </h-auto-form>
 
-            <!-- <h-auto-form
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">
+                Complex Config With Template Slots
+            </div>
+
+            <h-auto-form
                 class="w-2/3 space-y-6"
-                :schema="schema3"
+                :schema="schemaComplex"
                 :field-config="{
                     password: {
                         label: 'Your secure password',
@@ -70,36 +76,43 @@
                         component: 'file',
                     },
                 }"
-                @submit="onSubmit3"
+                @submit="onSubmitComplex"
             >
                 <template #acceptTerms="slotProps">
-                    <h-auto-form-field v-bind="slotProps" />
+                    <h-auto-form-field v-bind="slotProps"></h-auto-form-field>
                     <div class="!mt-2 text-sm">
-                        I agree to the <button class="text-primary underline">terms and conditions</button>.
+                        I agree to the
+                        <button class="text-primary underline">terms and conditions</button>.
                     </div>
                 </template>
 
                 <template #customParent="slotProps">
                     <div class="flex items-end space-x-2">
-                        <h-auto-form-field v-bind="slotProps" class="w-full" />
+                        <h-auto-form-field v-bind="slotProps" class="w-full"></h-auto-form-field>
                         <h-button type="button">Check</h-button>
                     </div>
                 </template>
 
                 <h-button type="submit">Submit</h-button>
-            </h-auto-form> -->
-
-            <h-auto-form class="w-2/3 space-y-6" :schema="schema4" @submit="onSubmit4">
-                <h-button type="submit"> Submit </h-button>
             </h-auto-form>
 
-            <h-auto-form class="w-2/3 space-y-6" :schema="schema5" :form="form" @submit="onSubmit5">
-                <h-button type="submit"> Submit </h-button>
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Password Match</div>
+
+            <h-auto-form class="w-2/3 space-y-6" :schema="schemaPwMatch" @submit="onSubmitPwMatch">
+                <h-button type="submit">Submit</h-button>
             </h-auto-form>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">With useForm</div>
+
+            <h-auto-form class="w-2/3 space-y-6" :schema="schemaUseForm" :form="form" @submit="onSubmitUseForm">
+                <h-button type="submit">Submit</h-button>
+            </h-auto-form>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">With Dependencies</div>
 
             <h-auto-form
                 class="w-2/3 space-y-6"
-                :schema="schema6"
+                :schema="schemaDependencies"
                 :field-config="{
                     age: {
                         description:
@@ -118,14 +131,40 @@
                     },
                 }"
                 :dependencies="dependencies"
-                @submit="onSubmit6"
+                @submit="onSubmitDependencies"
             >
-                <h-button type="submit"> Submit </h-button>
+                <h-button type="submit">Submit</h-button>
             </h-auto-form>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">No Label</div>
 
             <h-auto-form
                 class="w-2/3 space-y-6"
-                :schema="schema7"
+                :schema="schemaNoLabel"
+                :field-config="{
+                    username: {
+                        hideLabel: true,
+                    },
+                }"
+                @submit="onSubmitNoLabel"
+            >
+                <template #username="slotProps">
+                    <div class="flex items-start gap-3">
+                        <div class="flex-1">
+                            <h-auto-form-field v-bind="slotProps" />
+                        </div>
+                        <div>
+                            <h-button type="submit">Update</h-button>
+                        </div>
+                    </div>
+                </template>
+            </h-auto-form>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">With Sub Object</div>
+
+            <h-auto-form
+                class="w-2/3 space-y-6"
+                :schema="schemaSubObject"
                 :field-config="{
                 subObject: {
                     numberField: {
@@ -135,23 +174,23 @@
                     },
                 },
                 }"
-                @submit="onSubmit7"
+                @submit="onSubmitSubObject"
             >
-                <h-button type="submit"> Submit </h-button>
+                <h-button type="submit">Submit</h-button>
             </h-auto-form>
         </div>
         <script type="module">
             import * as z from 'zod'
             import { useForm } from 'vee-validate'
             import { toTypedSchema } from '@vee-validate/zod'
-            let schema5 = z.object({
+            let schemaUseForm = z.object({
                 username: z.string(),
             })
             const app = Vue.createApp({
                 data() {
                     return {
                         schema: Vue.shallowRef(null),
-                        schema2: z.object({
+                        schemaArray: z.object({
                             guestListName: z.string(),
                             invitedGuests: z
                                 .array(
@@ -162,7 +201,7 @@
                                 )
                                 .describe('Guests invited to the party'),
                         }),
-                        schema3: z.object({
+                        schemaComplex: z.object({
                             username: z
                                 .string({
                                     required_error: 'Username is required.',
@@ -220,7 +259,7 @@
 
                             file: z.string().optional(),
                         }),
-                        schema4: z
+                        schemaPwMatch: z
                             .object({
                                 password: z.string(),
                                 confirm: z.string(),
@@ -229,11 +268,14 @@
                                 message: 'Passwords must match.',
                                 path: ['confirm'],
                             }),
-                        schema5: schema5,
+                        schemaUseForm: schemaUseForm,
                         form: useForm({
-                            validationSchema: toTypedSchema(schema5),
+                            validationSchema: toTypedSchema(schemaUseForm),
                         }),
-                        schema6: z.object({
+                        schemaNoLabel: z.object({
+                            username: z.string(),
+                        }),
+                        schemaDependencies: z.object({
                             age: z.number(),
                             parentsAllowed: z.boolean().optional(),
                             vegetarian: z.boolean().optional(),
@@ -260,7 +302,7 @@
                                 options: ['Pasta', 'Salad'],
                             },
                         ],
-                        schema7: z.object({
+                        schemaSubObject: z.object({
                             subObject: z.object({
                                 subField: z.string().optional().default('Sub Field'),
                                 numberField: z.number().optional().default(1),
@@ -291,7 +333,7 @@
                             ),
                         })
                     },
-                    onSubmit2(values) {
+                    onSubmitArray(values) {
                         Harmonia.toast({
                             title: 'You submitted the following values:',
                             description: Vue.h(
@@ -301,7 +343,7 @@
                             ),
                         })
                     },
-                    onSubmit3(values) {
+                    onSubmitComplex(values) {
                         Harmonia.toast({
                             title: 'You submitted the following values:',
                             description: Vue.h(
@@ -311,7 +353,7 @@
                             ),
                         })
                     },
-                    onSubmit4(values) {
+                    onSubmitPwMatch(values) {
                         Harmonia.toast({
                             title: 'You submitted the following values:',
                             description: Vue.h(
@@ -321,7 +363,7 @@
                             ),
                         })
                     },
-                    onSubmit5(values) {
+                    onSubmitUseForm(values) {
                         Harmonia.toast({
                             title: 'You submitted the following values:',
                             description: Vue.h(
@@ -331,7 +373,7 @@
                             ),
                         })
                     },
-                    onSubmit6(values) {
+                    onSubmitDependencies(values) {
                         Harmonia.toast({
                             title: 'You submitted the following values:',
                             description: Vue.h(
@@ -341,7 +383,17 @@
                             ),
                         })
                     },
-                    onSubmit7(values) {
+                    onSubmitNoLabel(values) {
+                        Harmonia.toast({
+                            title: 'You submitted the following values:',
+                            description: Vue.h(
+                                'pre',
+                                { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
+                                Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
+                            ),
+                        })
+                    },
+                    onSubmitSubObject(values) {
                         Harmonia.toast({
                             title: 'You submitted the following values:',
                             description: Vue.h(

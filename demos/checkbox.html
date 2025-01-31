@@ -27,6 +27,8 @@
                 </label>
             </div>
 
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Disabled</div>
+
             <div class="items-top flex space-x-2">
                 <h-checkbox id="terms1" disabled></h-checkbox>
                 <label
@@ -36,6 +38,8 @@
                     Accept terms and conditions
                 </label>
             </div>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">With Text</div>
 
             <div class="items-top flex gap-x-2">
                 <h-checkbox id="terms1"></h-checkbox>
@@ -49,6 +53,8 @@
                     <p class="text-sm text-muted-foreground">You agree to our Terms of Service and Privacy Policy.</p>
                 </div>
             </div>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Form Multiple</div>
 
             <form @submit="onSubmit">
                 <h-form-field name="items">
@@ -72,11 +78,11 @@
                             <h-form-item class="flex flex-row items-start space-x-3 space-y-0">
                                 <h-form-control>
                                     <h-checkbox
-                                        :checked="value.includes(item.id)"
+                                        :checked="value && value.includes(item.id)"
                                         @update:checked="handleChange"
                                     ></h-checkbox>
                                 </h-form-control>
-                                <h-form-label class="font-normal">{{ item.label }}</h-form-label>
+                                <h-form-label class="font-normal"> {{ item.label }} </h-form-label>
                             </h-form-item>
                         </h-form-field>
                         <h-form-message></h-form-message>
@@ -84,9 +90,11 @@
                 </h-form-field>
 
                 <div class="flex justify-start mt-4">
-                    <h-button type="submit">Submit</h-button>
+                    <h-button type="submit"> Submit </h-button>
                 </div>
             </form>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Form Single</div>
 
             <form class="space-y-6" @submit="onSubmitSingle">
                 <h-form-field v-slot="{ value, handleChange }" type="checkbox" name="mobile">
@@ -165,7 +173,6 @@
                                 label: 'Documents',
                             },
                         ],
-                        value: Vue.ref(false),
                     }
                 },
                 methods: {
