@@ -20,7 +20,7 @@
             <h-breadcrumb>
                 <h-breadcrumb-list>
                     <h-breadcrumb-item>
-                        <h-breadcrumb-link href="/">Home</h-breadcrumb-link>
+                        <h-breadcrumb-link href="#home">Home</h-breadcrumb-link>
                     </h-breadcrumb-item>
                     <h-breadcrumb-separator></h-breadcrumb-separator>
                     <h-breadcrumb-item>
@@ -47,10 +47,34 @@
                 </h-breadcrumb-list>
             </h-breadcrumb>
 
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Custom separator</div>
+
             <h-breadcrumb>
                 <h-breadcrumb-list>
                     <h-breadcrumb-item>
-                        <h-breadcrumb-link href="/">Home</h-breadcrumb-link>
+                        <h-breadcrumb-link href="#home">Home</h-breadcrumb-link>
+                    </h-breadcrumb-item>
+                    <h-breadcrumb-separator>
+                        <i-slash></i-slash>
+                    </h-breadcrumb-separator>
+                    <h-breadcrumb-item>
+                        <h-breadcrumb-link href="#">Components</h-breadcrumb-link>
+                    </h-breadcrumb-item>
+                    <h-breadcrumb-separator>
+                        <i-slash></i-slash>
+                    </h-breadcrumb-separator>
+                    <h-breadcrumb-item>
+                        <h-breadcrumb-page>Breadcrumb</h-breadcrumb-page>
+                    </h-breadcrumb-item>
+                </h-breadcrumb-list>
+            </h-breadcrumb>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Dropdown</div>
+
+            <h-breadcrumb>
+                <h-breadcrumb-list>
+                    <h-breadcrumb-item>
+                        <h-breadcrumb-link href="#home">Home</h-breadcrumb-link>
                     </h-breadcrumb-item>
                     <h-breadcrumb-separator>
                         <i-slash></i-slash>
@@ -77,11 +101,13 @@
                 </h-breadcrumb-list>
             </h-breadcrumb>
 
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Collapsed</div>
+
             <h-breadcrumb>
                 <h-breadcrumb-list>
                     <h-breadcrumb-item>
                         <h-breadcrumb-link as-child>
-                            <a href="/">Home</a>
+                            <a href="#home">Home</a>
                         </h-breadcrumb-link>
                     </h-breadcrumb-item>
                     <h-breadcrumb-separator></h-breadcrumb-separator>
@@ -101,11 +127,13 @@
                 </h-breadcrumb-list>
             </h-breadcrumb>
 
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Link component</div>
+
             <h-breadcrumb>
                 <h-breadcrumb-list>
                     <h-breadcrumb-item>
                         <h-breadcrumb-link>
-                            <a href="/">Home</a>
+                            <a href="#home">Home</a>
                         </h-breadcrumb-link>
                     </h-breadcrumb-item>
                     <h-breadcrumb-separator></h-breadcrumb-separator>
@@ -121,10 +149,12 @@
                 </h-breadcrumb-list>
             </h-breadcrumb>
 
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Responsive</div>
+
             <h-breadcrumb>
                 <h-breadcrumb-list>
                     <h-breadcrumb-item>
-                        <h-breadcrumb-link href="{items[0].href}">{{ firstLabel }} </h-breadcrumb-link>
+                        <h-breadcrumb-link href="{items[0].href}">{{ firstLabel }}</h-breadcrumb-link>
                     </h-breadcrumb-item>
                     <h-breadcrumb-separator></h-breadcrumb-separator>
                     <h-breadcrumb-item v-if="items.length >itemsToDisplay">
@@ -134,7 +164,7 @@
                             </h-dropdown-menu-trigger>
                             <h-dropdown-menu-content align="start">
                                 <h-dropdown-menu-item v-for="item of allButLastTwoItems" :key="item.label">
-                                    <a :href="item.href || '#'">{{ item.label }} </a>
+                                    <a :href="item.href || '#'">{{ item.label }}</a>
                                 </h-dropdown-menu-item>
                             </h-dropdown-menu-content>
                         </h-dropdown-menu>
@@ -145,7 +175,7 @@
                             <h-drawer-content>
                                 <h-drawer-header class="text-left">
                                     <h-drawer-title>Navigate to</h-drawer-title>
-                                    <h-drawer-description>Select a page to navigate to. </h-drawer-description>
+                                    <h-drawer-description>Select a page to navigate to.</h-drawer-description>
                                 </h-drawer-header>
                                 <div class="grid gap-1 px-4">
                                     <a
@@ -159,7 +189,7 @@
                                 </div>
                                 <h-drawer-footer class="pt-4">
                                     <h-drawer-close as-child>
-                                        <h-button variant="outline">Close </h-button>
+                                        <h-button variant="outline">Close</h-button>
                                     </h-drawer-close>
                                 </h-drawer-footer>
                             </h-drawer-content>
@@ -168,32 +198,12 @@
                     <h-breadcrumb-separator v-if="items.length >itemsToDisplay"></h-breadcrumb-separator>
                     <h-breadcrumb-item v-for="item of remainingItems" :key="item.label">
                         <h-breadcrumb-link v-if="item.href" as-child class="max-w-20 truncate md:max-w-none">
-                            <a :href="item.href">{{ item.label }} </a>
+                            <a :href="item.href">{{ item.label }}</a>
                         </h-breadcrumb-link>
                         <h-breadcrumb-separator v-if="item.href"></h-breadcrumb-separator>
                         <h-breadcrumb-page v-else class="max-w-20 truncate md:max-w-none">
                             {{ item.label }}
                         </h-breadcrumb-page>
-                    </h-breadcrumb-item>
-                </h-breadcrumb-list>
-            </h-breadcrumb>
-
-            <h-breadcrumb>
-                <h-breadcrumb-list>
-                    <h-breadcrumb-item>
-                        <h-breadcrumb-link href="/">Home</h-breadcrumb-link>
-                    </h-breadcrumb-item>
-                    <h-breadcrumb-separator>
-                        <i-slash></i-slash>
-                    </h-breadcrumb-separator>
-                    <h-breadcrumb-item>
-                        <h-breadcrumb-link href="#">Components</h-breadcrumb-link>
-                    </h-breadcrumb-item>
-                    <h-breadcrumb-separator>
-                        <i-slash></i-slash>
-                    </h-breadcrumb-separator>
-                    <h-breadcrumb-item>
-                        <h-breadcrumb-page>Breadcrumb</h-breadcrumb-page>
                     </h-breadcrumb-item>
                 </h-breadcrumb-list>
             </h-breadcrumb>

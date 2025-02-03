@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <h-popover v-model:open="open">
+                <h-popover-trigger as-child>
+                    <h-button variant="outline" role="combobox" :aria-expanded="open" class="w-[200px] justify-between">
+                        {{ value ? frameworks.find((framework) => framework.value === value)?.label : `Select
+                        framework...` }}
+                        <i-chevrons-up-down class="ml-2 h-4 w-4 shrink-0 opacity-50"></i-chevrons-up-down>
+                    </h-button>
+                </h-popover-trigger>
+                <h-popover-content class="w-[200px] p-0">
+                    <h-command>
+                        <h-command-input class="h-9" placeholder="Search framework..."></h-command-input>
+                        <h-command-empty>No framework found.</h-command-empty>
+                        <h-command-list>
+                            <h-command-group>
+                                <h-command-item
+                                    v-for="framework in frameworks"
+                                    :key="framework.value"
+                                    :value="framework.value"
+                                    @select="(ev) => {
+                                        if (typeof ev.detail.value === 'string') {
+                                            value = ev.detail.value
+                                        }
+                                        open = false
+                                    }"
+                                >
+                                    {{ framework.label }}
+                                    <i-check
+                                        class="ml-auto h-4 w-4"
+                                        :class="value === framework.value ? 'opacity-100' : 'opacity-0'"
+                                    ></i-check>
+                                </h-command-item>
+                            </h-command-group>
+                        </h-command-list>
+                    </h-command>
+                </h-popover-content>
+            </h-popover>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Dropdown Menu</div>
+
+            <div
+                class="flex w-full flex-col items-start justify-between rounded-md border px-4 py-3 sm:flex-row sm:items-center"
+            >
+                <p class="text-sm font-medium leading-none">
+                    <span class="mr-2 rounded-lg bg-primary px-2 py-1 text-xs text-primary-foreground">
+                        {{ labelRef }}
+                    </span>
+                    <span class="text-muted-foreground">Create a new project</span>
+                </p>
+                <h-dropdown-menu v-model:open="openDropdown">
+                    <h-dropdown-menu-trigger as-child>
+                        <h-button variant="ghost" size="sm">
+                            <i-more-horizontal></i-more-horizontal>
+                        </h-button>
+                    </h-dropdown-menu-trigger>
+                    <h-dropdown-menu-content align="end" class="w-[200px]">
+                        <h-dropdown-menu-label>Actions</h-dropdown-menu-label>
+                        <h-dropdown-menu-group>
+                            <h-dropdown-menu-item>
+                                <i-user class="mr-2 h-4 w-4"></i-user>
+                                Assign to...
+                            </h-dropdown-menu-item>
+                            <h-dropdown-menu-item>
+                                <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+                                Set due date...
+                            </h-dropdown-menu-item>
+                            <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                            <h-dropdown-menu-sub>
+                                <h-dropdown-menu-sub-trigger>
+                                    <i-tags class="mr-2 h-4 w-4"></i-tags>
+                                    Apply label
+                                </h-dropdown-menu-sub-trigger>
+                                <h-dropdown-menu-sub-content class="p-0">
+                                    <h-command>
+                                        <i-command-input placeholder="Filter label..." auto-focus></i-command-input>
+                                        <h-command-list>
+                                            <h-command-empty>No label found.</h-command-empty>
+                                            <h-command-group>
+                                                <h-command-item
+                                                    v-for="label in labels"
+                                                    :key="label"
+                                                    :value="label"
+                                                    @select="(ev) => {
+                                                        labelRef = `${ev.detail.value}`
+                                                        open = false
+                                                    }"
+                                                >
+                                                    {{ label }}
+                                                </h-command-item>
+                                            </h-command-group>
+                                        </h-command-list>
+                                    </h-command>
+                                </h-dropdown-menu-sub-content>
+                            </h-dropdown-menu-sub>
+                            <h-dropdown-menu-separator></h-dropdown-menu-separator>
+                            <h-dropdown-menu-item class="text-red-600">
+                                <i-trash class="mr-2 h-4 w-4"></i-trash>
+                                Delete
+                                <h-dropdown-menu-shortcut>⌘⌫</h-dropdown-menu-shortcut>
+                            </h-dropdown-menu-item>
+                        </h-dropdown-menu-group>
+                    </h-dropdown-menu-content>
+                </h-dropdown-menu>
+            </div>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">In Form</div>
+
+            <form class="space-y-6" @submit="onSubmit">
+                <h-form-field name="language">
+                    <h-form-item class="flex flex-col">
+                        <h-form-label>Language</h-form-label>
+                        <h-popover>
+                            <h-popover-trigger as-child>
+                                <h-form-control>
+                                    <h-button
+                                        variant="outline"
+                                        role="combobox"
+                                        class="w-[200px] justify-between"
+                                        :class="values.language ? 'text-muted-foreground' : ''"
+                                    >
+                                        {{ values.language ? languages.find( (language) => language.value ===
+                                        values.language, )?.label : 'Select language...' }}
+                                        <i-chevrons-up-down
+                                            class="ml-2 h-4 w-4 shrink-0 opacity-50"
+                                        ></i-chevrons-up-down>
+                                    </h-button>
+                                </h-form-control>
+                            </h-popover-trigger>
+                            <h-popover-content class="w-[200px] p-0">
+                                <h-command>
+                                    <h-command-input placeholder="Search language..."></h-command-input>
+                                    <h-command-empty>Nothing found.</h-command-empty>
+                                    <h-command-list>
+                                        <h-command-group>
+                                            <h-command-item
+                                                v-for="language in languages"
+                                                :key="language.value"
+                                                :value="language.label"
+                                                @select="() => {
+                                                    setFieldValue('language', language.value)
+                                                }"
+                                            >
+                                                <i-check
+                                                    class="mr-2 h-4 w-4"
+                                                    :class="language.value === values.language ? 'opacity-100' : 'opacity-0'"
+                                                ></i-check>
+                                                {{ language.label }}
+                                            </h-command-item>
+                                        </h-command-group>
+                                    </h-command-list>
+                                </h-command>
+                            </h-popover-content>
+                        </h-popover>
+                        <h-form-description>
+                            This is the language that will be used in the dashboard.
+                        </h-form-description>
+                        <h-form-message></h-form-message>
+                    </h-form-item>
+                </h-form-field>
+
+                <h-button type="submit"> Submit </h-button>
+            </form>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Form</div>
+
+            <div class="flex items-center space-x-4">
+                <p class="text-sm text-muted-foreground">Status</p>
+                <h-popover v-model:open="openPopover">
+                    <h-popover-trigger as-child>
+                        <h-button variant="outline" size="sm" class="w-[150px] justify-start">
+                            <template v-if="selectedStatus">
+                                <component :is="selectedStatus?.icon" class="mr-2 h-4 w-4 shrink-0"></component>
+                                {{ selectedStatus?.label }}
+                            </template>
+                            <template v-else> + Set status </template>
+                        </h-button>
+                    </h-popover-trigger>
+                    <h-popover-content class="p-0" side="right" align="start">
+                        <h-command>
+                            <h-command-input placeholder="Change status..."></h-command-input>
+                            <h-command-list>
+                                <h-command-empty>No results found.</h-command-empty>
+                                <h-command-group>
+                                    <h-command-item
+                                        v-for="status in statuses"
+                                        :key="status.value"
+                                        :value="status.value"
+                                        @select="(value) => {
+                                            selectedStatus = status
+                                            open = false
+                                        }"
+                                    >
+                                        <component
+                                            :is="status.icon"
+                                            :key="status.value"
+                                            class="mr-2 h-4 w-4"
+                                            :class="status.value === selectedStatus?.value ? 'opacity-100' : 'opacity-40'"
+                                        ></component>
+                                        <span>{{ status.label }}</span>
+                                    </h-command-item>
+                                </h-command-group>
+                            </h-command-list>
+                        </h-command>
+                    </h-popover-content>
+                </h-popover>
+            </div>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Responsive</div>
+
+            <div>
+                <use-template>
+                    <h-command>
+                        <h-command-input placeholder="Filter status..."></h-command-input>
+                        <h-command-list>
+                            <h-command-empty>No results found.</h-command-empty>
+                            <h-command-group>
+                                <h-command-item
+                                    v-for="status of statuses"
+                                    :key="status.value"
+                                    :value="status.value"
+                                    @select="onStatusSelect(status)"
+                                >
+                                    {{ status.label }}
+                                </h-command-item>
+                            </h-command-group>
+                        </h-command-list>
+                    </h-command>
+                </use-template>
+
+                <h-popover v-if="isDesktop" v-model:open="isOpen">
+                    <h-popover-trigger as-child>
+                        <h-button variant="outline" class="w-[150px] justify-start">
+                            {{ selectedStatus ? selectedStatus.label : "+ Set status" }}
+                        </h-button>
+                    </h-popover-trigger>
+                    <h-popover-content class="w-[200px] p-0" align="start">
+                        <status-list></status-list>
+                    </h-popover-content>
+                </h-popover>
+
+                <h-drawer v-else :open="isOpen" @update:open="(newOpenValue) => isOpen = newOpenValue">
+                    <h-drawer-trigger as-child>
+                        <h-button variant="outline" class="w-[150px] justify-start">
+                            {{ selectedStatus ? selectedStatus.label : "+ Set status" }}
+                        </h-button>
+                    </h-drawer-trigger>
+                    <h-drawer-content>
+                        <div class="mt-4 border-t">
+                            <status-list></status-list>
+                        </div>
+                    </h-drawer-content>
+                </h-drawer>
+            </div>
+        </div>
+        <script type="module">
+            import { toTypedSchema } from '@vee-validate/zod'
+            import { useForm } from 'vee-validate'
+            import * as z from 'zod'
+            import {
+                Check,
+                ChevronsUpDown,
+                Calendar,
+                MoreHorizontal,
+                Tags,
+                Trash,
+                User,
+                HelpCircle,
+                Circle,
+                ArrowUpCircle,
+                CheckCircle2,
+                XCircle,
+            } from 'lucide-vue-next'
+            import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
+
+            const formSchema = toTypedSchema(
+                z.object({
+                    language: z.string({
+                        required_error: 'Please select a language.',
+                    }),
+                }),
+            )
+
+            const { handleSubmit, setFieldValue, values } = useForm({
+                validationSchema: formSchema,
+            })
+            const [UseTemplate, StatusList] = createReusableTemplate()
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        frameworks: [
+                            { value: 'next.js', label: 'Next.js' },
+                            { value: 'sveltekit', label: 'SvelteKit' },
+                            { value: 'nuxt', label: 'Nuxt' },
+                            { value: 'remix', label: 'Remix' },
+                            { value: 'astro', label: 'Astro' },
+                        ],
+                        labels: ['feature', 'bug', 'enhancement', 'documentation', 'design', 'question', 'maintenance'],
+                        languages: [
+                            { label: 'English', value: 'en' },
+                            { label: 'French', value: 'fr' },
+                            { label: 'German', value: 'de' },
+                            { label: 'Spanish', value: 'es' },
+                            { label: 'Portuguese', value: 'pt' },
+                            { label: 'Bulgarian', value: 'bg' },
+                            { label: 'Japanese', value: 'ja' },
+                            { label: 'Korean', value: 'ko' },
+                            { label: 'Chinese', value: 'zh' },
+                        ],
+                        statuses: [
+                            {
+                                value: 'backlog',
+                                label: 'Backlog',
+                                icon: HelpCircle,
+                            },
+                            {
+                                value: 'todo',
+                                label: 'Todo',
+                                icon: Circle,
+                            },
+                            {
+                                value: 'in progress',
+                                label: 'In Progress',
+                                icon: ArrowUpCircle,
+                            },
+                            {
+                                value: 'done',
+                                label: 'Done',
+                                icon: CheckCircle2,
+                            },
+                            {
+                                value: 'canceled',
+                                label: 'Canceled',
+                                icon: XCircle,
+                            },
+                        ],
+                        labelRef: Vue.ref('feature'),
+                        open: Vue.ref(false),
+                        openDropdown: Vue.ref(false),
+                        openPopover: Vue.ref(false),
+                        value: Vue.ref(''),
+                        values: Vue.ref(values),
+                        setFieldValue: Vue.ref(setFieldValue),
+                        selectedStatus: Vue.ref(),
+                        isDesktop: Vue.ref(useMediaQuery('(min-width: 768px)')),
+                        isOpen: Vue.ref(false),
+                    }
+                },
+                methods: {
+                    onSubmit(values) {
+                        handleSubmit((values) => {
+                            Harmonia.toast({
+                                title: 'You submitted the following values:',
+                                description: Vue.h(
+                                    'pre',
+                                    { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
+                                    Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
+                                ),
+                            })
+                        })
+                    },
+                    onStatusSelect(status) {
+                        this.selectedStatus = status
+                        this.isOpen = false
+                    },
+                },
+            })
+            app.use(Harmonia)
+            app.component('ICheck', Check)
+            app.component('IChevronsUpDown', ChevronsUpDown)
+            app.component('ICalendar', Calendar)
+            app.component('IMoreHorizontal', MoreHorizontal)
+            app.component('ITags', Tags)
+            app.component('ITrash', Trash)
+            app.component('IUser', User)
+            app.component(UseTemplate)
+            app.component(StatusList)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

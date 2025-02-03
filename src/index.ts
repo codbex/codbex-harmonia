@@ -51,6 +51,7 @@ import {
     CalendarHeading,
     CalendarNextButton,
     CalendarPrevButton,
+    CalendarSelect,
 } from '@/components/ui/calendar'
 import { createDecade, createYear, toDate } from 'radix-vue/date'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -301,6 +302,8 @@ import './assets/global.css'
 
 import { useColorMode } from '@vueuse/core'
 
+import { valueUpdater } from './lib/utils'
+
 const components = {
     HAccordion: Accordion,
     HAccordionItem: AccordionItem,
@@ -354,6 +357,7 @@ const components = {
     HCalendarHeading: CalendarHeading,
     HCalendarNextButton: CalendarNextButton,
     HCalendarPrevButton: CalendarPrevButton,
+    HCalendarSelect: CalendarSelect,
     HCard: Card,
     HCardContent: CardContent,
     HCardDescription: CardDescription,
@@ -613,6 +617,7 @@ const Harmonia = {
     createYear: createYear,
     toDate: toDate,
     themeMode: useColorMode(),
+    valueUpdater: valueUpdater,
 }
 
 export default Harmonia

@@ -19,6 +19,8 @@
         <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
             <h-calendar v-model="value" :weekday-format="'short'" class="rounded-md border"></h-calendar>
 
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">In Form</div>
+
             <form class="space-y-8" @submit="onSubmit">
                 <h-form-field name="dob">
                     <h-form-item class="flex flex-col">
@@ -56,75 +58,12 @@
                 <h-button type="submit">Submit</h-button>
             </form>
 
-            <!-- <calendar-root
-                v-slot="{ date, grid, weekDays }"
-                v-model:placeholder="placeholder"
-                v-bind="forwarded"
-                class="rounded-md border p-3"
-            >
-                <h-calendar-header>
-                    <h-calendar-heading class="flex w-full items-center justify-between gap-2">
-                        <h-select
-                            :default-value="placeholder.month.toString()"
-                            @update:model-value="(v) => updateMonthModel(v)"
-                        >
-                            <h-select-trigger aria-label="Select month" class="w-[60%]">
-                                <h-select-value placeholder="Select month" />
-                            </h-select-trigger>
-                            <h-select-content class="max-h-[200px]">
-                                <h-select-item
-                                    v-for="month in createYear({ dateObj: date })"
-                                    :key="month.toString()"
-                                    :value="month.month.toString()"
-                                >
-                                    {{ formatter.custom(toDate(month), { month: 'long' }) }}
-                                </h-select-item>
-                            </h-select-content>
-                        </h-select>
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">With dropdowns</div>
 
-                        <h-select
-                            :default-value="placeholder.year.toString()"
-                            @update:model-value="(v) => updateYearModel(v)"
-                        >
-                            <h-select-trigger aria-label="Select year" class="w-[40%]">
-                                <h-select-value placeholder="Select year" />
-                            </h-select-trigger>
-                            <h-select-content class="max-h-[200px]">
-                                <h-select-item
-                                    v-for="yearValue in createDecade({ dateObj: date, startIndex: -10, endIndex: 10 })"
-                                    :key="yearValue.toString()"
-                                    :value="yearValue.year.toString()"
-                                >
-                                    {{ yearValue.year }}
-                                </h-select-item>
-                            </h-select-content>
-                        </h-select>
-                    </h-calendar-heading>
-                </h-calendar-header>
-
-                <div class="flex flex-col space-y-4 pt-4 sm:flex-row sm:gap-x-4 sm:gap-y-0">
-                    <h-calendar-grid v-for="month in grid" :key="month.value.toString()">
-                        <h-calendar-grid-head>
-                            <h-calendar-grid-row>
-                                <h-calendar-head-cell v-for="day in weekDays" :key="day">
-                                    {{ day }}
-                                </h-calendar-head-cell>
-                            </h-calendar-grid-row>
-                        </h-calendar-grid-head>
-                        <h-calendar-grid-body class="grid">
-                            <h-calendar-grid-row v-for="(weekDates, index) in month.rows" class="mt-2 w-full">
-                                <h-calendar-cell
-                                    v-for="weekDate in weekDates"
-                                    :key="weekDate.toString()"
-                                    :date="weekDate"
-                                >
-                                    <h-calendar-cell-trigger :day="weekDate" :month="month.value" />
-                                </h-calendar-cell>
-                            </h-calendar-grid-row>
-                        </h-calendar-grid-body>
-                    </h-calendar-grid>
-                </div>
-            </calendar-root> -->
+            <h-calendar-select
+                v-model="selectValue"
+                @update:model-value="(v) => updateSelectValue(v)"
+            ></h-calendar-select>
         </div>
         <script type="module">
             import { CalendarDate, DateFormatter, getLocalTimeZone, parseDate, today } from '@internationalized/date'
@@ -132,43 +71,26 @@
             import { toTypedSchema } from '@vee-validate/zod'
             import { useForm } from 'vee-validate'
             import { z } from 'zod'
-            import { cn } from '@/lib/utils'
-            import { useVModel } from '@vueuse/core'
-            import { CalendarRoot, useDateFormatter, useForwardPropsEmits } from 'radix-vue'
-            import { createDecade, createYear, toDate } from 'radix-vue/date'
+            import { CalendarRoot } from 'radix-vue'
 
             const formSchema = toTypedSchema(
                 z.object({
                     dob: z.string().refine((v) => v, { message: 'A date of birth is required.' }),
                 }),
             )
-            const { handleSubmit, setFieldValue, values } = useForm({
+            const form = useForm({
                 validationSchema: formSchema,
             })
             const value = Vue.computed({
-                get: () => (values.dob ? parseDate(values.dob) : undefined),
+                get: () => (form.values.dob ? parseDate(form.values.dob) : undefined),
                 set: (val) => val,
             })
-            const props = {
-                modelValue: undefined,
-                placeholder() {
-                    return today(getLocalTimeZone())
-                },
-                weekdayFormat: 'short',
-                multiple: false,
-            }
-            const emits = {
-                'update:modelValue': [],
-                'update:placeholder': [],
-            }
-            const delegatedProps = Vue.computed(() => {
-                const { class: _, placeholder: __, ...delegated } = props
-
-                return delegated
+            const selectForm = useForm({
+                validationSchema: formSchema,
             })
-            let placeholder = useVModel(props, 'modelValue', emits, {
-                passive: true,
-                defaultValue: today(getLocalTimeZone()),
+            const selectValue = Vue.computed({
+                get: () => (selectForm.values.dob ? parseDate(selectForm.values.dob) : undefined),
+                set: (val) => val,
             })
             const app = Vue.createApp({
                 data() {
@@ -178,50 +100,35 @@
                         df: new DateFormatter('en-US', {
                             dateStyle: 'long',
                         }),
-                        toDate: toDate,
-                        formSchema: formSchema,
                         placeholder: Vue.ref(),
-                        handleSubmit: handleSubmit,
-                        setFieldValue: setFieldValue,
-                        values: Vue.ref(values),
                         value: Vue.ref(value),
-                        props: props,
-                        formatter: useDateFormatter('en'),
-                        forwarded: useForwardPropsEmits(delegatedProps, emits),
-                        createYear: createYear,
-                        createDecade: createDecade,
                     }
                 },
                 methods: {
                     onSubmit(values) {
-                        Harmonia.toast({
-                            title: 'You submitted the following values:',
-                            description: Vue.h(
-                                'pre',
-                                { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
-                                Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
-                            ),
-                        })
-                    },
-                    updateMonthModel(v) {
-                        if (!v || !this.placeholder) return
-                        if (Number(v) === this.placeholder?.month) return
-                        this.placeholder = this.placeholder.set({
-                            month: Number(v),
-                        })
-                    },
-                    updateYearModel(v) {
-                        if (!v || !this.placeholder) return
-                        if (Number(v) === this.placeholder?.year) return
-                        this.placeholder = this.placeholder.set({
-                            year: Number(v),
+                        form.handleSubmit((values) => {
+                            Harmonia.toast({
+                                title: 'You submitted the following values:',
+                                description: Vue.h(
+                                    'pre',
+                                    { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
+                                    Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
+                                ),
+                            })
                         })
                     },
                     updateValue(v) {
                         if (v) {
-                            this.setFieldValue('dob', v.toString())
+                            form.setFieldValue('dob', v.toString())
                         } else {
-                            this.setFieldValue('dob', undefined)
+                            form.setFieldValue('dob', undefined)
+                        }
+                    },
+                    updateSelectValue(v) {
+                        if (v) {
+                            selectForm.setFieldValue('dob', v.toString())
+                        } else {
+                            selectForm.setFieldValue('dob', undefined)
                         }
                     },
                 },

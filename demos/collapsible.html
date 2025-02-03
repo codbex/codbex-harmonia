@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <h-collapsible v-model:open="isOpen" class="w-[350px] space-y-2">
+                <div class="flex items-center justify-between space-x-4 px-4">
+                    <h4 class="text-sm font-semibold">2 hidden content items</h4>
+                    <h-collapsible-trigger as-child>
+                        <h-button variant="ghost" size="sm" class="w-9 p-0">
+                            <i-chevrons-up-down class="h-4 w-4"></i-chevrons-up-down>
+                            <span class="sr-only">Toggle</span>
+                        </h-button>
+                    </h-collapsible-trigger>
+                </div>
+                <div class="rounded-md border px-4 py-3 font-mono text-sm">Always visible</div>
+                <h-collapsible-content class="space-y-2">
+                    <div class="rounded-md border px-4 py-3 font-mono text-sm">Collapsible content 1</div>
+                    <div class="rounded-md border px-4 py-3 font-mono text-sm">Collapsible content 2</div>
+                </h-collapsible-content>
+            </h-collapsible>
+        </div>
+        <script type="module">
+            import { ChevronsUpDown } from 'lucide-vue-next'
+            const app = Vue.createApp({})
+            app.use(Harmonia)
+            app.component('IChevronsUpDown', ChevronsUpDown)
+            app.mount('#app')
+        </script>
+    </body>
+</html>

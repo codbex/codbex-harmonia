@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmonia</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+        <script src="/dist/harmonia.umd.js"></script>
+        <link rel="stylesheet" href="/dist/harmonia.css" />
+    </head>
+    <body>
+        <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+            <h-command class="rounded-lg border shadow-md max-w-[450px] max-h-[450px]">
+                <h-command-input placeholder="Type a command or search..."></h-command-input>
+                <h-command-list>
+                    <h-command-empty>No results found.</h-command-empty>
+                    <h-command-group heading="Suggestions">
+                        <h-command-item value="Calendar">
+                            <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+                            <span>Calendar</span>
+                        </h-command-item>
+                        <h-command-item value="Search Emoji">
+                            <i-smile class="mr-2 h-4 w-4"></i-smile>
+                            <span>Search Emoji</span>
+                        </h-command-item>
+                        <h-command-item value="Calculator">
+                            <i-calculator class="mr-2 h-4 w-4"></i-calculator>
+                            <span>Calculator</span>
+                        </h-command-item>
+                    </h-command-group>
+                    <h-command-separator></h-command-separator>
+                    <h-command-group heading="Settings">
+                        <h-command-item value="Profile">
+                            <i-user class="mr-2 h-4 w-4"></i-user>
+                            <span>Profile</span>
+                            <h-command-shortcut>⌘P</h-command-shortcut>
+                        </h-command-item>
+                        <h-command-item value="Billing">
+                            <i-credit-card class="mr-2 h-4 w-4"></i-credit-card>
+                            <span>Billing</span>
+                            <h-command-shortcut>⌘B</h-command-shortcut>
+                        </h-command-item>
+                        <h-command-item value="Settings">
+                            <i-settings class="mr-2 h-4 w-4"></i-settings>
+                            <span>Settings</span>
+                            <h-command-shortcut>⌘S</h-command-shortcut>
+                        </h-command-item>
+                    </h-command-group>
+                </h-command-list>
+            </h-command>
+
+            <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">As Dialog</div>
+
+            <div>
+                <p class="text-sm text-muted-foreground">
+                    Press
+                    <kbd
+                        class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100"
+                    >
+                        <span class="text-xs">⌘</span>J
+                    </kbd>
+                </p>
+                <h-command-dialog v-model:open="open">
+                    <h-command-input placeholder="Type a command or search..."></h-command-input>
+                    <h-command-list>
+                        <h-command-empty>No results found.</h-command-empty>
+                        <h-command-group heading="Suggestions">
+                            <h-command-item value="calendar">Calendar</h-command-item>
+                            <h-command-item value="search-emoji">Search Emoji</h-command-item>
+                            <h-command-item value="calculator">Calculator</h-command-item>
+                        </h-command-group>
+                        <h-command-separator></h-command-separator>
+                        <h-command-group heading="Settings">
+                            <h-command-item value="profile">Profile</h-command-item>
+                            <h-command-item value="billing">Billing</h-command-item>
+                            <h-command-item value="settings">Settings</h-command-item>
+                        </h-command-group>
+                    </h-command-list>
+                </h-command-dialog>
+            </div>
+        </div>
+        <script type="module">
+            import * as z from 'zod'
+            import { Calculator, Calendar, CreditCard, Settings, Smile, User } from 'lucide-vue-next'
+            import { useMagicKeys } from '@vueuse/core'
+
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        open: Vue.ref(false),
+                    }
+                },
+                methods: {
+                    handleOpenChange() {
+                        this.open = !this.open
+                    },
+                },
+                mounted() {
+                    const { Meta_J, Ctrl_J } = useMagicKeys({
+                        passive: false,
+                        onEventFired(e) {
+                            if (e.key === 'j' && (e.metaKey || e.ctrlKey)) e.preventDefault()
+                        },
+                    })
+                    Vue.watch([Meta_J, Ctrl_J], (v) => {
+                        if (v[0] || v[1]) this.handleOpenChange()
+                    })
+                },
+            })
+            app.use(Harmonia)
+            app.component('ICalculator', Calculator)
+            app.component('ICalendar', Calendar)
+            app.component('ICreditCard', CreditCard)
+            app.component('ISettings', Settings)
+            app.component('ISmile', Smile)
+            app.component('IUser', User)
+            app.mount('#app')
+        </script>
+    </body>
+</html>
