@@ -38,7 +38,7 @@
                 class="capitalize"
                 :checked="column.getIsVisible()"
                 @update:checked="(value) => {
-                    column.toggleVisibility(!!value)
+                  column.toggleVisibility(!!value)
                 }"
               >
                 {{ column.id }}
@@ -118,6 +118,115 @@
 
       <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">
         Column Pinning
+      </div>
+
+      <div class="w-full">
+        <div class="flex gap-2 items-center py-4">
+          <h-input
+            class="max-w-sm"
+            placeholder="Filter emails..."
+            :model-value="tablePinned.getColumn('email')?.getFilterValue()"
+            @update:model-value="tablePinned.getColumn('email')?.setFilterValue($event)"
+          ></h-input>
+          <h-dropdown-menu>
+            <h-dropdown-menu-trigger as-child>
+              <h-button variant="outline" class="ml-auto">
+                Columns <i-chevron-down class="ml-2 h-4 w-4"></i-chevron-down>
+              </h-button>
+            </h-dropdown-menu-trigger>
+            <h-dropdown-menu-content align="end">
+              <h-dropdown-menu-checkbox-item
+                v-for="column in tablePinned.getAllColumns().filter((column) => column.getCanHide())"
+                :key="column.id"
+                class="capitalize"
+                :checked="column.getIsVisible()"
+                @update:checked="(value) => {
+                  column.toggleVisibility(!!value)
+                }"
+              >
+                {{ column.id }}
+              </h-dropdown-menu-checkbox-item>
+            </h-dropdown-menu-content>
+          </h-dropdown-menu>
+        </div>
+        <div class="rounded-md border">
+          <h-table>
+            <h-table-header>
+              <h-table-row
+                v-for="headerGroup in tablePinned.getHeaderGroups()"
+                :key="headerGroup.id"
+              >
+                <h-table-head
+                  v-for="header in headerGroup.headers"
+                  :key="header.id"
+                  :data-pinned="header.column.getIsPinned()"
+                  :class="(header.column.getIsPinned() ? 'sticky bg-background/95' : '') + ' ' + (header.column.getIsPinned() === 'left' ? 'left-0' : 'right-0')"
+                >
+                  <h-data-table-render
+                    v-if="!header.isPlaceholder"
+                    :render="header.column.columnDef.header"
+                    :props="header.getContext()"
+                  ></h-data-table-render>
+                </h-table-head>
+              </h-table-row>
+            </h-table-header>
+            <h-table-body>
+              <template v-if="tablePinned.getRowModel().rows?.length">
+                <template v-for="row in tablePinned.getRowModel().rows" :key="row.id">
+                  <h-table-row :data-state="row.getIsSelected() && 'selected'">
+                    <h-table-cell
+                      v-for="cell in row.getVisibleCells()"
+                      :key="cell.id"
+                      :data-pinned="cell.column.getIsPinned()"
+                      :class="(cell.column.getIsPinned() ? 'sticky bg-background/95' : '') + ' ' + (cell.column.getIsPinned() === 'left' ? 'left-0' : 'right-0')"
+                    >
+                      <h-data-table-render
+                        :render="cell.column.columnDef.cell"
+                        :props="cell.getContext()"
+                      ></h-data-table-render>
+                    </h-table-cell>
+                  </h-table-row>
+                  <h-table-row v-if="row.getIsExpanded()">
+                    <h-table-cell :colspan="row.getAllCells().length">
+                      {{ row.original }}
+                    </h-table-cell>
+                  </h-table-row>
+                </template>
+              </template>
+
+              <h-table-row v-else>
+                <h-table-cell :colspan="getColSpan()" class="h-24 text-center">
+                  No results.
+                </h-table-cell>
+              </h-table-row>
+            </h-table-body>
+          </h-table>
+        </div>
+
+        <div class="flex items-center justify-end space-x-2 py-4">
+          <div class="flex-1 text-sm text-muted-foreground">
+            {{ table.getFilteredSelectedRowModel().rows.length }} of {{
+            table.getFilteredRowModel().rows.length }} row(s) selected.
+          </div>
+          <div class="space-x-2">
+            <h-button
+              variant="outline"
+              size="sm"
+              :disabled="!table.getCanPreviousPage()"
+              @click="table.previousPage()"
+            >
+              Previous
+            </h-button>
+            <h-button
+              variant="outline"
+              size="sm"
+              :disabled="!table.getCanNextPage()"
+              @click="table.nextPage()"
+            >
+              Next
+            </h-button>
+          </div>
+        </div>
       </div>
     </div>
     <script type="module">
@@ -264,6 +373,105 @@
         },
       ]
 
+      const columnHelper = createColumnHelper()
+
+      const columnsPinned = [
+        columnHelper.display({
+          id: 'select',
+          header: ({ table }) =>
+            Vue.h(Harmonia.HCheckbox, {
+              checked:
+                table.getIsAllPageRowsSelected() ||
+                (table.getIsSomePageRowsSelected() && 'indeterminate'),
+              'onUpdate:checked': (value) => table.toggleAllPageRowsSelected(!!value),
+              ariaLabel: 'Select all',
+            }),
+          cell: ({ row }) => {
+            return Vue.h(Harmonia.HCheckbox, {
+              checked: row.getIsSelected(),
+              'onUpdate:checked': (value) => row.toggleSelected(!!value),
+              ariaLabel: 'Select row',
+            })
+          },
+          enableSorting: false,
+          enableHiding: false,
+        }),
+        columnHelper.accessor('status', {
+          enablePinning: true,
+          header: 'Status',
+          cell: ({ row }) => Vue.h('div', { class: 'capitalize' }, row.getValue('status')),
+        }),
+        columnHelper.accessor('email', {
+          header: ({ column }) => {
+            return Vue.h(
+              Harmonia.HButton,
+              {
+                variant: 'ghost',
+                onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+              },
+              () => ['Email', Vue.h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })],
+            )
+          },
+          cell: ({ row }) => Vue.h('div', { class: 'lowercase' }, row.getValue('email')),
+        }),
+        columnHelper.accessor('amount', {
+          header: () => Vue.h('div', { class: 'text-right' }, 'Amount'),
+          cell: ({ row }) => {
+            const amount = Number.parseFloat(row.getValue('amount'))
+
+            // Format the amount as a dollar amount
+            const formatted = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }).format(amount)
+
+            return Vue.h('div', { class: 'text-right font-medium' }, formatted)
+          },
+        }),
+        columnHelper.display({
+          id: 'actions',
+          enableHiding: false,
+          cell: ({ row }) => {
+            const payment = row.original
+
+            const listItems = [
+              { id: 'act', label: 'Actions' },
+              {
+                id: payment.id,
+                label: 'Copy payment ID',
+                click: (id) => {
+                  navigator.clipboard.writeText(id)
+                },
+              },
+              {
+                id: 'exp',
+                label: 'Expand',
+                click: () => {
+                  row.toggleExpanded(!row.getIsExpanded())
+                },
+              },
+              { id: 'sep' },
+              {
+                id: 'vc',
+                label: 'View customer',
+                click: () => {},
+              },
+              {
+                id: 'vcd',
+                label: 'View payment details',
+                click: () => {},
+              },
+            ]
+
+            return Vue.h(
+              'div',
+              { class: 'float-right' },
+              Vue.h(Harmonia.HDataTableDropdown, { items: listItems }),
+            )
+          },
+        }),
+      ]
+
       const sorting = Vue.ref([])
       const columnFilters = Vue.ref([])
       const columnVisibility = Vue.ref({})
@@ -307,11 +515,51 @@
                 },
               },
             }),
+            tablePinned: useVueTable({
+              data,
+              columns: columnsPinned,
+              getCoreRowModel: getCoreRowModel(),
+              getPaginationRowModel: getPaginationRowModel(),
+              getSortedRowModel: getSortedRowModel(),
+              getFilteredRowModel: getFilteredRowModel(),
+              getExpandedRowModel: getExpandedRowModel(),
+              onSortingChange: (updaterOrValue) => Harmonia.valueUpdater(updaterOrValue, sorting),
+              onColumnFiltersChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, columnFilters),
+              onColumnVisibilityChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, columnVisibility),
+              onRowSelectionChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, rowSelection),
+              onExpandedChange: (updaterOrValue) => Harmonia.valueUpdater(updaterOrValue, expanded),
+              state: {
+                get sorting() {
+                  return sorting.value
+                },
+                get columnFilters() {
+                  return columnFilters.value
+                },
+                get columnVisibility() {
+                  return columnVisibility.value
+                },
+                get rowSelection() {
+                  return rowSelection.value
+                },
+                get expanded() {
+                  return expanded.value
+                },
+                columnPinning: {
+                  left: ['status'],
+                },
+              },
+            }),
           }
         },
         methods: {
           getColSpan() {
             return columns.length
+          },
+          getPinnedColSpan() {
+            return columnsPinned.length
           },
         },
       })
