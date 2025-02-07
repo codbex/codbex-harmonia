@@ -715,6 +715,22 @@
       const rowSelection = Vue.ref({})
       const expanded = Vue.ref({})
 
+      const pinnedRefs = {
+        sorting: Vue.ref([]),
+        columnFilters: Vue.ref([]),
+        columnVisibility: Vue.ref({}),
+        rowSelection: Vue.ref({}),
+        expanded: Vue.ref({}),
+      }
+
+      const reactiveRefs = {
+        sorting: Vue.ref([]),
+        columnFilters: Vue.ref([]),
+        columnVisibility: Vue.ref({}),
+        rowSelection: Vue.ref({}),
+        expanded: Vue.ref({}),
+      }
+
       const app = Vue.createApp({
         data() {
           return {
@@ -760,29 +776,31 @@
               getSortedRowModel: getSortedRowModel(),
               getFilteredRowModel: getFilteredRowModel(),
               getExpandedRowModel: getExpandedRowModel(),
-              onSortingChange: (updaterOrValue) => Harmonia.valueUpdater(updaterOrValue, sorting),
+              onSortingChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, pinnedRefs.sorting),
               onColumnFiltersChange: (updaterOrValue) =>
-                Harmonia.valueUpdater(updaterOrValue, columnFilters),
+                Harmonia.valueUpdater(updaterOrValue, pinnedRefs.columnFilters),
               onColumnVisibilityChange: (updaterOrValue) =>
-                Harmonia.valueUpdater(updaterOrValue, columnVisibility),
+                Harmonia.valueUpdater(updaterOrValue, pinnedRefs.columnVisibility),
               onRowSelectionChange: (updaterOrValue) =>
-                Harmonia.valueUpdater(updaterOrValue, rowSelection),
-              onExpandedChange: (updaterOrValue) => Harmonia.valueUpdater(updaterOrValue, expanded),
+                Harmonia.valueUpdater(updaterOrValue, pinnedRefs.rowSelection),
+              onExpandedChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, pinnedRefs.expanded),
               state: {
                 get sorting() {
-                  return sorting.value
+                  return pinnedRefs.sorting.value
                 },
                 get columnFilters() {
-                  return columnFilters.value
+                  return pinnedRefs.columnFilters.value
                 },
                 get columnVisibility() {
-                  return columnVisibility.value
+                  return pinnedRefs.columnVisibility.value
                 },
                 get rowSelection() {
-                  return rowSelection.value
+                  return pinnedRefs.rowSelection.value
                 },
                 get expanded() {
-                  return expanded.value
+                  return pinnedRefs.expanded.value
                 },
                 columnPinning: {
                   left: ['status'],
@@ -790,36 +808,40 @@
               },
             }),
             tableReactive: useVueTable({
-              data: reactiveData,
+              get data() {
+                return reactiveData.value
+              },
               columns: columnsReactive,
               getCoreRowModel: getCoreRowModel(),
               getPaginationRowModel: getPaginationRowModel(),
               getSortedRowModel: getSortedRowModel(),
               getFilteredRowModel: getFilteredRowModel(),
               getExpandedRowModel: getExpandedRowModel(),
-              onSortingChange: (updaterOrValue) => Harmonia.valueUpdater(updaterOrValue, sorting),
+              onSortingChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, reactiveRefs.sorting),
               onColumnFiltersChange: (updaterOrValue) =>
-                Harmonia.valueUpdater(updaterOrValue, columnFilters),
+                Harmonia.valueUpdater(updaterOrValue, reactiveRefs.columnFilters),
               onColumnVisibilityChange: (updaterOrValue) =>
-                Harmonia.valueUpdater(updaterOrValue, columnVisibility),
+                Harmonia.valueUpdater(updaterOrValue, reactiveRefs.columnVisibility),
               onRowSelectionChange: (updaterOrValue) =>
-                Harmonia.valueUpdater(updaterOrValue, rowSelection),
-              onExpandedChange: (updaterOrValue) => Harmonia.valueUpdater(updaterOrValue, expanded),
+                Harmonia.valueUpdater(updaterOrValue, reactiveRefs.rowSelection),
+              onExpandedChange: (updaterOrValue) =>
+                Harmonia.valueUpdater(updaterOrValue, reactiveRefs.expanded),
               state: {
                 get sorting() {
-                  return sorting.value
+                  return reactiveRefs.sorting.value
                 },
                 get columnFilters() {
-                  return columnFilters.value
+                  return reactiveRefs.columnFilters.value
                 },
                 get columnVisibility() {
-                  return columnVisibility.value
+                  return reactiveRefs.columnVisibility.value
                 },
                 get rowSelection() {
-                  return rowSelection.value
+                  return reactiveRefs.rowSelection.value
                 },
                 get expanded() {
-                  return expanded.value
+                  return reactiveRefs.expanded.value
                 },
               },
             }),
@@ -827,7 +849,6 @@
         },
         methods: {
           randomize() {
-            console.log('ds')
             reactiveData.value = reactiveData.value.map((item) => ({
               ...item,
               status: statuses[Math.floor(Math.random() * statuses.length)],
