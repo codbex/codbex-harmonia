@@ -112,6 +112,7 @@ import {
   DataTableDropdown, // Added for Harmonia
 } from '@/components/ui/data-table'
 import { DatePicker } from '@/components/ui/date-picker'
+import { RangeCalendarRoot } from 'radix-vue'
 import {
   Dialog,
   DialogClose,
@@ -440,6 +441,7 @@ const components = {
   HDataTableRender: DataTableRender,
   HDataTableDropdown: DataTableDropdown,
   HDatePicker: DatePicker,
+  HRangeCalendarRoot: RangeCalendarRoot,
   HDialog: Dialog,
   HDialogClose: DialogClose,
   HDialogContent: DialogContent,

@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harmonia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="/node_modules/vue/dist/vue.global.prod.js"></script>
+    <script src="/dist/harmonia.umd.js"></script>
+    <link rel="stylesheet" href="/dist/harmonia.css" />
+  </head>
+  <body>
+    <div id="app" class="flex flex-col h-full overflow-auto items-start gap-2 p-4">
+      <h-popover>
+        <h-popover-trigger as-child>
+          <h-button
+            variant="outline"
+            class="w-[280px] justify-start text-left font-normal"
+            :class="!value ? 'text-muted-foreground' : ''"
+          >
+            <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+            {{ value ? getDate(value) : "Pick a date" }}
+          </h-button>
+        </h-popover-trigger>
+        <h-popover-content class="w-auto p-0">
+          <h-calendar v-model="value" initial-focus></h-calendar>
+        </h-popover-content>
+      </h-popover>
+
+      <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Range</div>
+
+      <h-popover>
+        <h-popover-trigger as-child>
+          <h-button
+            variant="outline"
+            class="w-[280px] justify-start text-left font-normal"
+            :class="!valueRange ? 'text-muted-foreground' : ''"
+          >
+            <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+            {{valueRange.start ? getDateRange(valueRange) : "Pick a date" }}
+          </h-button>
+        </h-popover-trigger>
+        <h-popover-content class="w-auto p-0">
+          <h-range-calendar
+            v-model="valueRange"
+            initial-focus
+            :number-of-months="2"
+            @update:start-value="(startDate) => valueRange.start = startDate"
+          ></h-range-calendar>
+        </h-popover-content>
+      </h-popover>
+
+      <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">
+        Independent Months
+      </div>
+
+      <h-popover>
+        <h-popover-trigger as-child>
+          <h-button
+            variant="outline"
+            class="w-[280px] justify-start text-left font-normal"
+            :class="!valueIndep ? 'text-muted-foreground' : ''"
+          >
+            <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+            {{ valueIndep.start ? getIndepDateRange(valueIndep) : 'Pick a date' }}
+          </h-button>
+        </h-popover-trigger>
+        <h-popover-content class="w-auto p-0">
+          <h-range-calendar-root
+            v-slot="{ weekDays }"
+            v-model="valueIndep"
+            v-model:placeholder="firstMonthPlaceholder"
+            class="p-3"
+          >
+            <div class="flex flex-col gap-y-4 mt-4 sm:flex-row sm:gap-x-4 sm:gap-y-0">
+              <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between">
+                  <h-button
+                    variant="outline"
+                    class="bg-transparent p-0 opacity-50 hover:opacity-100"
+                    size="icon"
+                    @click="updateMonth('first', -1)"
+                  >
+                    <i-chevron-left class="h-4 w-4"></i-chevron-left>
+                  </h-button>
+                  <div class="text-sm font-medium">{{ getFullMonthAndYear(firstMonth.value) }}</div>
+                  <h-button
+                    variant="outline"
+                    class="bg-transparent p-0 opacity-50 hover:opacity-100"
+                    size="icon"
+                    @click="updateMonth('first', 1)"
+                  >
+                    <i-chevron-right class="h-4 w-4"></i-chevron-right>
+                  </h-button>
+                </div>
+                <h-range-calendar-grid>
+                  <h-range-calendar-grid-head>
+                    <h-range-calendar-grid-row>
+                      <h-range-calendar-head-cell v-for="day in weekDays" :key="day" class="w-full">
+                        {{ day }}
+                      </h-range-calendar-head-cell>
+                    </h-range-calendar-grid-row>
+                  </h-range-calendar-grid-head>
+                  <h-range-calendar-grid-body>
+                    <h-range-calendar-grid-row
+                      v-for="(
+                        weekDates, index
+                      ) in firstMonth.rows"
+                      :key="`weekDate-${index}`"
+                      class="mt-2 w-full"
+                    >
+                      <h-range-calendar-cell
+                        v-for="weekDate in weekDates"
+                        :key="weekDate.toString()"
+                        :date="weekDate"
+                      >
+                        <h-range-calendar-cell-trigger
+                          :day="weekDate"
+                          :month="firstMonth.value"
+                        ></h-range-calendar-cell-trigger>
+                      </h-range-calendar-cell>
+                    </h-range-calendar-grid-row>
+                  </h-range-calendar-grid-body>
+                </h-range-calendar-grid>
+              </div>
+              <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between">
+                  <h-button
+                    variant="outline"
+                    class="bg-transparent p-0 opacity-50 hover:opacity-100"
+                    size="icon"
+                    @click="updateMonth('second', -1)"
+                  >
+                    <i-chevron-left class="h-4 w-4"></i-chevron-left>
+                  </h-button>
+                  <div class="text-sm font-medium">
+                    {{ getFullMonthAndYear(secondMonth.value) }}
+                  </div>
+                  <h-button
+                    variant="outline"
+                    class="bg-transparent p-0 opacity-50 hover:opacity-100"
+                    size="icon"
+                    @click="updateMonth('second', 1)"
+                  >
+                    <i-chevron-right class="h-4 w-4"></i-chevron-right>
+                  </h-button>
+                </div>
+                <h-range-calendar-grid>
+                  <h-range-calendar-grid-head>
+                    <h-range-calendar-grid-row>
+                      <h-range-calendar-head-cell v-for="day in weekDays" :key="day" class="w-full">
+                        {{ day }}
+                      </h-range-calendar-head-cell>
+                    </h-range-calendar-grid-row>
+                  </h-range-calendar-grid-head>
+                  <h-range-calendar-grid-body>
+                    <h-range-calendar-grid-row
+                      v-for="(
+                        weekDates, index
+                      ) in secondMonth.rows"
+                      :key="`weekDate-${index}`"
+                      class="mt-2 w-full"
+                    >
+                      <h-range-calendar-cell
+                        v-for="weekDate in weekDates"
+                        :key="weekDate.toString()"
+                        :date="weekDate"
+                      >
+                        <h-range-calendar-cell-trigger
+                          :day="weekDate"
+                          :month="secondMonth.value"
+                        ></h-range-calendar-cell-trigger>
+                      </h-range-calendar-cell>
+                    </h-range-calendar-grid-row>
+                  </h-range-calendar-grid-body>
+                </h-range-calendar-grid>
+              </div>
+            </div>
+          </h-range-calendar-root>
+        </h-popover-content>
+      </h-popover>
+
+      <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">
+        With Presets
+      </div>
+
+      <h-popover>
+        <h-popover-trigger as-child>
+          <h-button
+            variant="outline"
+            class="w-[280px] justify-start text-left font-normal"
+            :class="!valuePresets ? 'text-muted-foreground' : ''"
+          >
+            <i-calendar class="mr-2 h-4 w-4"></i-calendar>
+            {{ valuePresets ? getDate(valuePresets) : "Pick a date" }}
+          </h-button>
+        </h-popover-trigger>
+        <h-popover-content class="flex w-auto flex-col gap-y-2 p-2">
+          <h-select @update:model-value="(v) => updatePresetModel(v)">
+            <h-select-trigger>
+              <h-select-value placeholder="Select"></h-select-value>
+            </h-select-trigger>
+            <h-select-content>
+              <h-select-item v-for="item in items" :key="item.value" :value="item.value.toString()">
+                {{ item.label }}
+              </h-select-item>
+            </h-select-content>
+          </h-select>
+          <h-calendar v-model="valuePresets"></h-calendar>
+        </h-popover-content>
+      </h-popover>
+
+      <div class="font-semibold text-sm border-b-2 w-full px-2 pb-1.5 pt-4 first:pt-0">Form</div>
+
+      <form class="space-y-8" @submit="onSubmit">
+        <h-form-field name="dob">
+          <h-form-item class="flex flex-col">
+            <h-form-label>Date of birth</h-form-label>
+            <h-popover>
+              <h-popover-trigger as-child>
+                <h-form-control>
+                  <h-button
+                    variant="outline"
+                    class="w-[240px] ps-3 text-start font-normal"
+                    :class="!valueForm ? 'text-muted-foreground' : ''"
+                  >
+                    <span>{{ valueForm ? getFormDate(valueForm) : "Pick a date" }}</span>
+                    <i-calendar class="ms-auto h-4 w-4 opacity-50"></i-calendar>
+                  </h-button>
+                  <input hidden />
+                </h-form-control>
+              </h-popover-trigger>
+              <h-popover-content class="w-auto p-0">
+                <h-calendar
+                  v-model:placeholder="placeholder"
+                  v-model="valueForm"
+                  calendar-label="Date of birth"
+                  initial-focus
+                  :min-value="getMinDate()"
+                  :max-value="getToday()"
+                  @update:model-value="(v) => updateModel(v)"
+                ></h-calendar>
+              </h-popover-content>
+            </h-popover>
+            <h-form-description>
+              Your date of birth is used to calculate your age.
+            </h-form-description>
+            <h-form-message></h-form-message>
+          </h-form-item>
+        </h-form-field>
+        <h-button type="submit">Submit</h-button>
+      </form>
+    </div>
+    <script type="module">
+      import { toTypedSchema } from '@vee-validate/zod'
+      import {
+        CalendarDate,
+        DateFormatter,
+        getLocalTimeZone,
+        parseDate,
+        today,
+        isEqualMonth,
+      } from '@internationalized/date'
+      import { useDateFormatter } from 'radix-vue'
+      import { createMonth, toDate } from 'radix-vue/date'
+      import { useForm } from 'vee-validate'
+      import { z } from 'zod'
+      import { Calendar, ChevronRight, ChevronLeft } from 'lucide-vue-next'
+
+      const df = new DateFormatter('en-US', {
+        dateStyle: 'long',
+      })
+
+      const dfm = new DateFormatter('en-US', {
+        dateStyle: 'medium',
+      })
+
+      const formSchema = toTypedSchema(
+        z.object({
+          dob: z.string().refine((v) => v, { message: 'A date of birth is required.' }),
+        }),
+      )
+
+      const { handleSubmit, setFieldValue, values } = useForm({
+        validationSchema: formSchema,
+        initialValues: {},
+      })
+
+      const locale = Vue.ref('en-US')
+
+      const valueIndep = Vue.ref({
+        start: new CalendarDate(2022, 1, 20),
+        end: new CalendarDate(2022, 1, 20).add({ days: 20 }),
+      })
+
+      const formatter = useDateFormatter(locale.value)
+
+      const firstMonthPlaceholder = Vue.ref(valueIndep.value.start)
+
+      const secondMonthPlaceholder = Vue.ref(valueIndep.value.end)
+
+      const app = Vue.createApp({
+        data() {
+          return {
+            placeholder: Vue.ref(),
+            firstMonthPlaceholder: firstMonthPlaceholder,
+            value: Vue.ref(),
+            valueRange: Vue.ref({
+              start: new CalendarDate(2022, 1, 20),
+              end: new CalendarDate(2022, 1, 20).add({ days: 20 }),
+            }),
+            valueIndep: valueIndep,
+            valuePresets: Vue.ref(),
+            valueForm: Vue.computed({
+              get: () => (values.dob ? parseDate(values.dob) : undefined),
+              set: (val) => val,
+            }),
+            firstMonth: Vue.ref(
+              createMonth({
+                dateObj: firstMonthPlaceholder.value,
+                locale: locale.value,
+                fixedWeeks: true,
+                weekStartsOn: 0,
+              }),
+            ),
+            secondMonth: Vue.ref(
+              createMonth({
+                dateObj: secondMonthPlaceholder.value,
+                locale: locale.value,
+                fixedWeeks: true,
+                weekStartsOn: 0,
+              }),
+            ),
+            items: [
+              { value: 0, label: 'Today' },
+              { value: 1, label: 'Tomorrow' },
+              { value: 3, label: 'In 3 days' },
+              { value: 7, label: 'In a week' },
+            ],
+          }
+        },
+        mounted() {
+          Vue.watch(this.firstMonthPlaceholder, (_placeholder) => {
+            this.firstMonth.value = createMonth({
+              dateObj: _placeholder,
+              weekStartsOn: 0,
+              fixedWeeks: false,
+              locale: locale.value,
+            })
+            if (isEqualMonth(secondMonthPlaceholder.value, _placeholder)) {
+              secondMonthPlaceholder.value = secondMonthPlaceholder.value.add({
+                months: 1,
+              })
+            }
+          })
+
+          Vue.watch(secondMonthPlaceholder, (_secondMonthPlaceholder) => {
+            this.secondMonth.value = createMonth({
+              dateObj: _secondMonthPlaceholder,
+              weekStartsOn: 0,
+              fixedWeeks: false,
+              locale: locale.value,
+            })
+            if (isEqualMonth(_secondMonthPlaceholder, this.firstMonthPlaceholder))
+              this.firstMonthPlaceholder = this.firstMonthPlaceholder.subtract({ months: 1 })
+          })
+        },
+        methods: {
+          getMinDate() {
+            return new CalendarDate(1900, 1, 1)
+          },
+          getToday() {
+            return today(getLocalTimeZone())
+          },
+          getDate(value) {
+            return df.format(value.toDate(getLocalTimeZone()))
+          },
+          getFormDate(value) {
+            return df.format(toDate(value))
+          },
+          getDateRange(value) {
+            if (value.end) {
+              return (
+                dfm.format(value.start.toDate(getLocalTimeZone())) +
+                ' - ' +
+                dfm.format(value.end.toDate(getLocalTimeZone()))
+              )
+            } else {
+              return dfm.format(value.start.toDate(getLocalTimeZone()))
+            }
+          },
+          getIndepDateRange(value) {
+            if (value.end) {
+              return (
+                formatter.custom(toDate(value.start), { dateStyle: 'medium' }) +
+                ' - ' +
+                formatter.custom(toDate(value.end), { dateStyle: 'medium' })
+              )
+            } else {
+              return formatter.custom(toDate(value.start), { dateStyle: 'medium' })
+            }
+          },
+          getFullMonthAndYear(month) {
+            if (month) {
+              if (month.value) return formatter.fullMonthAndYear(toDate(month.value))
+              return formatter.fullMonthAndYear(toDate(month))
+            }
+          },
+          updateModel(v) {
+            if (v) {
+              setFieldValue('dob', v.toString())
+            } else {
+              setFieldValue('dob', undefined)
+            }
+          },
+          updatePresetModel(v) {
+            if (!v) return
+            this.valuePresets = today(getLocalTimeZone()).add({ days: Number(v) })
+          },
+          updateMonth(reference, months) {
+            if (reference === 'first') {
+              firstMonthPlaceholder.value = firstMonthPlaceholder.value.add({ months })
+            } else {
+              secondMonthPlaceholder.value = secondMonthPlaceholder.value.add({
+                months,
+              })
+            }
+          },
+          onSubmit(event) {
+            event.preventDefault()
+            handleSubmit((values) => {
+              Harmonia.toast({
+                title: 'You submitted the following values:',
+                description: Vue.h(
+                  'pre',
+                  { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' },
+                  Vue.h('code', { class: 'text-white' }, JSON.stringify(values, null, 2)),
+                ),
+              })
+            })
+          },
+        },
+      })
+      app.use(Harmonia)
+      app.component('ICalendar', Calendar)
+      app.component('IChevronRight', ChevronRight)
+      app.component('IChevronLeft', ChevronLeft)
+      app.mount('#app')
+    </script>
+  </body>
+</html>
