@@ -1,0 +1,24 @@
+{
+  "name": "harmonia",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/harmonia.umd.js",
+  "module": "dist/harmonia.es.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "^2.7.3",
+    "@ui5/webcomponents-fiori": "^2.7.3",
+    "@ui5/webcomponents-icons": "^2.7.3"
+  }
+}

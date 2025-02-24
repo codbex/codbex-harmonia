@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" sizes="any" href="data:;base64,iVBORw0KGgo=" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harmonia</title>
+    <script defer src="/dist/harmonia.umd.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+  </head>
+  <body x-data="demoPage">
+    <h-form>
+      <h-form-item>
+        <h-label required for="nameInp" slot="labelContent">Input:</h-label>
+        <h-input id="nameInp" type="text" name="nameInp" x-model="form.input"></h-input>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required for="streetInp" slot="labelContent">Textarea:</h-label>
+        <h-textarea id="streetInp" name="streetInp" placeholder="Write your message here" show-exceeded-text maxlength="10" x-model="form.textarea"></h-textarea>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required slot="labelContent" for="fileUpload">File Upload:</h-label>
+        <h-file-uploader id="fileUpload" name="fileUpload" placeholder="Choose a file" x-model="form.fileUpload">
+          <h-button>Browse...</h-button>
+        </h-file-uploader>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required for="durationInp" slot="labelContent">Time Picker:</h-label>
+        <h-time-picker id="durationInp" name="durationInp" format-pattern="hh:mm:ss" x-model="form.timePicker"></h-time-picker>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required slot="labelContent" for="rbGroup">Checkbox:</h-label>
+        <h-checkbox id="rbGroup" class="margin--density-aware" name="rbGroup" text="Here comes your checkbox text" x-model="form.checkbox"></h-checkbox>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required slot="labelContent" for="swGroup">Switch:</h-label>
+        <h-switch id="swGrou" class="margin--fixed" x-model="form.switch"></h-switch>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required slot="labelContent" for="rbGroup">Radios:</h-label>
+
+        <div role="radiogroup" class="margin--density-aware">
+          <h-radio-button text="With Text" name="test" value="with-text" x-model="form.radio"></h-radio-button>
+          <h-radio-button text="Without Text" name="test" value="without-text" x-model="form.radio"></h-radio-button>
+        </div>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required for="countrySel" slot="labelContent">Select:</h-label>
+        <h-select id="countrySel" name="countrySel" accessible-name-ref="countryLbl" x-model="form.select">
+          <h-option>Australia</h-option>
+          <h-option>Germany</h-option>
+          <h-option>England</h-option>
+        </h-select>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required for="multi-input" slot="labelContent">MultiInput:</h-label>
+        <h-multi-input placeholder="Start typing a name" show-suggestions @change="addMultiInput($event)" @token-delete="removeMultiInput($event)">
+          <h-suggestion-item text="Alex"></h-suggestion-item>
+          <h-suggestion-item text="Boris"></h-suggestion-item>
+          <h-suggestion-item text="Christopher"></h-suggestion-item>
+          <h-suggestion-item text="Denis"></h-suggestion-item>
+          <h-suggestion-item text="Evgeni"></h-suggestion-item>
+          <h-suggestion-item text="Felix"></h-suggestion-item>
+          <div slot="valueStateMessage">Name is already in the list</div>
+        </h-multi-input>
+      </h-form-item>
+    </h-form>
+
+    <h-button type="submit" slot="endContent" @click="submit">Submit</h-button>
+
+    <h-dialog id="formResultDialog" header-text="Form Json">
+      <h-text><pre x-text="formResult"></pre></h-text>
+      <h-toolbar slot="footer">
+        <h-toolbar-button class="dialogCloser" design="Emphasized" text="OK" @click="closeDialog"></h-toolbar-button>
+      </h-toolbar>
+    </h-dialog>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('demoPage', () => ({
+          form: {
+            input: 'input text value',
+            textarea: 'Text area value',
+            fileUpload: undefined,
+            timePicker: '12:21:12',
+            checkbox: true,
+            radio: undefined,
+            switch: true,
+            select: 'England',
+            multiInput: [],
+          },
+          formResult: '',
+          addMultiInput(event) {
+            this.form.multiInput.push(event.target.value);
+            event.target.value = '';
+            console.log(this.form.multiInput);
+          },
+          removeMultiInput(event) {
+            if (event.removed) {
+              event.removed.forEach((token) => {
+                const index = this.form.multiInput.indexOf(token);
+                if (index > -1) {
+                  this.form.multiInput.splice(index, 1);
+                }
+              });
+            }
+            console.log(this.form.multiInput);
+          },
+          submit() {
+            this.formResult = JSON.stringify(this.form, null, 2);
+            formResultDialog.open = true;
+          },
+          closeDialog() {
+            formResultDialog.open = false;
+          },
+        }));
+      });
+    </script>
+  </body>
+</html>
