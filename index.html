@@ -33,6 +33,21 @@
       </h-form-item>
 
       <h-form-item>
+        <h-label required for="datePick" slot="labelContent">Date Picker:</h-label>
+        <h-date-picker id="datePick" name="datePick" format-pattern="YYYY-MM-dd" x-model="form.datePicker"></h-date-picker>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required for="dateRangePick" slot="labelContent">Date Range Picker:</h-label>
+        <h-daterange-picker id="dateRangePick" name="dateRangePick" format-pattern="YYYY-MM-dd" x-model="form.dateRangePicker"></h-daterange-picker>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label required for="dateTimePick" slot="labelContent">Date Time Picker:</h-label>
+        <h-datetime-picker id="dateTimePick" name="dateTimePick" format-pattern="YYYY-MM-dd hh:mm" x-model="form.dateTimePicker"></h-datetime-picker>
+      </h-form-item>
+
+      <h-form-item>
         <h-label required slot="labelContent" for="rbGroup">Checkbox:</h-label>
         <h-checkbox id="rbGroup" class="margin--density-aware" name="rbGroup" text="Here comes your checkbox text" x-model="form.checkbox"></h-checkbox>
       </h-form-item>
@@ -91,6 +106,9 @@
             textarea: 'Text area value',
             fileUpload: undefined,
             timePicker: '12:21:12',
+            datePicker: '2025-02-21',
+            dateRangePicker: '2025-02-03 - 2025-02-17',
+            dateTimePicker: '2025-02-12 12:06',
             checkbox: true,
             radio: undefined,
             switch: true,

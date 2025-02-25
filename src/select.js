@@ -26,10 +26,10 @@ export default class HSelect extends Select {
       const intervalID = setInterval(() => {
         if (this._x_model) {
           clearInterval(intervalID);
-          if (this.model.modifiers.fill) {
+          if (this.model.modifiers.fill && !this._x_model.get()) {
             this._x_model.set(this.getAttribute('value'));
             this.model.modifiers.fill = false;
-          }
+          } else this.model.modifiers.fill = false;
         }
       }, 1);
     }

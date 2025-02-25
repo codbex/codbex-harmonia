@@ -33,11 +33,11 @@ export default class HInput extends Input {
             this._x_removeModelListeners['default']();
             delete this._x_removeModelListeners['default'];
           }
-          if (this.model.modifiers.fill !== undefined) {
+          if (this.model.modifiers.fill !== undefined && !this._x_model.get()) {
             this.value = this.model.modifiers.fill;
             this._x_model.set(this.value);
             this.model.modifiers.fill = undefined;
-          }
+          } else this.model.modifiers.fill = undefined;
           this.addEventListener('input', this.valueChange);
         }
       }, 1);

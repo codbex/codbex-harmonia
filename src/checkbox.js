@@ -45,9 +45,8 @@ export default class HCheckBox extends CheckBox {
             this._x_removeModelListeners['default']();
             delete this._x_removeModelListeners['default'];
           }
-          if (this.model.modifiers.fill !== undefined) {
+          if (this.model.modifiers.fill !== undefined && (this._x_model.get() === undefined || this._x_model.get() === null || this._x_model.get() === '')) {
             this._x_model.set(this.model.modifiers.fill);
-            this.model.modifiers.fill = undefined;
           } else if (this.hasAttribute('value')) {
             if (this.getAttribute('value') === this._x_model.get()) {
               this.checked = true;
@@ -59,6 +58,7 @@ export default class HCheckBox extends CheckBox {
               this.checked = true;
             } else this.checked = false;
           }
+          this.model.modifiers.fill = undefined;
           this.addEventListener('change', this.valueChange);
         }
       }, 1);

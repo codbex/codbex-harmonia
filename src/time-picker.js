@@ -3,28 +3,51 @@ import TimePicker from '@ui5/webcomponents/dist/TimePicker.js';
 export default class HTimePicker extends TimePicker {
   constructor() {
     super();
+    this.model = {
+      init: false,
+      modifiers: {
+        // Supported modifiers
+        fill: undefined,
+      },
+    };
+    for (const attr of this.attributes) {
+      if (attr.name.startsWith('x-model')) {
+        this.model.init = true;
+        if (attr.name.includes('.fill') && this.hasAttribute('value')) {
+          this.model.modifiers.fill = this.getAttribute('value');
+        }
+        break;
+      }
+    }
   }
 
   valueChange() {
     this._x_model.set(this.value);
   }
 
-  inputChange(value, valid) {
-    if (valid) {
-      this._x_model.set(this.value);
-    }
-  }
-
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('change', this.valueChange);
-    this.addEventListener('input', this.inputChange);
+    if (this.model.init) {
+      const intervalID = setInterval(() => {
+        if (this._x_model) {
+          clearInterval(intervalID);
+          if (this._x_removeModelListeners['default']) {
+            this._x_removeModelListeners['default']();
+            delete this._x_removeModelListeners['default'];
+          }
+          if (this.model.modifiers.fill !== undefined && !this._x_model.get()) {
+            this._x_model.set(this.model.modifiers.fill);
+            this.model.modifiers.fill = undefined;
+          } else this.model.modifiers.fill = undefined;
+          this.addEventListener('change', this.valueChange);
+        }
+      }, 1);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('change', this.valueChange);
-    this.removeEventListener('input', this.inputChange);
   }
 }
 

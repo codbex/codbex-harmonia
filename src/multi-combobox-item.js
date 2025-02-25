@@ -6,4 +6,4 @@ export default class HMultiComboBoxItem extends MultiComboBoxItem {
   }
 }
 
-customElements.define('h-multi-combobox-item', HMultiComboBoxItem);
+customElements.define('h-mcb-item', HMultiComboBoxItem);
