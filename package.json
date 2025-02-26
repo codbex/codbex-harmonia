@@ -1,12 +1,15 @@
 {
-  "name": "harmonia",
-  "private": true,
-  "version": "0.0.1",
+  "name": "@codbex/harmonia",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/codbex/codbex-harmonia.git",
+    "type": "git"
+  },
   "type": "module",
   "main": "dist/harmonia.umd.js",
-  "module": "dist/harmonia.es.js",
+  "module": "dist/harmonia.umd.js",
   "files": [
-    "dist"
+    "dist/"
   ],
   "scripts": {
     "dev": "vite",
