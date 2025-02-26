@@ -48,6 +48,20 @@
       </h-form-item>
 
       <h-form-item>
+        <h-label for="dateTimePick" slot="labelContent">Multi Combobox:</h-label>
+        <h-multi-combobox placeholder="Type your value" show-select-all x-model="form.multiCombo">
+          <h-mcb-item text="Albania" value="albania"></h-mcb-item>
+          <h-mcb-item text="Argentina" value="argentina"></h-mcb-item>
+          <h-mcb-item text="Bulgaria" value="bulgaria"></h-mcb-item>
+          <h-mcb-item text="Denmark" value="denmark"></h-mcb-item>
+          <h-mcb-item text="England" value="england"></h-mcb-item>
+          <h-mcb-item text="Germany" value="germany"></h-mcb-item>
+          <h-mcb-item text="Philippines" value="philippines"></h-mcb-item>
+          <h-mcb-item text="Portugal" value="portugal"></h-mcb-item>
+        </h-multi-combobox>
+      </h-form-item>
+
+      <h-form-item>
         <h-label required slot="labelContent" for="rbGroup">Checkbox:</h-label>
         <h-checkbox id="rbGroup" class="margin--density-aware" name="rbGroup" text="Here comes your checkbox text" x-model="form.checkbox"></h-checkbox>
       </h-form-item>
@@ -76,8 +90,21 @@
       </h-form-item>
 
       <h-form-item>
-        <h-label required for="multi-input" slot="labelContent">MultiInput:</h-label>
-        <h-multi-input placeholder="Start typing a name" show-suggestions @change="addMultiInput($event)" @token-delete="removeMultiInput($event)">
+        <h-label for="MultiInput" slot="labelContent">MultiInput (no model):</h-label>
+        <h-multi-input id="MultiInput" placeholder="Start typing a name" show-suggestions @change="addMultiInput($event)" @token-delete="removeMultiInput($event)">
+          <h-suggestion-item text="Alex"></h-suggestion-item>
+          <h-suggestion-item text="Boris"></h-suggestion-item>
+          <h-suggestion-item text="Christopher"></h-suggestion-item>
+          <h-suggestion-item text="Denis"></h-suggestion-item>
+          <h-suggestion-item text="Evgeni"></h-suggestion-item>
+          <h-suggestion-item text="Felix"></h-suggestion-item>
+          <div slot="valueStateMessage">Name is already in the list</div>
+        </h-multi-input>
+      </h-form-item>
+
+      <h-form-item>
+        <h-label for="multi-input-model" slot="labelContent">MultiInput (model):</h-label>
+        <h-multi-input id="multi-input-model" placeholder="Start typing a name" show-suggestions x-model="form.multiInputModel">
           <h-suggestion-item text="Alex"></h-suggestion-item>
           <h-suggestion-item text="Boris"></h-suggestion-item>
           <h-suggestion-item text="Christopher"></h-suggestion-item>
@@ -109,28 +136,39 @@
             datePicker: '2025-02-21',
             dateRangePicker: '2025-02-03 - 2025-02-17',
             dateTimePicker: '2025-02-12 12:06',
+            multiCombo: [],
             checkbox: true,
             radio: undefined,
             switch: true,
             select: 'England',
             multiInput: [],
+            multiInputModel: [],
           },
           formResult: '',
           addMultiInput(event) {
+            if (!event.target.value) return;
+            const isDuplicate = event.target.tokens.some((token) => token.text === event.target.value);
+            if (isDuplicate) {
+              event.target.valueState = 'Negative';
+              setTimeout(() => {
+                event.target.valueState = 'None';
+              }, 2000);
+              return;
+            }
+            event.target.appendChild(MultiInput.createTokenFromText(event.target.value));
             this.form.multiInput.push(event.target.value);
             event.target.value = '';
-            console.log(this.form.multiInput);
           },
           removeMultiInput(event) {
-            if (event.removed) {
-              event.removed.forEach((token) => {
-                const index = this.form.multiInput.indexOf(token);
-                if (index > -1) {
-                  this.form.multiInput.splice(index, 1);
-                }
+            const tokens = event.detail?.tokens;
+
+            if (tokens) {
+              tokens.forEach((token) => {
+                const index = this.form.multiInput.indexOf(token['text']);
+                if (index > -1) this.form.multiInput.splice(index, 1);
+                token.remove();
               });
             }
-            console.log(this.form.multiInput);
           },
           submit() {
             this.formResult = JSON.stringify(this.form, null, 2);

@@ -4,7 +4,7 @@ export default class HCheckBox extends CheckBox {
   constructor() {
     super();
     this.type = 'checkbox';
-    this.model = {
+    this._model = {
       // Array model not supported
       init: false,
       modifiers: {
@@ -14,12 +14,12 @@ export default class HCheckBox extends CheckBox {
     };
     for (const attr of this.attributes) {
       if (attr.name.startsWith('x-model')) {
-        this.model.init = true;
+        this._model.init = true;
         if (attr.name.includes('.fill')) {
           if (this.hasAttribute('value')) {
-            this.model.modifiers.fill = this.getAttribute('value');
+            this._model.modifiers.fill = this.getAttribute('value');
             this.checked = true;
-          } else this.model.modifiers.fill = this.hasAttribute('checked');
+          } else this._model.modifiers.fill = this.hasAttribute('checked');
         }
         break;
       }
@@ -37,7 +37,7 @@ export default class HCheckBox extends CheckBox {
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.model.init) {
+    if (this._model.init) {
       const intervalID = setInterval(() => {
         if (this._x_model) {
           clearInterval(intervalID);
@@ -45,8 +45,8 @@ export default class HCheckBox extends CheckBox {
             this._x_removeModelListeners['default']();
             delete this._x_removeModelListeners['default'];
           }
-          if (this.model.modifiers.fill !== undefined && (this._x_model.get() === undefined || this._x_model.get() === null || this._x_model.get() === '')) {
-            this._x_model.set(this.model.modifiers.fill);
+          if (this._model.modifiers.fill !== undefined && (this._x_model.get() === undefined || this._x_model.get() === null || this._x_model.get() === '')) {
+            this._x_model.set(this._model.modifiers.fill);
           } else if (this.hasAttribute('value')) {
             if (this.getAttribute('value') === this._x_model.get()) {
               this.checked = true;
@@ -58,7 +58,7 @@ export default class HCheckBox extends CheckBox {
               this.checked = true;
             } else this.checked = false;
           }
-          this.model.modifiers.fill = undefined;
+          this._model.modifiers.fill = undefined;
           this.addEventListener('change', this.valueChange);
         }
       }, 1);

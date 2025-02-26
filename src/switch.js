@@ -4,7 +4,7 @@ export default class HSwitch extends Switch {
   constructor() {
     super();
     this.type = 'checkbox';
-    this.model = {
+    this._model = {
       init: false,
       modifiers: {
         // Supported modifiers
@@ -13,9 +13,9 @@ export default class HSwitch extends Switch {
     };
     for (const attr of this.attributes) {
       if (attr.name.startsWith('x-model')) {
-        this.model.init = true;
+        this._model.init = true;
         if (attr.name.includes('.fill')) {
-          this.model.modifiers.fill = this.hasAttribute('checked');
+          this._model.modifiers.fill = this.hasAttribute('checked');
         }
         break;
       }
@@ -28,7 +28,7 @@ export default class HSwitch extends Switch {
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.model.init) {
+    if (this._model.init) {
       this.addEventListener('change', this.valueChange);
       const intervalID = setInterval(() => {
         if (this._x_model) {
@@ -37,14 +37,14 @@ export default class HSwitch extends Switch {
             this._x_removeModelListeners['default']();
             delete this._x_removeModelListeners['default'];
           }
-          if (this.model.modifiers.fill !== undefined && (this._x_model.get() === undefined || this._x_model.get() === null)) {
-            this._x_model.set(this.model.modifiers.fill);
+          if (this._model.modifiers.fill !== undefined && (this._x_model.get() === undefined || this._x_model.get() === null)) {
+            this._x_model.set(this._model.modifiers.fill);
           } else {
             if (this._x_model.get()) {
               this.checked = true;
             } else this.checked = false;
           }
-          this.model.modifiers.fill = undefined;
+          this._model.modifiers.fill = undefined;
           this.addEventListener('change', this.valueChange);
         }
       }, 1);

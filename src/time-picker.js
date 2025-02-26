@@ -3,7 +3,7 @@ import TimePicker from '@ui5/webcomponents/dist/TimePicker.js';
 export default class HTimePicker extends TimePicker {
   constructor() {
     super();
-    this.model = {
+    this._model = {
       init: false,
       modifiers: {
         // Supported modifiers
@@ -12,9 +12,9 @@ export default class HTimePicker extends TimePicker {
     };
     for (const attr of this.attributes) {
       if (attr.name.startsWith('x-model')) {
-        this.model.init = true;
+        this._model.init = true;
         if (attr.name.includes('.fill') && this.hasAttribute('value')) {
-          this.model.modifiers.fill = this.getAttribute('value');
+          this._model.modifiers.fill = this.getAttribute('value');
         }
         break;
       }
@@ -27,7 +27,7 @@ export default class HTimePicker extends TimePicker {
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.model.init) {
+    if (this._model.init) {
       const intervalID = setInterval(() => {
         if (this._x_model) {
           clearInterval(intervalID);
@@ -35,10 +35,10 @@ export default class HTimePicker extends TimePicker {
             this._x_removeModelListeners['default']();
             delete this._x_removeModelListeners['default'];
           }
-          if (this.model.modifiers.fill !== undefined && !this._x_model.get()) {
-            this._x_model.set(this.model.modifiers.fill);
-            this.model.modifiers.fill = undefined;
-          } else this.model.modifiers.fill = undefined;
+          if (this._model.modifiers.fill !== undefined && !this._x_model.get()) {
+            this._x_model.set(this._model.modifiers.fill);
+            this._model.modifiers.fill = undefined;
+          } else this._model.modifiers.fill = undefined;
           this.addEventListener('change', this.valueChange);
         }
       }, 1);
