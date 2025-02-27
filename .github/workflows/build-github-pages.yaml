@@ -26,6 +26,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
+          name: demo-page
           path: |
             dist
             index.html
