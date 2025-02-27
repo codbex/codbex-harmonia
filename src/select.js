@@ -12,9 +12,7 @@ export default class HSelect extends Select {
     for (const attr of this.attributes) {
       if (attr.name.startsWith('x-model')) {
         this._model.init = true;
-        if (attr.name.includes('.fill') && this.hasAttribute('value')) {
-          this._model.modifiers.fill = true;
-        }
+        this._model.modifiers.fill = attr.name.includes('.fill') && this.hasAttribute('value');
         break;
       }
     }

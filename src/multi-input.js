@@ -1,13 +1,6 @@
 import MultiInput from '@ui5/webcomponents/dist/MultiInput.js';
 
 export default class HMultiInput extends MultiInput {
-  createTokenFromText(text) {
-    let token = document.createElement('h-token');
-    token.setAttribute('text', text);
-    token.setAttribute('slot', 'tokens');
-    return token;
-  }
-
   constructor() {
     super();
     this._model = {
@@ -22,6 +15,13 @@ export default class HMultiInput extends MultiInput {
         break;
       }
     }
+  }
+
+  createTokenFromText(text) {
+    let token = document.createElement('h-token');
+    token.setAttribute('text', text);
+    token.setAttribute('slot', 'tokens');
+    return token;
   }
 
   valueChange(event) {

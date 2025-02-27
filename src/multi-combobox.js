@@ -12,9 +12,7 @@ export default class HMultiComboBox extends MultiComboBox {
     for (const attr of this.attributes) {
       if (attr.name.startsWith('x-model')) {
         this._model.init = true;
-        if (attr.name.includes('.fill')) {
-          this._model.modifiers.fill = true;
-        }
+        this._model.modifiers.fill = attr.name.includes('.fill');
         break;
       }
     }

@@ -36,8 +36,8 @@ export default class HInput extends Input {
           if (this._model.modifiers.fill !== undefined && !this._x_model.get()) {
             this.value = this._model.modifiers.fill;
             this._x_model.set(this.value);
-            this._model.modifiers.fill = undefined;
-          } else this._model.modifiers.fill = undefined;
+          }
+          this._model.modifiers.fill = undefined;
           this.addEventListener('input', this.valueChange);
         }
       }, 1);
