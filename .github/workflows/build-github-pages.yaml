@@ -26,7 +26,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./github-pages
+          path: ./github_pages
 
   deploy:
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
