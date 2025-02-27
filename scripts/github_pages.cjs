@@ -2,20 +2,21 @@
 
 var fs = require('fs');
 
-mkdir('github_pages');
-mkdir('github_pages/dist');
+mkdir('./github_pages/dist');
 
 copyFile('index.html', 'github_pages');
 copyFile('dist/harmonia.umd.js', 'github_pages');
 
 function mkdir(dir) {
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+    const result = fs.mkdirSync(dir, { recursive: true });
+    if (result) {
+      console.info(`Directory '${dir}' created`);
+    }
   }
 }
 
 function copyFile(path, to) {
-  fs.copyFile(`./${path}`, `${to}/${path}`, (err) => {
-    if (err) throw err;
-  });
+  fs.copyFileSync(`./${path}`, `${to}/${path}`);
+  console.info(`${path} copied to ${to}`);
 }
