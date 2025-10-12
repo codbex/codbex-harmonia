@@ -28,34 +28,34 @@ import progress from './components/progress';
 import pagination from './components/pagination';
 import tabs from './components/tabs';
 
-document.addEventListener('alpine:init', () => {
-    window.Alpine.plugin(accordion);
-    window.Alpine.plugin(button);
-    window.Alpine.plugin(input);
-    window.Alpine.plugin(card);
-    window.Alpine.plugin(label);
-    window.Alpine.plugin(textarea);
-    window.Alpine.plugin(checkbox);
-    window.Alpine.plugin(popover);
-    window.Alpine.plugin(avatar);
-    window.Alpine.plugin(badge);
-    window.Alpine.plugin(command);
-    window.Alpine.plugin(select);
-    window.Alpine.plugin(alert);
-    window.Alpine.plugin(radio);
-    window.Alpine.plugin(range);
-    window.Alpine.plugin(_switch);
-    window.Alpine.plugin(sidebar);
-    window.Alpine.plugin(separator);
-    window.Alpine.plugin(skeleton);
-    window.Alpine.plugin(collapsible);
-    window.Alpine.plugin(tile);
-    window.Alpine.plugin(tag);
-    window.Alpine.plugin(information);
-    window.Alpine.plugin(spinner);
-    window.Alpine.plugin(fieldset);
-    window.Alpine.plugin(tooltip);
-    window.Alpine.plugin(progress);
-    window.Alpine.plugin(pagination);
-    window.Alpine.plugin(tabs);
-});
+export {
+    accordion,
+    button,
+    input,
+    card,
+    label,
+    textarea,
+    checkbox,
+    popover,
+    avatar,
+    badge,
+    command,
+    select,
+    alert,
+    radio,
+    range,
+    _switch,
+    sidebar,
+    separator,
+    skeleton,
+    collapsible,
+    tile,
+    tag,
+    information,
+    spinner,
+    fieldset,
+    tooltip,
+    progress,
+    pagination,
+    tabs,
+};

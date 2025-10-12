@@ -1,0 +1,520 @@
+import { createElement, ChevronDown, Check, Search } from 'lucide';
+import { v4 as uuidv4 } from 'uuid';
+import { computePosition, offset, flip, shift, size, autoUpdate } from '@floating-ui/dom';
+
+const FilterType = Object.freeze({
+    'starts-with': 0,
+    contains: 1,
+    'contains-each': 2,
+    none: 3,
+});
+
+export default function (Alpine) {
+    Alpine.directive('h-select', (el, {}, { Alpine }) => {
+        el._select = Alpine.reactive({
+            id: undefined,
+            controls: `hsc${uuidv4()}`,
+            expanded: false,
+            model: undefined,
+            multiple: false,
+            label: [],
+            search: '',
+            filterType: FilterType['starts-with'],
+        });
+        el.setAttribute('data-slot', 'select');
+    });
+
+    Alpine.directive('h-select-trigger', (el, {}, { effect, cleanup, Alpine }) => {
+        const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
+
+        if (!select) {
+            console.error('h-select-trigger must be inside an h-select element');
+            return;
+        } else if (el.hasOwnProperty('_x_model')) {
+            select._select.multiple = Array.isArray(el._x_model.get());
+            select._select.model = el._x_model.get();
+        }
+        el.setAttribute('type', 'button');
+
+        const selectValue = document.createElement('span');
+        selectValue.setAttribute('data-slot', 'select-value');
+        selectValue.classList.add('pointer-events-none');
+
+        function getPlaceholder() {
+            if (!el.value) {
+                const value = el.getAttribute('placeholder');
+                if (value) {
+                    selectValue.innerText = value;
+                    selectValue.classList.add('text-muted-foreground');
+                } else {
+                    selectValue.classList.remove('text-muted-foreground');
+                }
+            }
+        }
+
+        getPlaceholder();
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes') {
+                    if (mutation.attributeName === 'value') {
+                        el.dispatchEvent(new Event('change', { bubbles: true }));
+                        if (el.value) selectValue.classList.remove('text-muted-foreground');
+                    } else if (mutation.attributeName === 'placeholder' && !select._select.label.length) {
+                        getPlaceholder();
+                    }
+                }
+            });
+        });
+
+        observer.observe(el, { attributes: true });
+
+        effect(() => {
+            if (select._select.label.length === 1) {
+                selectValue.innerText = select._select.label[0];
+            } else if (select._select.label.length > 1) {
+                selectValue.innerText = select._select.label.join(', ');
+            } else {
+                getPlaceholder();
+            }
+        });
+
+        el.classList.add(
+            '[&>*]:pointer-events-none',
+            'cursor-pointer',
+            'border-input',
+            'focus-visible:border-ring',
+            'focus-visible:ring-ring/50',
+            'aria-invalid:ring-negative/20',
+            'dark:aria-invalid:ring-negative/40',
+            'aria-invalid:border-negative',
+            'hover:bg-secondary-hover',
+            'active:bg-secondary-active',
+            'flex',
+            'w-full',
+            'items-center',
+            'justify-between',
+            'gap-2',
+            'rounded-control',
+            'border',
+            'bg-input-inner',
+            'px-3',
+            'text-sm',
+            'whitespace-nowrap',
+            'shadow-control',
+            'transition-[color,box-shadow]',
+            'outline-none',
+            'focus-visible:ring-[3px]',
+            'disabled:cursor-not-allowed',
+            'disabled:opacity-50',
+            '*:data-[slot=select-value]:line-clamp-1',
+            '*:data-[slot=select-value]:flex',
+            '*:data-[slot=select-value]:items-center',
+            '*:data-[slot=select-value]:gap-2',
+            '[&_svg]:pointer-events-none',
+            '[&_svg]:shrink-0',
+            "[&_svg:not([class*='size-'])]:size-4",
+            '[&_svg]:size-4',
+            '[&_svg]:opacity-50',
+            '[&[data-state=open]>svg]:rotate-180'
+        );
+        el.setAttribute('data-slot', 'select-trigger');
+
+        if (el.hasAttribute('id')) {
+            select._select.id = el.getAttribute('id');
+        } else {
+            select._select.id = `hs${uuidv4()}`;
+            el.setAttribute('id', select._select.id);
+        }
+        el.setAttribute('aria-controls', select._select.controls);
+        el.setAttribute('aria-haspopup', 'listbox');
+        el.setAttribute('aria-autocomplete', 'none');
+        el.setAttribute('role', 'combobox');
+
+        const sizes = {
+            default: ['h-9', 'py-2'],
+            xs: ['h-6.5', 'py-[0.188rem]'],
+            sm: ['h-8', 'py-1.5'],
+        };
+
+        function setSize(size) {
+            for (const [_, value] of Object.entries(sizes)) {
+                el.classList.remove(...value);
+            }
+            if (sizes.hasOwnProperty(size)) {
+                el.classList.add(...sizes[size]);
+            }
+        }
+        if (!el.hasAttribute('data-size')) el.setAttribute('data-size', 'default');
+        setSize(el.getAttribute('data-size'));
+
+        effect(() => {
+            el.setAttribute('data-state', select._select.expanded ? 'open' : 'closed');
+            el.setAttribute('aria-expanded', select._select.expanded);
+        });
+
+        const close = () => {
+            select._select.expanded = false;
+            top.removeEventListener('click', close);
+        };
+
+        let content;
+        let options;
+
+        const shiftFocus = (event) => {
+            if (event.key === 'ArrowDown') {
+                for (let o = 0; o < options.length; o++) {
+                    if (options[o] === document.activeElement) {
+                        if (o < options.length - 1) {
+                            options[o + 1].focus();
+                        } else options[0].focus();
+                        return;
+                    }
+                }
+                options[0].focus();
+            } else if (event.key === 'ArrowUp') {
+                for (let o = options.length - 1; o >= 0; o--) {
+                    if (options[o] === document.activeElement) {
+                        if (o !== 0) {
+                            options[o - 1].focus();
+                        } else options[options.length - 1].focus();
+                        return;
+                    }
+                }
+                options[options.length - 1].focus();
+            } else if (event.key === 'Escape' || event.key === 'Enter') {
+                handler();
+                el.focus();
+            } else if (event.key === 'Tab') {
+                handler();
+            }
+        };
+
+        const handler = () => {
+            select._select.expanded = !select._select.expanded;
+            if (select._select.expanded) {
+                if (!content) content = document.getElementById(select._select.controls);
+                options = content.querySelectorAll('[role=option]');
+            }
+            Alpine.nextTick(() => {
+                if (select._select.expanded) {
+                    top.addEventListener('click', close);
+                    el.parentElement.addEventListener('keydown', shiftFocus);
+                } else {
+                    top.removeEventListener('click', close);
+                    el.parentElement.removeEventListener('keydown', shiftFocus);
+                    options = null;
+                }
+            });
+        };
+
+        el.addEventListener('click', handler);
+
+        const chevronDown = createElement(ChevronDown, {
+            class: ['opacity-50 size-4 transition-transform duration-200'],
+            width: '16',
+            height: '16',
+            'aria-hidden': true,
+            role: 'presentation',
+        });
+
+        el.appendChild(selectValue);
+        el.appendChild(chevronDown);
+
+        cleanup(() => {
+            el.removeEventListener('click', handler);
+            el.parentElement.removeEventListener('keydown', shiftFocus);
+            top.removeEventListener('click', close);
+            observer.disconnect();
+        });
+    });
+
+    Alpine.directive('h-select-content', (el, {}, { effect, Alpine }) => {
+        const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
+        if (!select) {
+            console.error('h-select-content must be inside an h-select element');
+            return;
+        }
+        el.classList.add('absolute', 'bg-popover', 'text-popover-foreground', 'data-[state=closed]:hidden', 'p-1', 'top-0', 'left-0', 'z-50', 'min-w-[1rem]', 'overflow-x-hidden', 'overflow-y-auto', 'rounded-control', 'border', 'shadow-md');
+        el.setAttribute('data-slot', 'select-content');
+        el.setAttribute('role', 'listbox');
+        el.setAttribute('role', 'presentation');
+        el.setAttribute('id', select._select.controls);
+        el.setAttribute('tabindex', '-1');
+        el.setAttribute('aria-labelledby', select._select.id);
+        el.setAttribute('data-state', select._select.expanded ? 'open' : 'closed');
+
+        const control = document.getElementById(select._select.id);
+
+        let autoUpdateCleanup;
+
+        function updatePosition() {
+            computePosition(control, el, {
+                placement: el.getAttribute('data-align') || 'bottom-start',
+                middleware: [
+                    offset(4),
+                    flip(),
+                    shift({ padding: 4 }),
+                    size({
+                        apply({ availableWidth, availableHeight, elements }) {
+                            Object.assign(elements.floating.style, {
+                                maxWidth: `${Math.max(0, availableWidth) - 4}px`,
+                                maxHeight: `${Math.max(0, availableHeight) - 4}px`,
+                            });
+                        },
+                    }),
+                ],
+            }).then(({ x, y }) => {
+                Object.assign(el.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                });
+            });
+        }
+
+        effect(() => {
+            el.setAttribute('data-state', select._select.expanded ? 'open' : 'closed');
+            if (select._select.expanded) {
+                autoUpdateCleanup = autoUpdate(control, el, updatePosition);
+            } else {
+                if (autoUpdateCleanup) autoUpdateCleanup();
+                Object.assign(el.style, {
+                    left: '0px',
+                    top: '0px',
+                });
+            }
+        });
+    });
+
+    Alpine.directive('h-select-search', (el, { modifiers }, { effect, cleanup }) => {
+        const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
+        if (!select) {
+            console.error('h-select-search must be inside an h-select element');
+            return;
+        } else select._select.filterType = FilterType[modifiers[0]] ?? FilterType['starts-with'];
+        el.classList.add('flex', 'h-8', 'items-center', 'gap-2', 'border-b', 'px-2');
+        el.setAttribute('data-slot', 'select-search');
+        el.setAttribute('aria-autocomplete', select._select.filterType === FilterType.none ? 'both' : 'list');
+        el.setAttribute('aria-controls', select._select.controls);
+        el.setAttribute('aria-haspopup', 'listbox');
+        el.setAttribute('role', 'combobox');
+        el.setAttribute('autocomplete', 'off');
+        el.setAttribute('autocorrect', 'off');
+        el.setAttribute('spellcheck', 'false');
+        const searchIcon = createElement(Search, { class: ['size-4 shrink-0 opacity-50'], width: '16', height: '16', 'aria-hidden': true, role: 'presentation' });
+        const searchInput = document.createElement('input');
+        searchInput.setAttribute('type', 'text');
+        searchInput.setAttribute('data-slot', 'select-input');
+        searchInput.classList.add('placeholder:text-muted-foreground', 'flex', 'h-10', 'w-full', 'rounded-md', 'bg-transparent', 'py-3', 'text-sm', 'outline-hidden', 'disabled:cursor-not-allowed', 'disabled:opacity-50');
+        el.appendChild(searchIcon);
+        el.appendChild(searchInput);
+
+        function handler(event) {
+            if (event.type === 'keydown' && event.key === 'Escape') return;
+            event.stopPropagation();
+        }
+
+        el.addEventListener('click', handler);
+        el.addEventListener('keydown', handler);
+
+        if (modifiers[0] !== FilterType.none) {
+            function onInput() {
+                select._select.search = searchInput.value.toLowerCase();
+            }
+
+            searchInput.addEventListener('keyup', onInput);
+        }
+
+        effect(() => {
+            if (select._select.expanded) searchInput.focus({ preventScroll: true });
+            el.setAttribute('aria-expanded', select._select.expanded);
+        });
+
+        cleanup(() => {
+            el.removeEventListener('click', handler);
+            el.removeEventListener('keydown', handler);
+            if (modifiers[0] !== FilterType.none) searchInput.removeEventListener('keyup', onInput);
+        });
+    });
+
+    Alpine.directive('h-select-group', (el, {}, { effect }) => {
+        el.setAttribute('data-slot', 'select-group');
+        el._selectGroup = Alpine.reactive({
+            labelledby: undefined,
+        });
+
+        effect(() => {
+            if (el._selectGroup.labelledby) {
+                el.setAttribute('aria-labelledby', el._selectGroup.labelledby);
+            }
+        });
+    });
+
+    Alpine.directive('h-select-label', (el) => {
+        el.classList.add('text-muted-foreground', 'px-2', 'py-1.5', 'text-xs');
+        el.setAttribute('data-slot', 'select-label');
+
+        const selectGroup = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_selectGroup'));
+        if (selectGroup) {
+            const id = `hsl${uuidv4()}`;
+            el.setAttribute('id', id);
+            selectGroup._selectGroup.labelledby = id;
+        }
+    });
+
+    Alpine.directive('h-select-option', (el, { expression }, { effect, evaluateLater, cleanup }) => {
+        const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
+        if (!select) {
+            console.error('h-select-option must be inside an h-select element');
+            return;
+        }
+
+        el.classList.add(
+            'focus:bg-primary',
+            'focus:text-primary-foreground',
+            'hover:bg-primary',
+            'hover:text-primary-foreground',
+            "[&_svg:not([class*='text-'])]:text-muted-foreground",
+            "focus:[&_svg:not([class*='text-'])]:text-primary-foreground",
+            "hover:[&_svg:not([class*='text-'])]:text-primary-foreground",
+            'relative',
+            'flex',
+            'w-full',
+            'cursor-default',
+            'items-center',
+            'gap-2',
+            'rounded-control',
+            'py-1.5',
+            'pr-8',
+            'pl-2',
+            'text-sm',
+            'outline-hidden',
+            'select-none',
+            'data-[disabled]:pointer-events-none',
+            'data-[disabled]:opacity-50',
+            '[&_svg]:pointer-events-none',
+            '[&_svg]:shrink-0',
+            "[&_svg:not([class*='size-'])]:size-4",
+            '*:[span]:last:flex',
+            '*:[span]:last:items-center',
+            '*:[span]:last:gap-2'
+        );
+        el.setAttribute('data-slot', 'select-option');
+        el.setAttribute('tabindex', '-1');
+
+        const id = `hso${uuidv4()}`;
+        el.setAttribute('role', 'option');
+        el.setAttribute('aria-labelledby', id);
+
+        const indicatorEl = document.createElement('span');
+        const labelEl = document.createElement('span');
+        labelEl.setAttribute('id', id);
+        indicatorEl.classList.add('absolute', 'right-2', 'flex', 'size-3.5', 'items-center', 'justify-center', 'invisible');
+        indicatorEl.setAttribute('aria-hidden', 'true');
+        const check = createElement(Check, { class: ['size-4'], width: '16', height: '16', 'aria-hidden': true, role: 'presentation' });
+        indicatorEl.appendChild(check);
+
+        el.appendChild(indicatorEl);
+        el.appendChild(labelEl);
+
+        function getValue() {
+            if (el.hasOwnProperty('_x_bindings') && el._x_bindings.hasOwnProperty('value')) return el._x_bindings.value;
+            else return el.getAttribute('value');
+        }
+
+        const getLabel = evaluateLater(expression);
+        effect(() => {
+            getLabel((label) => {
+                if (select._select.multiple && select._select.model.includes(getValue())) {
+                    select._select.label[select._select.label.indexOf(labelEl.innerText)] = label;
+                } else if (select._select.model === getValue()) {
+                    select._select.label[0] = label;
+                }
+                labelEl.innerText = label;
+            });
+        });
+
+        effect(() => {
+            if (select._select.search) {
+                if (select._select.filterType === FilterType['starts-with']) {
+                    if (!labelEl.innerText.toLowerCase().startsWith(select._select.search)) {
+                        el.classList.add('hidden');
+                    } else el.classList.remove('hidden');
+                } else if (select._select.filterType === FilterType.contains) {
+                    if (!labelEl.innerText.toLowerCase().includes(select._select.search)) {
+                        el.classList.add('hidden');
+                    } else el.classList.remove('hidden');
+                } else if (select._select.filterType === FilterType['contains-each']) {
+                    const terms = select._select.search.split(' ');
+                    const label = labelEl.innerText.toLowerCase();
+                    if (!terms.every((term) => label.includes(term))) el.classList.add('hidden');
+                    else el.classList.remove('hidden');
+                } else {
+                    el.classList.remove('hidden');
+                }
+            } else el.classList.remove('hidden');
+        });
+
+        function setSelectedState(selected) {
+            if (selected) {
+                indicatorEl.classList.remove('invisible');
+                el.setAttribute('aria-selected', 'true');
+                if (!select._select.label.length) {
+                    select._select.label.push(labelEl.innerText);
+                } else if (!select._select.label.includes(labelEl.innerText)) {
+                    if (select._select.multiple) select._select.label.push(labelEl.innerText);
+                    else select._select.label[0] = labelEl.innerText;
+                }
+            } else {
+                indicatorEl.classList.add('invisible');
+                el.setAttribute('aria-selected', 'false');
+            }
+        }
+
+        function removeLabel() {
+            const lIndex = select._select.label.indexOf(labelEl.innerText);
+            if (lIndex > -1) select._select.label.splice(lIndex, 1);
+        }
+
+        effect(() => {
+            if (select._select.multiple) {
+                setSelectedState(select._select.model.includes(getValue()));
+            } else {
+                setSelectedState(select._select.model === getValue());
+            }
+        });
+
+        const handler = (event) => {
+            if ((event.type === 'keydown' && event.key === 'Enter') || event.type === 'click') {
+                if (select._select.multiple) {
+                    const vIndex = select._select.model.indexOf(getValue());
+                    if (vIndex > -1) {
+                        select._select.model.splice(vIndex, 1);
+                        removeLabel();
+                    } else {
+                        select._select.model.push(getValue());
+                    }
+                } else if (select._select.model !== getValue()) {
+                    select._select.model = getValue();
+                } else {
+                    select._select.model = '';
+                    removeLabel();
+                }
+            }
+        };
+
+        el.addEventListener('click', handler);
+        el.addEventListener('keydown', handler);
+
+        cleanup(() => {
+            el.removeEventListener('click', handler);
+            el.removeEventListener('keydown', handler);
+        });
+    });
+
+    Alpine.directive('h-select-separator', (el) => {
+        el.classList.add('bg-border', 'pointer-events-none', '-mx-1', 'my-1', 'h-px');
+        el.setAttribute('data-slot', 'select-separator');
+        el.setAttribute('aria-hidden', 'true');
+    });
+}

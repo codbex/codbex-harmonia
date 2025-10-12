@@ -3,9 +3,11 @@
 var fs = require('fs');
 
 mkdir('./github_pages/dist');
+mkdir('./github_pages/node_modules');
 
 copyFile('index.html', 'github_pages');
-copyFile('dist/harmonia.umd.js', 'github_pages');
+copyFile('dist/harmonia.min.js', 'github_pages');
+copyFile('node_modules', 'github_pages/node_modules');
 
 function mkdir(dir) {
   if (!fs.existsSync(dir)) {
@@ -17,6 +19,6 @@ function mkdir(dir) {
 }
 
 function copyFile(path, to) {
-  fs.copyFileSync(`./${path}`, `${to}/${path}`);
+  fs.cpSync(`./${path}`, `${to}/${path}`, { recursive: true });
   console.info(`${path} copied to ${to}`);
 }

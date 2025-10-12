@@ -1,28 +1,51 @@
 {
   "name": "@codbex/harmonia",
-  "version": "0.1.1",
+  "version": "0.2.0",
+  "description": "Harmonia UI",
   "repository": {
     "url": "https://github.com/codbex/codbex-harmonia.git",
     "type": "git"
   },
   "type": "module",
-  "main": "dist/harmonia.umd.js",
-  "module": "dist/harmonia.umd.js",
+  "main": "dist/harmonia.min.js",
+  "module": "dist/harmonia.esm.js",
+  "keywords": [],
+  "author": "StanGenchev",
+  "license": "EPL-2.0",
+  "contributors": [
+    {
+      "name": "Stan Genchev",
+      "email": "stan.genchev@codbex.com",
+      "url": "https://github.com/StanZGenchev"
+    }
+  ],
   "files": [
     "dist/"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "build:pages": "vite build && node ./scripts/github_pages.cjs"
+    "start": "npx http-server",
+    "build": "node scripts/build.cjs && npx @tailwindcss/cli -m -i src/styles/globals.css -o dist/harmonia.css",
+    "build:pages": "npm run build && node ./scripts/github_pages.cjs",
+    "tailwind": "npx @tailwindcss/cli -m -i src/styles/globals.css -o dist/harmonia.css -w",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md,html,yaml}\" --config ./.prettierrc",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md,html,yaml}\" --config ./.prettierrc"
   },
   "devDependencies": {
-    "vite": "^6.1.0"
+    "@tailwindcss/cli": "^4.1.13",
+    "@tailwindcss/postcss": "^4.1.13",
+    "alpinejs": "^3.15.0",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.9",
+    "http-server": "^14.1.1",
+    "postcss": "^8.5.6",
+    "postcss-loader": "^8.2.0",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.13"
   },
   "dependencies": {
-    "@ui5/webcomponents": "^2.7.3",
-    "@ui5/webcomponents-fiori": "^2.7.3",
-    "@ui5/webcomponents-icons": "^2.7.3"
+    "@floating-ui/dom": "^1.7.4",
+    "lucide": "^0.544.0",
+    "nouislider": "^15.8.1",
+    "uuid": "^13.0.0"
   }
 }
