@@ -1,140 +1,140 @@
 export default function (Alpine) {
-    Alpine.directive('h-button', (el, { modifiers }, { cleanup }) => {
-        el.classList.add(
-            'cursor-pointer',
-            'inline-flex',
-            'items-center',
-            'justify-center',
-            'gap-2',
-            'whitespace-nowrap',
-            'rounded-control',
-            'text-sm',
-            'font-medium',
-            'transition-all',
-            'disabled:pointer-events-none',
-            'disabled:opacity-50',
-            '[&_svg]:pointer-events-none',
-            "[&_svg:not([class*='size-'])]:size-4",
-            'shrink-0',
-            '[&_svg]:shrink-0',
-            'outline-none',
-            'focus-visible:border-ring',
-            'focus-visible:ring-ring/50',
-            'focus-visible:ring-[3px]',
-            'aria-invalid:ring-negative/20',
-            'dark:aria-invalid:ring-negative/40',
-            'aria-invalid:border-negative'
-        );
-        el.setAttribute('data-slot', 'button');
+  Alpine.directive('h-button', (el, { modifiers }, { cleanup }) => {
+    el.classList.add(
+      'cursor-pointer',
+      'inline-flex',
+      'items-center',
+      'justify-center',
+      'gap-2',
+      'whitespace-nowrap',
+      'rounded-control',
+      'text-sm',
+      'font-medium',
+      'transition-all',
+      'disabled:pointer-events-none',
+      'disabled:opacity-50',
+      '[&_svg]:pointer-events-none',
+      "[&_svg:not([class*='size-'])]:size-4",
+      'shrink-0',
+      '[&_svg]:shrink-0',
+      'outline-none',
+      'focus-visible:border-ring',
+      'focus-visible:ring-ring/50',
+      'focus-visible:ring-[3px]',
+      'aria-invalid:ring-negative/20',
+      'dark:aria-invalid:ring-negative/40',
+      'aria-invalid:border-negative'
+    );
+    el.setAttribute('data-slot', 'button');
 
-        const inGroup = modifiers.includes('group');
+    const inGroup = modifiers.includes('group');
 
-        const variants = {
-            default: ['bg-secondary', 'text-secondary-foreground', 'shadow-control', 'hover:bg-secondary-hover', 'active:bg-secondary-active', 'aria-pressed:bg-secondary-active'],
-            primary: ['bg-primary', 'text-primary-foreground', 'shadow-control', 'hover:bg-primary-hover', 'active:bg-primary-active', 'aria-pressed:bg-primary-active'],
-            positive: ['bg-positive', 'text-positive-foreground', 'shadow-control', 'hover:bg-positive-hover', 'active:bg-positive-active', 'aria-pressed:bg-positive-active'],
-            negative: ['bg-negative', 'text-negative-foreground', 'shadow-control', 'hover:bg-negative-hover', 'active:bg-negative-active', 'aria-pressed:bg-negative-active'],
-            warning: ['bg-warning', 'text-warning-foreground', 'shadow-control', 'hover:bg-warning-hover', 'active:bg-warning-active', 'aria-pressed:bg-warning-active'],
-            outline: ['border', 'bg-background', 'text-foreground', 'shadow-none', 'hover:bg-secondary', 'hover:text-secondary-foreground', 'active:bg-secondary-active', 'aria-pressed:bg-secondary-active'],
-            transparent: ['bg-transparent', 'text-foreground', 'shadow-none', 'hover:bg-secondary', 'hover:text-secondary-foreground', 'active:bg-secondary-active', 'aria-pressed:bg-secondary-active'],
-            link: ['text-primary', 'underline-offset-4', 'hover:underline'],
-        };
+    const variants = {
+      default: ['bg-secondary', 'text-secondary-foreground', 'shadow-control', 'hover:bg-secondary-hover', 'active:bg-secondary-active', 'aria-pressed:bg-secondary-active'],
+      primary: ['bg-primary', 'text-primary-foreground', 'shadow-control', 'hover:bg-primary-hover', 'active:bg-primary-active', 'aria-pressed:bg-primary-active'],
+      positive: ['bg-positive', 'text-positive-foreground', 'shadow-control', 'hover:bg-positive-hover', 'active:bg-positive-active', 'aria-pressed:bg-positive-active'],
+      negative: ['bg-negative', 'text-negative-foreground', 'shadow-control', 'hover:bg-negative-hover', 'active:bg-negative-active', 'aria-pressed:bg-negative-active'],
+      warning: ['bg-warning', 'text-warning-foreground', 'shadow-control', 'hover:bg-warning-hover', 'active:bg-warning-active', 'aria-pressed:bg-warning-active'],
+      outline: ['border', 'bg-background', 'text-foreground', 'shadow-none', 'hover:bg-secondary', 'hover:text-secondary-foreground', 'active:bg-secondary-active', 'aria-pressed:bg-secondary-active'],
+      transparent: ['bg-transparent', 'text-foreground', 'shadow-none', 'hover:bg-secondary', 'hover:text-secondary-foreground', 'active:bg-secondary-active', 'aria-pressed:bg-secondary-active'],
+      link: ['text-primary', 'underline-offset-4', 'hover:underline'],
+    };
 
-        const sizes = {
-            default: ['h-9', 'px-4', 'py-2', 'has-[>svg]:px-3'],
-            xs: inGroup ? ['h-6', 'gap-1', 'px-2', 'rounded-[calc(var(--radius)-5px)]', "[&>svg:not([class*='size-'])]:size-3.5", 'has-[>svg]:px-2'] : ['h-6.5', 'gap-1.5', 'px-2.5', 'has-[>svg]:px-2.5'],
-            sm: inGroup ? ['h-8', 'px-2.5', 'gap-1.5', 'rounded-md', 'has-[>svg]:px-2.5'] : ['h-8', 'gap-1.5', 'px-3', 'has-[>svg]:px-2.5'],
-            lg: ['h-10', 'px-6', 'has-[>svg]:px-4'],
-            'icon-xs': inGroup ? ['size-6', 'rounded-[calc(var(--radius)-5px)]', 'p-0', 'has-[>svg]:p-0'] : ['size-6.5'],
-            'icon-sm': inGroup ? ['size-8', 'p-0', 'has-[>svg]:p-0'] : ['size-8'],
-            icon: ['size-9'],
-            'icon-lg': ['size-10'],
-        };
+    const sizes = {
+      default: ['h-9', 'px-4', 'py-2', 'has-[>svg]:px-3'],
+      xs: inGroup ? ['h-6', 'gap-1', 'px-2', 'rounded-[calc(var(--radius)-5px)]', "[&>svg:not([class*='size-'])]:size-3.5", 'has-[>svg]:px-2'] : ['h-6.5', 'gap-1.5', 'px-2.5', 'has-[>svg]:px-2.5'],
+      sm: inGroup ? ['h-8', 'px-2.5', 'gap-1.5', 'rounded-md', 'has-[>svg]:px-2.5'] : ['h-8', 'gap-1.5', 'px-3', 'has-[>svg]:px-2.5'],
+      lg: ['h-10', 'px-6', 'has-[>svg]:px-4'],
+      'icon-xs': inGroup ? ['size-6', 'rounded-[calc(var(--radius)-5px)]', 'p-0', 'has-[>svg]:p-0'] : ['size-6.5'],
+      'icon-sm': inGroup ? ['size-8', 'p-0', 'has-[>svg]:p-0'] : ['size-8'],
+      icon: ['size-9'],
+      'icon-lg': ['size-10'],
+    };
 
-        function setVariant(variant) {
-            for (const [_, value] of Object.entries(variants)) {
-                el.classList.remove(...value);
-            }
-            if (variants.hasOwnProperty(variant)) el.classList.add(...variants[variant]);
+    function setVariant(variant) {
+      for (const [_, value] of Object.entries(variants)) {
+        el.classList.remove(...value);
+      }
+      if (variants.hasOwnProperty(variant)) el.classList.add(...variants[variant]);
+    }
+
+    function setSize(size) {
+      if (sizes.hasOwnProperty(size)) {
+        el.classList.add(...sizes[size]);
+        el.setAttribute('data-size', size);
+      }
+    }
+
+    setVariant(el.getAttribute('data-variant') ?? 'default');
+    if (inGroup) {
+      el.classList.remove('shadow-control', 'inline-flex');
+      el.classList.add('shadow-none', 'flex');
+      setSize(el.getAttribute('data-size') ?? 'xs');
+    } else setSize(el.getAttribute('data-size') ?? 'default');
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes') {
+          if (mutation.attributeName === 'data-variant') setVariant(el.getAttribute('data-variant') ?? 'default');
+          else if (mutation.attributeName === 'data-size') setSize(el.getAttribute('data-size') ?? (inGroup ? 'xs' : 'default'));
         }
-
-        function setSize(size) {
-            if (sizes.hasOwnProperty(size)) {
-                el.classList.add(...sizes[size]);
-                el.setAttribute('data-size', size);
-            }
-        }
-
-        setVariant(el.getAttribute('data-variant') ?? 'default');
-        if (inGroup) {
-            el.classList.remove('shadow-control', 'inline-flex');
-            el.classList.add('shadow-none', 'flex');
-            setSize(el.getAttribute('data-size') ?? 'xs');
-        } else setSize(el.getAttribute('data-size') ?? 'default');
-
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes') {
-                    if (mutation.attributeName === 'data-variant') setVariant(el.getAttribute('data-variant') ?? 'default');
-                    else if (mutation.attributeName === 'data-size') setSize(el.getAttribute('data-size') ?? (inGroup ? 'xs' : 'default'));
-                }
-            });
-        });
-
-        observer.observe(el, { attributes: true });
-
-        cleanup(() => {
-            observer.disconnect();
-        });
+      });
     });
 
-    Alpine.directive('h-button-group', (el) => {
-        el.classList.add(
-            'flex',
-            'w-fit',
-            'items-stretch',
-            '[&>*]:focus-visible:z-10',
-            '[&>*]:focus-visible:relative',
-            "[&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit",
-            '[&>input]:flex-1',
-            'has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-control',
-            'has-[>[data-slot=button-group]]:gap-2'
-        );
-        el.setAttribute('role', 'group');
-        el.setAttribute('data-slot', 'button-group');
-        const variants = {
-            horizontal: ['[&>*:not(:first-child)]:rounded-l-none', '[&>*:not(:first-child)]:border-l-0', '[&>*:not(:last-child)]:rounded-r-none'],
-            vertical: ['flex-col', '[&>*:not(:first-child)]:rounded-t-none', '[&>*:not(:first-child)]:border-t-0', '[&>*:not(:last-child)]:rounded-b-none'],
-        };
+    observer.observe(el, { attributes: true });
 
-        function setVariant(variant) {
-            for (const [_, value] of Object.entries(variants)) {
-                el.classList.remove(...value);
-            }
-            if (variants.hasOwnProperty(variant)) el.classList.add(...variants[variant]);
-        }
-
-        setVariant(el.getAttribute('data-orientation') ?? 'horizontal');
+    cleanup(() => {
+      observer.disconnect();
     });
+  });
 
-    Alpine.directive('h-button-group-text', (el) => {
-        el.classList.add('bg-muted', 'flex', 'items-center', 'gap-2', 'rounded-control', 'border', 'px-4', 'text-sm', 'font-medium', 'shadow-xs', '[&_svg]:pointer-events-none', "[&_svg:not([class*='size-'])]:size-4");
-        el.setAttribute('data-slot', 'button-group-text');
-    });
+  Alpine.directive('h-button-group', (el) => {
+    el.classList.add(
+      'flex',
+      'w-fit',
+      'items-stretch',
+      '[&>*]:focus-visible:z-10',
+      '[&>*]:focus-visible:relative',
+      "[&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit",
+      '[&>input]:flex-1',
+      'has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-control',
+      'has-[>[data-slot=button-group]]:gap-2'
+    );
+    el.setAttribute('role', 'group');
+    el.setAttribute('data-slot', 'button-group');
+    const variants = {
+      horizontal: ['[&>*:not(:first-child)]:rounded-l-none', '[&>*:not(:first-child)]:border-l-0', '[&>*:not(:last-child)]:rounded-r-none'],
+      vertical: ['flex-col', '[&>*:not(:first-child)]:rounded-t-none', '[&>*:not(:first-child)]:border-t-0', '[&>*:not(:last-child)]:rounded-b-none'],
+    };
 
-    Alpine.directive('h-button-group-separator', (el) => {
-        el.classList.add(
-            'bg-secondary-active',
-            'shrink-0',
-            'data-[orientation=horizontal]:h-px',
-            'data-[orientation=horizontal]:w-full',
-            'data-[orientation=vertical]:h-auto',
-            'data-[orientation=vertical]:w-px',
-            'relative',
-            '!m-0',
-            'self-stretch'
-        );
-        el.setAttribute('role', 'none');
-        el.setAttribute('data-slot', 'button-group-separator');
-    });
+    function setVariant(variant) {
+      for (const [_, value] of Object.entries(variants)) {
+        el.classList.remove(...value);
+      }
+      if (variants.hasOwnProperty(variant)) el.classList.add(...variants[variant]);
+    }
+
+    setVariant(el.getAttribute('data-orientation') ?? 'horizontal');
+  });
+
+  Alpine.directive('h-button-group-text', (el) => {
+    el.classList.add('bg-muted', 'flex', 'items-center', 'gap-2', 'rounded-control', 'border', 'px-4', 'text-sm', 'font-medium', 'shadow-xs', '[&_svg]:pointer-events-none', "[&_svg:not([class*='size-'])]:size-4");
+    el.setAttribute('data-slot', 'button-group-text');
+  });
+
+  Alpine.directive('h-button-group-separator', (el) => {
+    el.classList.add(
+      'bg-secondary-active',
+      'shrink-0',
+      'data-[orientation=horizontal]:h-px',
+      'data-[orientation=horizontal]:w-full',
+      'data-[orientation=vertical]:h-auto',
+      'data-[orientation=vertical]:w-px',
+      'relative',
+      '!m-0',
+      'self-stretch'
+    );
+    el.setAttribute('role', 'none');
+    el.setAttribute('data-slot', 'button-group-separator');
+  });
 }
