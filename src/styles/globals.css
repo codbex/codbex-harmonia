@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @import 'nouislider/dist/nouislider.min.css';
 @import './slider.css';
-/* @import 'vanilla-calendar-pro/styles/index.css'; */
 @source '../**/*.{ts,tsx,js,jsx}';
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -53,6 +52,11 @@
   --sidebar-secondary: oklch(0.9514 0.025 236.8242);
   --sidebar-secondary-foreground: oklch(0.3791 0.1378 265.5222);
   --sidebar-border: oklch(0.9276 0.0058 264.5313);
+
+  --table-header: oklch(0.9754 0.0011 197.14);
+  --table-header-foreground: oklch(0.3211 0 0);
+  --table-hover: oklch(0.9754 0.0011 197.14);
+  --table-hover-foreground: oklch(0.3211 0 0);
 
   --font-sans: Open Sans, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Merriweather, ui-serif, serif;
@@ -125,6 +129,11 @@
   --sidebar-secondary-foreground: oklch(0.8823 0.0571 254.1284);
   --sidebar-border: oklch(0.3715 0 0);
 
+  --table-header: oklch(0.9754 0.0011 197.14);
+  --table-header-foreground: oklch(0.3211 0 0);
+  --table-hover: oklch(0.9754 0.0011 197.14);
+  --table-hover-foreground: oklch(0.3211 0 0);
+
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
@@ -188,6 +197,11 @@
   --color-sidebar-secondary: var(--sidebar-secondary);
   --color-sidebar-secondary-foreground: var(--sidebar-secondary-foreground);
   --color-sidebar-border: var(--sidebar-border);
+
+  --color-table-header: var(--table-header);
+  --color-table-header-foreground: var(--table-header-foreground);
+  --color-table-hover: var(--table-hover);
+  --color-table-hover-foreground: var(--table-hover-foreground);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);

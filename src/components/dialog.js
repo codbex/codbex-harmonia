@@ -1,8 +1,36 @@
 export default function (Alpine) {
-  Alpine.directive('h-dialog-overlay', (el) => {
+  Alpine.directive('h-dialog-overlay', (el, {}, { cleanup }) => {
     el.classList.add('hidden', 'data-[open=true]:block', 'fixed', 'inset-0', 'z-50', 'bg-black/50');
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'dialog-overlay');
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-open' && el.getAttribute('data-open') === 'true') {
+          const inputs = el.getElementsByTagName('INPUT');
+          if (inputs.length) {
+            for (let i = 0; i < inputs.length; i++) {
+              if (inputs[i].autofocus) {
+                inputs[i].focus();
+                return;
+              }
+            }
+            inputs[0].focus();
+          } else {
+            const buttons = el.getElementsByTagName('BUTTON');
+            if (buttons.length) {
+              buttons[0].focus();
+            }
+          }
+        }
+      });
+    });
+
+    observer.observe(el, { attributes: true });
+
+    cleanup(() => {
+      observer.disconnect();
+    });
   });
 
   Alpine.directive('h-dialog', (el) => {
@@ -27,6 +55,12 @@ export default function (Alpine) {
     );
     el.setAttribute('role', 'dialog');
     el.setAttribute('data-slot', 'dialog');
+    if (!el.hasAttribute('aria-labelledby')) {
+      console.error('h-dialog: attribute "aria-labelledby" is missing');
+    }
+    if (!el.hasAttribute('aria-describedby')) {
+      console.error('h-dialog: attribute "aria-describedby" is missing');
+    }
   });
 
   Alpine.directive('h-dialog-header', (el) => {
