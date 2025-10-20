@@ -29,6 +29,7 @@ import pagination from './components/pagination';
 import tabs from './components/tabs';
 import dialog from './components/dialog';
 import table from './components/table';
+import menu from './components/menu';
 
 document.addEventListener('alpine:init', () => {
   window.Alpine.plugin(accordion);
@@ -62,4 +63,5 @@ document.addEventListener('alpine:init', () => {
   window.Alpine.plugin(tabs);
   window.Alpine.plugin(dialog);
   window.Alpine.plugin(table);
+  window.Alpine.plugin(menu);
 });

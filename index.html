@@ -231,6 +231,39 @@
         <div x-h-tooltip-content>Click to show</div>
       </div>
 
+      <div x-h-menu-area class="rounded-lg border border-dashed flex justify-center items-center" style="width: 100%; height: 200px">
+        Right click for context menu
+        <ul x-h-menu aria-label="context menu" x-data="{ checkbox: { autosave: true }, radioItems: [{ label: 'Radio 1', value: 'r1' }, { label: 'Radio 2', value: 'r2' }], radioSelected: 'r1' }">
+          <li x-h-menu-item>
+            <i data-lucide="save"></i>
+            Save
+            <span x-h-menu-item-secondary>Ctrl+S</span>
+          </li>
+          <li x-h-menu-item data-variant="negative">
+            <i data-lucide="trash"></i>
+            Delete
+            <span x-h-menu-item-secondary>Del</span>
+          </li>
+          <li x-h-menu-separator></li>
+          <div x-h-menu-label data-inset="true">Other items</div>
+          <li x-h-menu-item data-inset="true" id="submenu1">Menu Item 1</li>
+          <li x-h-menu-sub data-inset="true">
+            Submenu
+            <ul x-h-menu.sub aria-labelledby="submenu1">
+              <li x-h-menu-item>Subitem</li>
+            </ul>
+          </li>
+          <div x-h-menu-separator></div>
+          <div x-h-menu-label data-inset="true">Checkbox Items</div>
+          <div x-h-menu-checkbox-item x-model="checkbox.autosave" @change="console.log($event.target.value)">Auto-Save</div>
+          <div x-h-menu-separator></div>
+          <div x-h-menu-label data-inset="true">Radio Items</div>
+          <template x-for="radio in radioItems">
+            <li x-h-menu-radio-item="radio.value" name="rg1" x-model="radioSelected" @change="console.log(radioSelected)" x-text="radio.label"></li>
+          </template>
+        </ul>
+      </div>
+
       <div x-h-accordion.single="ai2">
         <div x-h-accordion-item="ai1">
           <h3 x-h-accordion-trigger="'Test'"></h3>

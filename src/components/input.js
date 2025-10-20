@@ -85,7 +85,7 @@ export default function (Alpine) {
     el.setAttribute('data-slot', 'input-group');
   });
 
-  Alpine.directive('h-input-group-addon', (el, {}, { cleanup }) => {
+  Alpine.directive('h-input-group-addon', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
       'text-muted-foreground',
       'flex',

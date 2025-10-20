@@ -21,7 +21,7 @@ build({
   entryPoints: [`src/index.js`],
   outfile: `dist/harmonia.min.js`,
   bundle: true,
-  minify: true,
+  minify: false,
   sourcemap: true,
   platform: 'browser',
   define: { CDN: 'true' },

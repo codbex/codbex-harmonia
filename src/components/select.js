@@ -155,38 +155,45 @@ export default function (Alpine) {
 
     const close = () => {
       select._select.expanded = false;
-      top.removeEventListener('click', close);
     };
 
     let content;
     let options;
 
     const shiftFocus = (event) => {
-      if (event.key === 'ArrowDown') {
-        for (let o = 0; o < options.length; o++) {
-          if (options[o] === document.activeElement) {
-            if (o < options.length - 1) {
-              options[o + 1].focus();
-            } else options[0].focus();
-            return;
+      switch (event.key) {
+        case 'Down':
+        case 'ArrowDown':
+          for (let o = 0; o < options.length; o++) {
+            if (options[o] === document.activeElement) {
+              if (o < options.length - 1) {
+                options[o + 1].focus();
+              } else options[0].focus();
+              return;
+            }
           }
-        }
-        options[0].focus();
-      } else if (event.key === 'ArrowUp') {
-        for (let o = options.length - 1; o >= 0; o--) {
-          if (options[o] === document.activeElement) {
-            if (o !== 0) {
-              options[o - 1].focus();
-            } else options[options.length - 1].focus();
-            return;
+          options[0].focus();
+          break;
+        case 'Up':
+        case 'ArrowUp':
+          for (let o = options.length - 1; o >= 0; o--) {
+            if (options[o] === document.activeElement) {
+              if (o !== 0) {
+                options[o - 1].focus();
+              } else options[options.length - 1].focus();
+              return;
+            }
           }
-        }
-        options[options.length - 1].focus();
-      } else if (event.key === 'Escape' || event.key === 'Enter') {
-        handler();
-        el.focus();
-      } else if (event.key === 'Tab') {
-        handler();
+          options[options.length - 1].focus();
+          break;
+        case 'Enter':
+        case 'Escape':
+          handler();
+          el.focus();
+          break;
+        case 'Tab':
+          handler();
+          break;
       }
     };
 
@@ -198,7 +205,7 @@ export default function (Alpine) {
       }
       Alpine.nextTick(() => {
         if (select._select.expanded) {
-          top.addEventListener('click', close);
+          top.addEventListener('click', close, { once: true });
           el.parentElement.addEventListener('keydown', shiftFocus);
         } else {
           top.removeEventListener('click', close);

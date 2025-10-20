@@ -1,9 +1,7 @@
 export default function (Alpine) {
   Alpine.directive('h-checkbox', (el, {}, { cleanup }) => {
     el.classList.add(
-      'group/checkbox',
       'appearance-none',
-      'peer',
       'border-input',
       'bg-input-inner',
       'data-[state=checked]:bg-primary',
@@ -33,7 +31,7 @@ export default function (Alpine) {
       'before:pointer-events-none',
       'before:w-2.5',
       'before:h-1.5',
-      'before:rounded-[2px]',
+      'before:rounded-[0.125rem]',
       'before:-rotate-45',
       'before:translate-x-0.5',
       'before:translate-y-0.75',

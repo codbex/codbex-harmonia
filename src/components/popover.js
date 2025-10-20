@@ -52,7 +52,6 @@ export default function (Alpine) {
 
     const close = () => {
       popover._popover.expanded = false;
-      top.removeEventListener('click', close);
     };
 
     const handler = () => {
@@ -60,7 +59,7 @@ export default function (Alpine) {
       setAttributes();
       Alpine.nextTick(() => {
         if (popover._popover.auto && popover._popover.expanded) {
-          top.addEventListener('click', close);
+          top.addEventListener('click', close, { once: true });
         }
       });
     };

@@ -29,6 +29,7 @@ import pagination from './components/pagination';
 import tabs from './components/tabs';
 import dialog from './components/dialog';
 import table from './components/table';
+import menu from './components/menu';
 
 export {
   accordion,
@@ -62,4 +63,5 @@ export {
   tabs,
   dialog,
   table,
+  menu,
 };
