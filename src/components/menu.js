@@ -20,9 +20,9 @@ export default function (Alpine) {
       return;
     }
 
-    let subitem;
-
-    if (modifiers.includes('sub')) subitem = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menuitem');
+    let isSubmenu = modifiers.includes('sub');
+    let menuSubItem;
+    if (isSubmenu) menuSubItem = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('data-slot') === 'menu-sub');
 
     let hidden = true;
 
@@ -33,7 +33,7 @@ export default function (Alpine) {
         left: '0px',
         top: '0px',
       });
-      if (subitem) {
+      if (isSubmenu) {
         top.removeEventListener('click', onClick);
         el.removeEventListener('keydown', onKeydown);
       }
@@ -53,121 +53,116 @@ export default function (Alpine) {
       close();
     }
 
-    function focusItem(item) {
-      item.tabIndex = 0;
-      item.focus();
-      item.addEventListener(
-        'blur',
-        (ev) => {
-          ev.target.tabIndex = -1;
-        },
-        { once: true }
-      );
-    }
-
-    function onHover(event) {
-      focusItem(event.target);
-    }
+    el.pauseKeyEvents = false;
 
     function onKeydown(event) {
-      let menuitem;
-      switch (event.key) {
-        case ' ':
-        case 'Enter':
-          event.preventDefault();
-          event.target.click();
-          break;
-        case 'Down':
-        case 'ArrowDown':
-          event.preventDefault();
-          menuitem = el.querySelector('[role^=menuitem][tabIndex="0"] ~ [role^=menuitem][tabIndex="-1"]');
-          if (!menuitem) menuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]');
-          if (menuitem) {
-            focusItem(menuitem);
-          }
-          break;
-        case 'Up':
-        case 'ArrowUp':
-          event.preventDefault();
-          let menuitems = el.querySelectorAll('[role^=menuitem][tabIndex="-1"]:has(~ [role^=menuitem][tabIndex="0"])');
-          if (menuitems.length) {
-            menuitem = menuitems[menuitems.length - 1];
-          } else {
-            menuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]:last-of-type');
-          }
-          if (menuitem) {
-            focusItem(menuitem);
-          }
-          break;
-        case 'Home':
-        case 'PageUp':
-          event.preventDefault();
-          menuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]:first-of-type');
-          if (menuitem) {
-            focusItem(menuitem);
-          }
-          break;
-        case 'End':
-        case 'PageDown':
-          event.preventDefault();
-          menuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]:last-of-type');
-          if (menuitem) {
-            focusItem(menuitem);
-          }
-          break;
-        case 'Esc':
-        case 'Escape':
-          close();
-          break;
-        case 'Tab':
-          close();
-          break;
-        default:
-          if (isPrintableCharacter(event.key)) {
-            const items = el.querySelectorAll('[role^=menuitem]');
-            for (let i = 0; i < items.length; i++) {
-              if (getFirstChar(items[i].textContent).startsWith(event.key.toLowerCase()) && items[i].tabIndex !== 0) {
-                focusItem(items[i]);
-                break;
+      if (!el.pauseKeyEvents) {
+        let menuitem;
+        switch (event.key) {
+          case 'Esc':
+          case 'Escape':
+          case 'Tab':
+          case ' ':
+          case 'Enter':
+            event.preventDefault();
+            close();
+            if (isSubmenu) {
+              setTimeout(() => menuSubItem.focus(), 0);
+            }
+            break;
+          case 'Down':
+          case 'ArrowDown':
+            event.preventDefault();
+            menuitem = el.querySelector(':scope > [role^=menuitem][tabIndex="0"] ~ [role^=menuitem][tabIndex="-1"]');
+            if (!menuitem) menuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]');
+            if (menuitem) {
+              menuitem.focus();
+            }
+            break;
+          case 'Up':
+          case 'ArrowUp':
+            event.preventDefault();
+            let menuitems = el.querySelectorAll(':scope > [role^=menuitem][tabIndex="-1"]:has(~ [role^=menuitem][tabIndex="0"])');
+            if (menuitems.length) {
+              menuitem = menuitems[menuitems.length - 1];
+            } else {
+              menuitem = el.querySelector(':scope > [role^=menuitem][tabIndex="-1"]:last-of-type');
+            }
+            if (menuitem) {
+              menuitem.focus();
+            }
+            break;
+          case 'Left':
+          case 'ArrowLeft':
+            if (isSubmenu) {
+              close();
+              menuSubItem.focus();
+            }
+            break;
+          case 'Home':
+          case 'PageUp':
+            event.preventDefault();
+            menuitem = el.querySelector(':scope > [role^=menuitem][tabIndex="-1"]:first-of-type');
+            if (menuitem) {
+              menuitem.focus();
+            }
+            break;
+          case 'End':
+          case 'PageDown':
+            event.preventDefault();
+            menuitem = el.querySelector(':scope > [role^=menuitem][tabIndex="-1"]:last-of-type');
+            if (menuitem) {
+              menuitem.focus();
+            }
+            break;
+          default:
+            if (isPrintableCharacter(event.key)) {
+              const items = el.querySelectorAll(':scope > [role^=menuitem]');
+              for (let i = 0; i < items.length; i++) {
+                if (getFirstChar(items[i].textContent).startsWith(event.key.toLowerCase()) && items[i].tabIndex !== 0) {
+                  items[i].focus();
+                  break;
+                }
               }
             }
-          }
+        }
       }
     }
 
-    function onSubmenu() {
-      if (hidden) {
-        hidden = false;
-        computePosition(subitem, el, {
-          placement: 'right-start',
-          middleware: [
-            flip(),
-            shift({ padding: 4 }),
-            size({
-              apply({ availableWidth, availableHeight, elements }) {
-                Object.assign(elements.floating.style, {
-                  maxWidth: `${Math.max(0, availableWidth) - 4}px`,
-                  maxHeight: `${Math.max(0, availableHeight) - 4}px`,
-                });
-              },
-            }),
-          ],
-        }).then(({ x, y }) => {
-          el.classList.remove('hidden');
-          Object.assign(el.style, {
-            left: `${x}px`,
-            top: `${y}px`,
-          });
-          el.addEventListener('keydown', onKeydown);
-          el.addEventListener('mouseover', onHover);
+    function show(parent) {
+      hidden = false;
+      el.pauseKeyEvents = false;
+      computePosition(parent, el, {
+        placement: 'right-start',
+        middleware: [
+          flip(),
+          shift({ padding: 4 }),
+          size({
+            apply({ availableWidth, availableHeight, elements }) {
+              Object.assign(elements.floating.style, {
+                maxWidth: `${Math.max(0, availableWidth) - 4}px`,
+                maxHeight: `${Math.max(0, availableHeight) - 4}px`,
+              });
+            },
+          }),
+        ],
+      }).then(({ x, y }) => {
+        el.classList.remove('hidden');
+        Object.assign(el.style, {
+          left: `${x}px`,
+          top: `${y}px`,
         });
-      } else {
-        close();
-      }
+        el.addEventListener('keydown', onKeydown);
+      });
+    }
+
+    function hide() {
+      close();
     }
 
     function onContextmenu(event) {
       event.preventDefault();
+      el.pauseKeyEvents = false;
       Alpine.nextTick(() => el.focus());
       const virtualEl = {
         getBoundingClientRect() {
@@ -209,30 +204,28 @@ export default function (Alpine) {
         });
         top.addEventListener('click', onClick);
         el.addEventListener('keydown', onKeydown);
-        el.addEventListener('mouseover', onHover);
       } else {
         close();
       }
     }
 
-    if (subitem) {
-      subitem.addEventListener('focus', onSubmenu);
-      subitem.addEventListener('blur', onSubmenu);
+    if (isSubmenu) {
+      menuSubItem._menu_sub.show = show;
+      menuSubItem._menu_sub.hide = hide;
     } else {
       menuArea.addEventListener('contextmenu', onContextmenu);
     }
 
     cleanup(() => {
-      if (!modifiers.includes('sub')) {
+      if (!isSubmenu) {
         menuArea.removeEventListener('contextmenu', onContextmenu);
         top.removeEventListener('click', onClick);
       }
-      el.removeEventListener('mouseover', onHover);
       el.removeEventListener('keydown', onKeydown);
     });
   });
 
-  Alpine.directive('h-menu-item', (el) => {
+  Alpine.directive('h-menu-item', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
       'focus:bg-muted/80',
       'hover:bg-muted/80',
@@ -265,12 +258,36 @@ export default function (Alpine) {
     el.setAttribute('role', 'menuitem');
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'menu-item');
+
+    const menu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
+
+    function focusOut(event) {
+      el.setAttribute('tabindex', '-1');
+      if (event.type === 'mouseleave') menu.focus();
+    }
+
+    function focusIn() {
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('blur', focusOut);
+      el.addEventListener('mouseleave', focusOut);
+    }
+
+    el.addEventListener('mouseenter', focusIn);
+    el.addEventListener('focus', focusIn);
+
+    cleanup(() => {
+      el.removeEventListener('mouseenter', focusIn);
+      el.removeEventListener('focus', focusIn);
+      el.removeEventListener('blur', focusOut);
+      el.removeEventListener('mouseleave', focusOut);
+    });
   });
 
-  Alpine.directive('h-menu-sub', (el) => {
+  Alpine.directive('h-menu-sub', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
       'focus:bg-muted/80',
       'hover:bg-muted/80',
+      'aria-expanded:bg-muted/80',
       "[&_svg:not([class*='text-'])]:text-muted-foreground",
       'relative',
       'flex',
@@ -303,8 +320,76 @@ export default function (Alpine) {
     );
     el.setAttribute('role', 'menuitem');
     el.setAttribute('aria-haspopup', 'true');
+    el.setAttribute('aria-expanded', 'false');
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'menu-sub');
+
+    el._menu_sub = {
+      show: undefined,
+      hide: undefined,
+      expanded: false,
+    };
+    const parentMenu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
+
+    const keyEvents = ['Right', 'ArrowRight', 'Enter', ' '];
+
+    function onKeydown(event) {
+      if (keyEvents.includes(event.key)) {
+        event.stopPropagation();
+        el.setAttribute('aria-expanded', 'true');
+        el._menu_sub.show(el);
+        el._menu_sub.expanded = true;
+        parentMenu.pauseKeyEvents = true;
+        el.removeEventListener('keydown', onKeydown);
+        const submenuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]:first-of-type');
+        if (submenuitem) Alpine.nextTick(() => submenuitem.focus());
+      }
+    }
+
+    function focusOut(event) {
+      console.log('out');
+      el.setAttribute('tabindex', '-1');
+      if (event.type === 'mouseleave') {
+        el._menu_sub.hide();
+        el._menu_sub.expanded = false;
+        parentMenu.pauseKeyEvents = false;
+        el.setAttribute('aria-expanded', 'false');
+        parentMenu.focus();
+      } else if (!el._menu_sub.expanded) {
+        el.setAttribute('aria-expanded', 'false');
+        el._menu_sub.hide();
+        parentMenu.pauseKeyEvents = false;
+        el.removeEventListener('keydown', onKeydown);
+      }
+    }
+
+    function focusIn(event) {
+      el.setAttribute('tabindex', '0');
+      if (event.type === 'mouseenter') {
+        el.setAttribute('aria-expanded', 'true');
+        el.addEventListener('mouseleave', focusOut);
+        el._menu_sub.show(el);
+        el._menu_sub.expanded = true;
+      } else {
+        if (el._menu_sub.expanded) {
+          el._menu_sub.expanded = false;
+          parentMenu.pauseKeyEvents = false;
+        } else {
+          el.addEventListener('keydown', onKeydown);
+          el.addEventListener('blur', focusOut);
+        }
+      }
+    }
+
+    el.addEventListener('mouseenter', focusIn);
+    el.addEventListener('focus', focusIn);
+
+    cleanup(() => {
+      el.removeEventListener('mouseenter', focusIn);
+      el.removeEventListener('focus', focusIn);
+      el.removeEventListener('blur', focusOut);
+      el.removeEventListener('mouseleave', focusOut);
+    });
   });
 
   Alpine.directive('h-menu-item-secondary', (el) => {
@@ -323,7 +408,7 @@ export default function (Alpine) {
     el.setAttribute('data-slot', 'menu-label');
   });
 
-  Alpine.directive('h-menu-checkbox-item', (el, {}, { cleanup }) => {
+  Alpine.directive('h-menu-checkbox-item', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
       'focus:bg-muted/80',
       'hover:bg-muted/80',
@@ -386,15 +471,37 @@ export default function (Alpine) {
 
       el.addEventListener('click', handler);
       el.addEventListener('keydown', handler);
+    }
 
-      cleanup(() => {
+    const menu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
+
+    function focusOut(event) {
+      el.setAttribute('tabindex', '-1');
+      if (event.type === 'mouseleave') menu.focus();
+    }
+
+    function focusIn() {
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('blur', focusOut);
+      el.addEventListener('mouseleave', focusOut);
+    }
+
+    el.addEventListener('mouseenter', focusIn);
+    el.addEventListener('focus', focusIn);
+
+    cleanup(() => {
+      if (el.hasOwnProperty('_x_model')) {
         el.removeEventListener('click', handler);
         el.removeEventListener('keydown', handler);
-      });
-    }
+      }
+      el.removeEventListener('mouseenter', focusIn);
+      el.removeEventListener('focus', focusIn);
+      el.removeEventListener('blur', focusOut);
+      el.removeEventListener('mouseleave', focusOut);
+    });
   });
 
-  Alpine.directive('h-menu-radio-item', (el, { expression }, { effect, evaluateLater, cleanup }) => {
+  Alpine.directive('h-menu-radio-item', (el, { expression }, { effect, evaluateLater, cleanup, Alpine }) => {
     el.classList.add(
       'focus:bg-muted/80',
       'hover:bg-muted/80',
@@ -460,11 +567,33 @@ export default function (Alpine) {
 
       el.addEventListener('click', handler);
       el.addEventListener('keydown', handler);
+    }
 
-      cleanup(() => {
+    const menu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
+
+    function focusOut(event) {
+      el.setAttribute('tabindex', '-1');
+      if (event.type === 'mouseleave') menu.focus();
+    }
+
+    function focusIn() {
+      el.setAttribute('tabindex', '0');
+      el.addEventListener('blur', focusOut);
+      el.addEventListener('mouseleave', focusOut);
+    }
+
+    el.addEventListener('mouseenter', focusIn);
+    el.addEventListener('focus', focusIn);
+
+    cleanup(() => {
+      if (el.hasOwnProperty('_x_model')) {
         el.removeEventListener('click', handler);
         el.removeEventListener('keydown', handler);
-      });
-    }
+      }
+      el.removeEventListener('mouseenter', focusIn);
+      el.removeEventListener('focus', focusIn);
+      el.removeEventListener('blur', focusOut);
+      el.removeEventListener('mouseleave', focusOut);
+    });
   });
 }
