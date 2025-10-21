@@ -24,21 +24,26 @@ export default function (Alpine) {
     let menuSubItem;
     if (isSubmenu) menuSubItem = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('data-slot') === 'menu-sub');
 
-    let hidden = true;
-
-    function close() {
-      hidden = true;
+    function close(parent = false) {
       el.pauseKeyEvents = false;
       el.classList.add('hidden');
       Object.assign(el.style, {
         left: '0px',
         top: '0px',
       });
+      top.removeEventListener('contextmenu', onClick);
+      top.removeEventListener('click', onClick);
+      el.removeEventListener('keydown', onKeydown);
       if (isSubmenu) {
-        top.removeEventListener('click', onClick);
-        el.removeEventListener('keydown', onKeydown);
+        if (parent) {
+          menuSubItem._menu_sub.closeTree();
+        }
+      } else {
+        menuArea.addEventListener('contextmenu', onContextmenu);
       }
     }
+
+    el._menu = { close };
 
     function isPrintableCharacter(str) {
       return str.length === 1 && /\S/.test(str);
@@ -50,8 +55,9 @@ export default function (Alpine) {
       return '';
     }
 
-    function onClick() {
-      close();
+    function onClick(event) {
+      if (event.type === 'contextmenu') event.preventDefault();
+      close(isSubmenu);
     }
 
     el.pauseKeyEvents = false;
@@ -60,16 +66,22 @@ export default function (Alpine) {
       if (!el.pauseKeyEvents) {
         let menuitem;
         switch (event.key) {
+          case 'Left':
+          case 'ArrowLeft':
           case 'Esc':
           case 'Escape':
+            close();
+            if (isSubmenu) {
+              setTimeout(() => menuSubItem.focus(), 0);
+            }
+            break;
           case 'Tab':
           case ' ':
           case 'Enter':
-            event.preventDefault();
+            if (event.key !== 'Tab') event.preventDefault();
             close();
             if (isSubmenu) {
-              menuSubItem._closeParentMenu = true;
-              setTimeout(() => menuSubItem.focus(), 0);
+              menuSubItem._menu_sub.closeTree();
             }
             break;
           case 'Down':
@@ -92,13 +104,6 @@ export default function (Alpine) {
             }
             if (menuitem) {
               menuitem.focus();
-            }
-            break;
-          case 'Left':
-          case 'ArrowLeft':
-            if (isSubmenu) {
-              menuSubItem.focus();
-              close();
             }
             break;
           case 'Home':
@@ -131,12 +136,12 @@ export default function (Alpine) {
       }
     }
 
-    function show(parent) {
-      hidden = false;
+    function open(parent) {
       el.pauseKeyEvents = false;
       computePosition(parent, el, {
         placement: 'right-start',
         middleware: [
+          offset(isSubmenu ? 0 : 4),
           flip(),
           shift({ padding: 4 }),
           size({
@@ -149,20 +154,23 @@ export default function (Alpine) {
           }),
         ],
       }).then(({ x, y }) => {
-        el.classList.remove('hidden');
         Object.assign(el.style, {
           left: `${x}px`,
           top: `${y}px`,
         });
-        el.addEventListener('keydown', onKeydown);
+        el.classList.remove('hidden');
+        if (!isSubmenu) Alpine.nextTick(() => el.focus());
+        setTimeout(() => {
+          top.addEventListener('contextmenu', onClick);
+          top.addEventListener('click', onClick);
+          el.addEventListener('keydown', onKeydown);
+        }, 0);
       });
     }
 
     function onContextmenu(event) {
       event.preventDefault();
-      el.pauseKeyEvents = false;
-      Alpine.nextTick(() => el.focus());
-      const virtualEl = {
+      open({
         getBoundingClientRect() {
           return {
             width: 0,
@@ -175,51 +183,20 @@ export default function (Alpine) {
             bottom: event.clientY,
           };
         },
-      };
-      if (hidden) {
-        hidden = false;
-        computePosition(virtualEl, el, {
-          placement: 'bottom-start',
-          middleware: [
-            offset(4),
-            flip(),
-            shift({ padding: 4 }),
-            size({
-              apply({ availableWidth, availableHeight, elements }) {
-                Object.assign(elements.floating.style, {
-                  maxWidth: `${Math.max(0, availableWidth) - 4}px`,
-                  maxHeight: `${Math.max(0, availableHeight) - 4}px`,
-                });
-              },
-            }),
-          ],
-        }).then(({ x, y }) => {
-          el.classList.remove('hidden');
-          Object.assign(el.style, {
-            left: `${x}px`,
-            top: `${y}px`,
-          });
-        });
-        top.addEventListener('click', onClick);
-        el.addEventListener('keydown', onKeydown);
-      } else {
-        close();
-      }
+      });
+      menuArea.removeEventListener('contextmenu', onContextmenu);
     }
 
     if (isSubmenu) {
-      menuSubItem._menu_sub.show = show;
-      menuSubItem._menu_sub.hide = close;
+      menuSubItem._menu_sub.open = open;
+      menuSubItem._menu_sub.close = close;
     } else {
       menuArea.addEventListener('contextmenu', onContextmenu);
-      el._menu = { close };
     }
 
     cleanup(() => {
-      if (!isSubmenu) {
-        menuArea.removeEventListener('contextmenu', onContextmenu);
-        top.removeEventListener('click', onClick);
-      }
+      menuArea.removeEventListener('contextmenu', onContextmenu);
+      top.removeEventListener('click', onClick);
       el.removeEventListener('keydown', onKeydown);
     });
   });
@@ -323,13 +300,21 @@ export default function (Alpine) {
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'menu-sub');
 
-    el._menu_sub = {
-      show: undefined,
-      hide: undefined,
-      expanded: false,
-    };
     const parentMenu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
-    el._closeParentMenu = false;
+    if (!parentMenu) console.error('h-menu-sub', 'Menu sub item must have a parent');
+
+    el._menu_sub = {
+      open: undefined,
+      close: undefined,
+      expanded: false,
+      closeTree() {
+        el.setAttribute('aria-expanded', 'false');
+        this.expanded = false;
+        el.removeEventListener('keydown', onKeydown);
+        parentMenu.pauseKeyEvents = false;
+        parentMenu._menu.close(true);
+      },
+    };
 
     const keyEvents = ['Right', 'ArrowRight', 'Enter', ' '];
 
@@ -341,7 +326,7 @@ export default function (Alpine) {
         const submenuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]:first-of-type');
         if (submenuitem) {
           el.setAttribute('aria-expanded', 'true');
-          el._menu_sub.show(el);
+          el._menu_sub.open(el);
           parentMenu.pauseKeyEvents = true;
           Alpine.nextTick(() => {
             submenuitem.focus();
@@ -354,14 +339,14 @@ export default function (Alpine) {
     function focusOut(event) {
       el.setAttribute('tabindex', '-1');
       if (event.type === 'mouseleave') {
-        el._menu_sub.hide();
+        el._menu_sub.close();
         el._menu_sub.expanded = false;
         parentMenu.pauseKeyEvents = false;
         el.setAttribute('aria-expanded', 'false');
         parentMenu.focus();
       } else if (el._menu_sub.expanded) {
         el.setAttribute('aria-expanded', 'false');
-        el._menu_sub.hide();
+        el._menu_sub.close();
         el._menu_sub.expanded = false;
         parentMenu.pauseKeyEvents = false;
         el.removeEventListener('keydown', onKeydown);
@@ -373,19 +358,16 @@ export default function (Alpine) {
       if (event.type === 'mouseenter') {
         el.setAttribute('aria-expanded', 'true');
         el.addEventListener('mouseleave', focusOut);
-        el._menu_sub.show(el);
+        el._menu_sub.open(el);
         el._menu_sub.expanded = true;
       } else {
         if (el._menu_sub.expanded) {
           el.setAttribute('aria-expanded', 'false');
           el._menu_sub.expanded = false;
           parentMenu.pauseKeyEvents = false;
-          if (el._closeParentMenu) {
-            parentMenu._menu.close();
-          }
         }
         el.addEventListener('keydown', onKeydown);
-        el.addEventListener('blur', focusOut);
+        el.addEventListener('blur', focusOut); // ?
       }
     }
 
