@@ -28,6 +28,7 @@ export default function (Alpine) {
 
     function close() {
       hidden = true;
+      el.pauseKeyEvents = false;
       el.classList.add('hidden');
       Object.assign(el.style, {
         left: '0px',
@@ -67,6 +68,7 @@ export default function (Alpine) {
             event.preventDefault();
             close();
             if (isSubmenu) {
+              menuSubItem._closeParentMenu = true;
               setTimeout(() => menuSubItem.focus(), 0);
             }
             break;
@@ -95,8 +97,8 @@ export default function (Alpine) {
           case 'Left':
           case 'ArrowLeft':
             if (isSubmenu) {
-              close();
               menuSubItem.focus();
+              close();
             }
             break;
           case 'Home':
@@ -156,10 +158,6 @@ export default function (Alpine) {
       });
     }
 
-    function hide() {
-      close();
-    }
-
     function onContextmenu(event) {
       event.preventDefault();
       el.pauseKeyEvents = false;
@@ -211,9 +209,10 @@ export default function (Alpine) {
 
     if (isSubmenu) {
       menuSubItem._menu_sub.show = show;
-      menuSubItem._menu_sub.hide = hide;
+      menuSubItem._menu_sub.hide = close;
     } else {
       menuArea.addEventListener('contextmenu', onContextmenu);
+      el._menu = { close };
     }
 
     cleanup(() => {
@@ -330,24 +329,29 @@ export default function (Alpine) {
       expanded: false,
     };
     const parentMenu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
+    el._closeParentMenu = false;
 
     const keyEvents = ['Right', 'ArrowRight', 'Enter', ' '];
 
     function onKeydown(event) {
       if (keyEvents.includes(event.key)) {
         event.stopPropagation();
-        el.setAttribute('aria-expanded', 'true');
-        el._menu_sub.show(el);
-        el._menu_sub.expanded = true;
-        parentMenu.pauseKeyEvents = true;
+        event.preventDefault();
         el.removeEventListener('keydown', onKeydown);
         const submenuitem = el.querySelector('[role^=menuitem][tabIndex="-1"]:first-of-type');
-        if (submenuitem) Alpine.nextTick(() => submenuitem.focus());
+        if (submenuitem) {
+          el.setAttribute('aria-expanded', 'true');
+          el._menu_sub.show(el);
+          parentMenu.pauseKeyEvents = true;
+          Alpine.nextTick(() => {
+            submenuitem.focus();
+            el._menu_sub.expanded = true;
+          });
+        }
       }
     }
 
     function focusOut(event) {
-      console.log('out');
       el.setAttribute('tabindex', '-1');
       if (event.type === 'mouseleave') {
         el._menu_sub.hide();
@@ -355,9 +359,10 @@ export default function (Alpine) {
         parentMenu.pauseKeyEvents = false;
         el.setAttribute('aria-expanded', 'false');
         parentMenu.focus();
-      } else if (!el._menu_sub.expanded) {
+      } else if (el._menu_sub.expanded) {
         el.setAttribute('aria-expanded', 'false');
         el._menu_sub.hide();
+        el._menu_sub.expanded = false;
         parentMenu.pauseKeyEvents = false;
         el.removeEventListener('keydown', onKeydown);
       }
@@ -372,12 +377,15 @@ export default function (Alpine) {
         el._menu_sub.expanded = true;
       } else {
         if (el._menu_sub.expanded) {
+          el.setAttribute('aria-expanded', 'false');
           el._menu_sub.expanded = false;
           parentMenu.pauseKeyEvents = false;
-        } else {
-          el.addEventListener('keydown', onKeydown);
-          el.addEventListener('blur', focusOut);
+          if (el._closeParentMenu) {
+            parentMenu._menu.close();
+          }
         }
+        el.addEventListener('keydown', onKeydown);
+        el.addEventListener('blur', focusOut);
       }
     }
 
