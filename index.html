@@ -252,13 +252,13 @@
             <ul x-h-menu.sub aria-labelledby="submenu1">
               <li x-h-menu-item>Subitem 1</li>
               <li x-h-menu-item>Subitem 2</li>
-              <li x-h-menu-item>Subitem 3</li>
+              <li x-h-menu-item @click="console.log('subitem 3')">Subitem 3</li>
               <li x-h-menu-sub id="submenu2">
                 Sub-submenu
                 <ul x-h-menu.sub aria-labelledby="submenu2">
                   <li x-h-menu-item>Subitem 1</li>
                   <li x-h-menu-item>Subitem 2</li>
-                  <li x-h-menu-item>Subitem 3</li>
+                  <li x-h-menu-item @click="console.log('sub-subitem 3')">Subitem 3</li>
                 </ul>
               </li>
             </ul>

@@ -55,6 +55,16 @@ export default function (Alpine) {
       return '';
     }
 
+    function findMatching(str, items) {
+      for (let i = 0; i < items.length; i++) {
+        if (getFirstChar(items[i].textContent).startsWith(str.toLowerCase())) {
+          items[i].focus();
+          return true;
+        }
+      }
+      return false;
+    }
+
     function onClick(event) {
       if (event.type === 'contextmenu') event.preventDefault();
       close(isSubmenu);
@@ -78,7 +88,10 @@ export default function (Alpine) {
           case 'Tab':
           case ' ':
           case 'Enter':
-            if (event.key !== 'Tab') event.preventDefault();
+            if (event.key !== 'Tab') {
+              event.preventDefault();
+              event.target.click();
+            }
             close();
             if (isSubmenu) {
               menuSubItem._menu_sub.closeTree();
@@ -124,12 +137,10 @@ export default function (Alpine) {
             break;
           default:
             if (isPrintableCharacter(event.key)) {
-              const items = el.querySelectorAll(':scope > [role^=menuitem]');
-              for (let i = 0; i < items.length; i++) {
-                if (getFirstChar(items[i].textContent).startsWith(event.key.toLowerCase()) && items[i].tabIndex !== 0) {
-                  items[i].focus();
-                  break;
-                }
+              let items = el.querySelectorAll(':scope > [role^=menuitem][tabindex="0"] ~ [role^=menuitem]');
+              if (!findMatching(event.key, items)) {
+                items = el.querySelectorAll(':scope > [role^=menuitem][tabindex="-1"]');
+                findMatching(event.key, items);
               }
             }
         }
@@ -301,7 +312,7 @@ export default function (Alpine) {
     el.setAttribute('data-slot', 'menu-sub');
 
     const parentMenu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
-    if (!parentMenu) console.error('h-menu-sub', 'Menu sub item must have a parent');
+    if (!parentMenu) console.error('h-menu-sub: Menu sub item must have a parent');
 
     el._menu_sub = {
       open: undefined,
