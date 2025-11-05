@@ -114,16 +114,16 @@ export default function (Alpine) {
       'hover:bg-sidebar-secondary',
       'hover:text-sidebar-secondary-foreground',
       'focus-visible:ring-2',
-      'active:bg-sidebar-secondary',
-      'active:text-sidebar-secondary-foreground',
+      'active:bg-sidebar-primary',
+      'active:text-sidebar-primary-foreground',
       'disabled:pointer-events-none',
       'disabled:opacity-50',
       'group-has-data-[sidebar=menu-action]/menu-item:pr-8',
       'aria-disabled:pointer-events-none',
       'aria-disabled:opacity-50',
-      'data-[active=true]:bg-sidebar-secondary',
+      'data-[active=true]:bg-sidebar-primary',
       'data-[active=true]:font-medium',
-      'data-[active=true]:text-sidebar-secondary-foreground',
+      'data-[active=true]:text-sidebar-primary-foreground',
       'data-[state=open]:hover:bg-sidebar-secondary',
       'data-[state=open]:hover:text-sidebar-secondary-foreground',
       'group-data-[collapsible=icon]:size-8!',
@@ -204,7 +204,7 @@ export default function (Alpine) {
       'tabular-nums',
       'select-none',
       'peer-hover/menu-button:text-sidebar-secondary-foreground',
-      'peer-data-[active=true]/menu-button:text-sidebar-secondary-foreground',
+      'peer-data-[active=true]/menu-button:text-sidebar-primary-foreground',
       'peer-data-[size=sm]/menu-button:top-1',
       'peer-data-[size=default]/menu-button:top-1.5',
       'peer-data-[size=lg]/menu-button:top-2.5',
@@ -217,11 +217,11 @@ export default function (Alpine) {
     el.classList.add('flex', 'h-8', 'items-center', 'gap-2', 'rounded-md', 'px-2');
     if (modifiers.includes('icon')) {
       const icon = document.createElement('div');
-      icon.classList.add('size-4', 'rounded-md', 'bg-secondary', 'animate-pulse', 'rounded-md');
+      icon.classList.add('size-4', 'rounded-md', 'bg-sidebar-secondary', 'animate-pulse', 'rounded-md');
       el.appendChild(icon);
     }
     const skeleton = document.createElement('div');
-    skeleton.classList.add('h-4', 'flex-1', 'bg-secondary', 'animate-pulse', 'rounded-md');
+    skeleton.classList.add('h-4', 'flex-1', 'bg-sidebar-secondary', 'animate-pulse', 'rounded-md');
     skeleton.style.maxWidth = `${Math.floor(Math.random() * 40) + 50}%`;
     el.appendChild(skeleton);
     el.setAttribute('data-slot', 'sidebar-menu-skeleton');
@@ -252,8 +252,8 @@ export default function (Alpine) {
       'ring-sidebar-ring',
       'hover:bg-sidebar-secondary',
       'hover:text-sidebar-secondary-foreground',
-      'active:bg-sidebar-secondary',
-      'active:text-sidebar-secondary-foreground',
+      'active:bg-primary-secondary',
+      'active:text-sidebar-primary-foreground',
       '[&>svg]:text-sidebar-secondary-foreground',
       'flex',
       'h-7',
@@ -277,8 +277,8 @@ export default function (Alpine) {
       '[&>svg]:size-4',
       '[&>svg]:shrink-0',
       '[&>svg:not(:first-child):last-child]:ml-auto',
-      'data-[active=true]:bg-sidebar-secondary',
-      'data-[active=true]:text-sidebar-secondary-foreground',
+      'data-[active=true]:bg-sidebar-primary',
+      'data-[active=true]:text-sidebar-primary-foreground',
       'group-data-[collapsible=icon]:hidden'
     );
     el.setAttribute('data-slot', 'sidebar-menu-sub-button');

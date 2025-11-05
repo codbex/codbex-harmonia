@@ -26,10 +26,7 @@ export default function (Alpine) {
         'has-[>[data-slot=field]]:flex-col',
         'has-[>[data-slot=field]]:rounded-md',
         'has-[>[data-slot=field]]:border',
-        '[&>*]:data-[slot=field]:p-4',
-        'has-data-[state=checked]:bg-primary/5',
-        'has-data-[state=checked]:border-primary',
-        'dark:has-data-[state=checked]:bg-primary/10'
+        '[&>*]:data-[slot=field]:p-4'
       );
       el.setAttribute('data-slot', 'field-label');
     } else el.setAttribute('data-slot', 'label');

@@ -100,7 +100,8 @@ export default function (Alpine) {
       'select-none',
       "[&>svg:not([class*='size-'])]:size-4",
       '[&>[data-slot=tag]]:rounded-[calc(var(--radius)-5px)]',
-      'group-data-[disabled=true]/input-group:opacity-50'
+      'data-[disabled=true]:opacity-50',
+      'data-[disabled=true]:pointer-events-none'
     );
     el.setAttribute('role', 'group');
     el.setAttribute('data-slot', 'input-group-addon');
@@ -118,18 +119,13 @@ export default function (Alpine) {
 
     setVariant(el.getAttribute('data-align') ?? 'inline-start');
 
-    const handler = () => {
-      select._select.expanded = !select._select.expanded;
-      if (select._select.expanded) {
-        if (!content) content = document.getElementById(select._select.controls);
-        options = content.querySelectorAll('[role=option]');
+    const handler = (event) => {
+      if (event.target.closest('button')) {
+        return;
       }
-      Alpine.nextTick((e) => {
-        if (e.target.closest('button')) {
-          return;
-        }
-        e.currentTarget.parentElement?.querySelector('input')?.focus();
-      });
+      let input = event.currentTarget.parentElement?.querySelector('input');
+      if (!input) input = event.currentTarget.parentElement?.querySelector('textarea');
+      input?.focus();
     };
 
     el.addEventListener('click', handler);

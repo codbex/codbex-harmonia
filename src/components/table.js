@@ -45,12 +45,12 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-table-body', (el) => {
-    el.classList.add('[&_tr:last-child_td]:border-b-0', '[&_tr:last-child_th]:border-b-0', '[&_tr_th]:bg-table-header');
+    el.classList.add('[&_tr:last-child_td]:border-b-0', '[&_tr:last-child_th]:border-b-0', '[&_tr_th]:bg-table-header', '[&_tr:hover_th]:bg-table-hover', '[&_tr:hover_th]:text-table-hover-foreground');
     el.setAttribute('data-slot', 'table-body');
   });
 
   Alpine.directive('h-table-row', (el) => {
-    el.classList.add('hover:bg-table-hover', 'hover:text-table-hover-foreground', 'data-[state=selected]:bg-muted', 'transition-colors');
+    el.classList.add('hover:bg-table-hover', 'hover:text-table-hover-foreground', 'data-[state=selected]:bg-muted');
     el.setAttribute('data-slot', 'table-row');
   });
 

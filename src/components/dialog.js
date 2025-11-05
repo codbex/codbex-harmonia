@@ -1,6 +1,6 @@
 export default function (Alpine) {
   Alpine.directive('h-dialog-overlay', (el, {}, { cleanup }) => {
-    el.classList.add('hidden', 'data-[open=true]:block', 'fixed', 'inset-0', 'z-50', 'bg-black/50');
+    el.classList.add('hidden', 'data-[open=true]:block', 'fixed', 'inset-0', 'z-50', 'bg-black/60');
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'dialog-overlay');
 

@@ -36,7 +36,7 @@
             <div x-h-sidebar-group-content x-h-collapsible-content>
               <div x-h-sidebar-menu>
                 <div x-h-sidebar-menu-item>
-                  <button x-h-sidebar-menu-button>
+                  <button x-h-sidebar-menu-button data-active="true">
                     <i data-lucide="house"></i>
                     Home
                   </button>
@@ -152,6 +152,14 @@
       </div>
     </div>
     <div class="p-4 flex flex-col gap-4 overflow-y-scroll" x-data="{showDialog: false, isPrimary: true}">
+      <div x-h-toolbar data-variant="transparent">
+        <span x-h-toolbar-title>Title</span>
+        <div x-h-toolbar-spacer></div>
+        <button x-h-button data-variant="transparent"><i data-lucide="save"></i>Save</button>
+        <div x-h-toolbar-separator></div>
+        <button x-h-button data-variant="transparent"><i data-lucide="plus"></i>Add</button>
+      </div>
+
       <div x-h-table-container.scroll data-border="true" style="height: 400px">
         <table x-h-table data-border="both" x-data="tableData">
           <caption x-h-table-caption>
@@ -228,10 +236,43 @@
 
       <div x-h-tooltip>
         <button x-h-button x-h-tooltip-trigger @click="showDialog = !showDialog">Dialog</button>
-        <div x-h-tooltip-content>Click to show</div>
+        <div x-h-tooltip-content>
+          Click to show
+          <div x-h-tag>⌘</div>
+        </div>
       </div>
 
-      <div x-h-menu-area class="rounded-lg border border-dashed flex justify-center items-center" style="width: 100%; height: 200px">
+      <button x-h-button x-h-menu-trigger.dropdown>
+        Dropdown
+        <ul x-h-menu aria-label="context menu">
+          <li x-h-menu-sub id="ddo1">
+            Open
+            <ul x-h-menu.sub aria-labelledby="ddo1">
+              <li x-h-menu-item>Text Editor</li>
+            </ul>
+          </li>
+          <div x-h-menu-label>File operations</div>
+          <li x-h-menu-item>
+            Cut
+            <span x-h-menu-item-secondary>Ctrl+X</span>
+          </li>
+          <li x-h-menu-item>
+            Copy
+            <span x-h-menu-item-secondary>Ctrl+S</span>
+          </li>
+          <li x-h-menu-item data-variant="negative">
+            Delete
+            <span x-h-menu-item-secondary>Del</span>
+          </li>
+          <div x-h-menu-separator></div>
+          <li x-h-menu-item>
+            Rename
+            <span x-h-menu-item-secondary>F2</span>
+          </li>
+        </ul>
+      </button>
+
+      <div x-h-menu-trigger class="rounded-lg border border-dashed flex justify-center items-center" style="width: 100%; height: 200px">
         Right click for context menu
         <ul x-h-menu aria-label="context menu" x-data="{ checkbox: { autosave: true }, radioItems: [{ label: 'Radio 1', value: 'r1' }, { label: 'Radio 2', value: 'r2' }], radioSelected: 'r1' }">
           <li x-h-menu-item>
@@ -245,7 +286,7 @@
             <span x-h-menu-item-secondary>Del</span>
           </li>
           <li x-h-menu-separator></li>
-          <div x-h-menu-label data-inset="true">Other items</div>
+          <div x-h-menu-label data-inset="false">Other items</div>
           <li x-h-menu-item data-inset="true">Menu Item 1</li>
           <li x-h-menu-sub data-inset="true" id="submenu1">
             Submenu
@@ -344,8 +385,8 @@
       </div>
 
       <div x-h-input-group>
-        <textarea x-h-textarea.group placeholder="Ask, Search or Chat..."></textarea>
-        <div x-h-input-group-addon data-align="block-end">
+        <textarea x-h-textarea.group placeholder="Ask, Search or Chat..." disabled></textarea>
+        <div x-h-input-group-addon data-align="block-end" data-disabled="true">
           <button x-h-button.group data-size="icon-xs" data-variant="outline" class="rounded-full">
             <i data-lucide="plus"></i>
           </button>
@@ -361,7 +402,7 @@
           </div>
           <span x-h-input-group-text class="ml-auto">52% used</span>
           <div x-h-separator data-orientation="vertical" class="!h-4"></div>
-          <button x-h-button.group data-size="icon-xs" data-variant="primary" class="rounded-full" disabled>
+          <button x-h-button.group data-size="icon-xs" data-variant="primary" class="rounded-full">
             <i data-lucide="arrow-up"></i>
             <span class="sr-only">Send</span>
           </button>
@@ -397,7 +438,7 @@
             <p x-h-field-description>All transactions are secure and encrypted</p>
             <div x-h-field-group>
               <div x-h-field>
-                <label x-h-label.field for="checkout-7j9-card-name-43j">Name on Card</label>
+                <label x-h-label.field for="checkout-7j9-card-name-43j" data-state="checked">Name on Card</label>
                 <input x-h-input id="checkout-7j9-card-name-43j" placeholder="Evil Rabbit" required />
               </div>
               <div x-h-field>
@@ -533,7 +574,7 @@
       </div>
 
       <div x-h-tabs data-orientation="horizontal">
-        <div x-h-tab-bar data-style="inline" data-size="sm">
+        <div x-h-tab-bar data-style="inline">
           <div x-h-tab-list>
             <button x-h-tab id="ismt1" aria-controls="ismt1c" aria-selected="true">
               <i data-lucide="file"></i>
@@ -616,6 +657,11 @@
       <div class="flex items-center gap-3">
         <input x-h-switch type="checkbox" id="sw" />
         <label x-h-label for="sw">Just switch</label>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <input x-h-switch data-size="sm" type="checkbox" id="sws" />
+        <label x-h-label for="sws">Just switch (small)</label>
       </div>
 
       <form class="grid grid-cols-[auto_1fr] justify-items-stretch gap-3">

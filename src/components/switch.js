@@ -8,8 +8,10 @@ export default function (Alpine) {
       'focus-visible:border-ring',
       'focus-visible:ring-ring/50',
       'inline-flex',
-      'h-4.5',
-      'w-8',
+      'data-[size=sm]:h-5',
+      'data-[size=sm]:w-8',
+      'h-6',
+      'w-10',
       'shrink-0',
       'items-center',
       'rounded-full',
@@ -25,13 +27,14 @@ export default function (Alpine) {
       'before:block',
       'before:bg-background',
       'before:pointer-events-none',
-      'before:size-4',
+      'data-[size=sm]:before:size-4',
+      'before:size-5',
       'before:rounded-full',
       'before:ring-0',
       'before:transition-transform',
       'before:duration-200',
-      'data-[state=checked]:before:translate-x-[calc(100%-2px)]',
-      'data-[state=unchecked]:before:translate-x-0'
+      'data-[state=checked]:before:translate-x-[calc(100%-3px)]',
+      'data-[state=unchecked]:before:translate-x-[1px]'
     );
     el.setAttribute('data-slot', 'switch');
 

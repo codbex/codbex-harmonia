@@ -1,28 +1,41 @@
 import { computePosition, offset, flip, shift, size } from '@floating-ui/dom';
 
 export default function (Alpine) {
-  Alpine.directive('h-menu-area', (el) => {
-    el._menu_area = true;
+  Alpine.directive('h-menu-trigger', (el, { modifiers }) => {
+    el._menu_trigger = {
+      isDropdown: modifiers.includes('dropdown'),
+    };
   });
 
   Alpine.directive('h-menu', (el, { modifiers }, { cleanup, Alpine }) => {
     el.classList.add('hidden', 'fixed', 'bg-popover', 'text-popover-foreground', 'z-50', 'min-w-[8rem]', 'overflow-x-hidden', 'overflow-y-auto', 'rounded-md', 'p-1', 'shadow-md', 'border', 'outline-none');
     el.setAttribute('role', 'menu');
+    el.setAttribute('aria-orientation', 'vertical');
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'menu');
     if (!el.hasAttribute('aria-labelledby') && !el.hasAttribute('aria-label')) {
       console.error('h-menu: must have an "aria-label" or "aria-labelledby" attribute');
     }
 
-    const menuArea = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_menu_area'));
-    if (!menuArea) {
-      console.error('h-menu: menu must be inside an h-menu-area');
+    const menuTrigger = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_menu_trigger'));
+    if (!menuTrigger) {
+      console.error('h-menu: menu must be inside an h-menu-trigger');
       return;
     }
 
     let isSubmenu = modifiers.includes('sub');
     let menuSubItem;
     if (isSubmenu) menuSubItem = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('data-slot') === 'menu-sub');
+
+    function listenForTrigger(listen) {
+      if (listen) {
+        if (menuTrigger._menu_trigger.isDropdown) menuTrigger.addEventListener('click', openDropdown);
+        else menuTrigger.addEventListener('contextmenu', onContextmenu);
+      } else {
+        if (menuTrigger._menu_trigger.isDropdown) menuTrigger.removeEventListener('click', openDropdown);
+        else menuTrigger.removeEventListener('contextmenu', onContextmenu);
+      }
+    }
 
     function close(parent = false) {
       el.pauseKeyEvents = false;
@@ -39,7 +52,7 @@ export default function (Alpine) {
           menuSubItem._menu_sub.closeTree();
         }
       } else {
-        menuArea.addEventListener('contextmenu', onContextmenu);
+        listenForTrigger(true);
       }
     }
 
@@ -148,9 +161,19 @@ export default function (Alpine) {
     }
 
     function open(parent) {
+      el.classList.remove('hidden');
       el.pauseKeyEvents = false;
+      function getPlacement() {
+        if (isSubmenu) {
+          return 'right-start';
+        } else if (menuTrigger._menu_trigger.isDropdown) {
+          return el.getAttribute('data-align') || 'bottom-start';
+        }
+        return 'right-start';
+      }
       computePosition(parent, el, {
-        placement: 'right-start',
+        placement: getPlacement(),
+        strategy: 'fixed',
         middleware: [
           offset(isSubmenu ? 0 : 4),
           flip(),
@@ -169,7 +192,6 @@ export default function (Alpine) {
           left: `${x}px`,
           top: `${y}px`,
         });
-        el.classList.remove('hidden');
         if (!isSubmenu) Alpine.nextTick(() => el.focus());
         setTimeout(() => {
           top.addEventListener('contextmenu', onClick);
@@ -177,6 +199,10 @@ export default function (Alpine) {
           el.addEventListener('keydown', onKeydown);
         }, 0);
       });
+    }
+
+    function openDropdown() {
+      open(menuTrigger);
     }
 
     function onContextmenu(event) {
@@ -195,18 +221,18 @@ export default function (Alpine) {
           };
         },
       });
-      menuArea.removeEventListener('contextmenu', onContextmenu);
+      listenForTrigger(false);
     }
 
     if (isSubmenu) {
       menuSubItem._menu_sub.open = open;
       menuSubItem._menu_sub.close = close;
     } else {
-      menuArea.addEventListener('contextmenu', onContextmenu);
+      listenForTrigger(true);
     }
 
     cleanup(() => {
-      menuArea.removeEventListener('contextmenu', onContextmenu);
+      listenForTrigger(false);
       top.removeEventListener('click', onClick);
       el.removeEventListener('keydown', onKeydown);
     });
@@ -214,12 +240,11 @@ export default function (Alpine) {
 
   Alpine.directive('h-menu-item', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
-      'focus:bg-muted/80',
-      'hover:bg-muted/80',
+      'focus:bg-secondary-hover',
+      'hover:bg-secondary-hover',
       'data-[variant=negative]:text-negative',
       'data-[variant=negative]:focus:bg-negative/10',
       'data-[variant=negative]:hover:bg-negative/10',
-      'dark:data-[variant=negative]:focus:bg-negative/20',
       'data-[variant=negative]:focus:text-negative',
       'data-[variant=negative]:hover:text-negative',
       'data-[variant=negative]:*:[svg]:!text-negative',
@@ -272,9 +297,9 @@ export default function (Alpine) {
 
   Alpine.directive('h-menu-sub', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
-      'focus:bg-muted/80',
-      'hover:bg-muted/80',
-      'aria-expanded:bg-muted/80',
+      'focus:bg-secondary-hover',
+      'hover:bg-secondary-hover',
+      'aria-expanded:bg-secondary-hover',
       "[&_svg:not([class*='text-'])]:text-muted-foreground",
       'relative',
       'flex',
@@ -405,14 +430,14 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-menu-label', (el) => {
-    el.classList.add('text-foreground', 'px-2', 'py-1.5', 'text-sm', 'font-medium', 'data-[inset=true]:pl-8');
+    el.classList.add('text-foreground', 'px-2', 'py-1.5', 'text-sm', 'font-medium', 'text-left', 'data-[inset=true]:pl-8');
     el.setAttribute('data-slot', 'menu-label');
   });
 
   Alpine.directive('h-menu-checkbox-item', (el, {}, { cleanup, Alpine }) => {
     el.classList.add(
-      'focus:bg-muted/80',
-      'hover:bg-muted/80',
+      'focus:bg-secondary-hover',
+      'hover:bg-secondary-hover',
       'relative',
       'flex',
       'cursor-default',
@@ -504,8 +529,8 @@ export default function (Alpine) {
 
   Alpine.directive('h-menu-radio-item', (el, { expression }, { effect, evaluateLater, cleanup, Alpine }) => {
     el.classList.add(
-      'focus:bg-muted/80',
-      'hover:bg-muted/80',
+      'focus:bg-secondary-hover',
+      'hover:bg-secondary-hover',
       'relative',
       'flex',
       'cursor-default',

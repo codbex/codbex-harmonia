@@ -30,6 +30,7 @@ import tabs from './components/tabs';
 import dialog from './components/dialog';
 import table from './components/table';
 import menu from './components/menu';
+import toolbar from './components/toolbar';
 
 export {
   accordion,
@@ -64,4 +65,5 @@ export {
   dialog,
   table,
   menu,
+  toolbar,
 };
