@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+github_pages
+docs/public/harmonia
+docs/public/fonts

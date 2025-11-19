@@ -1,0 +1,97 @@
+import { defineConfig } from 'vitepress';
+
+// https://vitepress.dev/reference/site-config
+export default defineConfig({
+  title: 'Harmonia UI',
+  description: 'Harmonia UI Component Library',
+  themeConfig: {
+    // https://vitepress.dev/reference/default-theme-config
+    logo: '/logo/harmonia-circle.svg',
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'Components', link: '/components' },
+    ],
+
+    sidebar: [
+      {
+        text: 'Get started',
+        items: [{ text: 'Installation', link: '/get-started' }],
+      },
+      {
+        text: 'Components',
+        items: [
+          { text: 'Accordion', link: '/components/accordion' },
+          { text: 'Alert', link: '/components/alert' },
+          { text: 'Avatar', link: '/components/avatar' },
+          { text: 'Badge', link: '/components/badge' },
+          { text: 'Button', link: '/components/button' },
+          { text: 'Button Group', link: '/components/button-group' },
+          { text: 'Card', link: '/components/card' },
+          { text: 'Checkbox', link: '/components/checkbox' },
+          { text: 'Collapsible', link: '/components/collapsible' },
+          { text: 'Dialog', link: '/components/dialog' },
+          { text: 'Fieldset', link: '/components/fieldset' },
+          { text: 'Info Page', link: '/components/info-page' },
+          { text: 'Icon', link: '/components/icon' },
+          { text: 'Input', link: '/components/input' },
+          { text: 'Input Group', link: '/components/input-group' },
+          { text: 'Label', link: '/components/label' },
+          { text: 'Menu', link: '/components/menu' },
+          { text: 'Pagination', link: '/components/pagination' },
+          { text: 'Popover', link: '/components/popover' },
+          { text: 'Progress', link: '/components/progress' },
+          { text: 'Radio', link: '/components/radio' },
+          { text: 'Range', link: '/components/range' },
+          { text: 'Select', link: '/components/select' },
+          { text: 'Separator', link: '/components/separator' },
+          { text: 'Sidebar', link: '/components/sidebar' },
+          { text: 'Skeleton', link: '/components/skeleton' },
+          { text: 'Spinner', link: '/components/spinner' },
+          { text: 'Switch', link: '/components/switch' },
+          { text: 'Table', link: '/components/table' },
+          { text: 'Tabs', link: '/components/tabs' },
+          { text: 'Tag', link: '/components/tag' },
+          { text: 'Textarea', link: '/components/textarea' },
+          { text: 'Text', link: '/components/text' },
+          { text: 'Tile', link: '/components/tile' },
+          { text: 'Toolbar', link: '/components/toolbar' },
+          { text: 'Tooltip', link: '/components/tooltip' },
+        ],
+      },
+      {
+        text: 'Utility classes',
+        items: [
+          { text: 'Margins & Paddings', link: '/utility-classes/margins-paddings' },
+          { text: 'Width & Height', link: '/utility-classes/width-height' },
+          { text: 'Flex Layout', link: '/utility-classes/flex' },
+          { text: 'Grid layout', link: '/utility-classes/grid' },
+          { text: 'Gap', link: '/utility-classes/gap' },
+          { text: 'Justify Content', link: '/utility-classes/justify' },
+          { text: 'Align Content', link: '/utility-classes/align-content' },
+          { text: 'Align Items', link: '/utility-classes/align-items' },
+          { text: 'Place Content', link: '/utility-classes/place-content' },
+          { text: 'Text', link: '/utility-classes/text' },
+          { text: 'Color', link: '/utility-classes/color' },
+          { text: 'Rotate', link: '/utility-classes/rotate' },
+          { text: 'Overflow', link: '/utility-classes/overflow' },
+          { text: 'Images', link: '/utility-classes/images' },
+        ],
+      },
+    ],
+
+    socialLinks: [{ icon: 'github', link: 'https://github.com/codbex/codbex-harmonia' }],
+  },
+  head: [
+    ['script', { src: '/js/component-container.js', type: 'module' }],
+    ['script', { src: '/node_modules/lucide/dist/umd/lucide.min.js', type: 'text/javascript' }],
+    ['link', { href: '/harmonia/harmonia.css', rel: 'stylesheet' }],
+    ['link', { href: '/fonts.css', rel: 'stylesheet' }],
+  ],
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag === 'component-container' || tag === 'component-test',
+      },
+    },
+  },
+});
