@@ -1,11 +1,14 @@
 @import 'tailwindcss';
 @import 'nouislider/dist/nouislider.min.css';
 @import './slider.css';
+@import './harmonia.css';
 @source '../**/*.{ts,tsx,js,jsx}';
+@source not '../../docs/';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
+:root,
+:host {
   --background: oklch(1 0 0);
   --foreground: oklch(0.3211 0 0);
   --card: oklch(1 0 0);
@@ -17,15 +20,15 @@
   --primary-hover: oklch(0.664 0.1651 259.83);
   --primary-active: oklch(0.5768 0.1721 259.73);
   --secondary: oklch(0.9308 0.0029 264.54);
-  --secondary-foreground: oklch(0.4461 0.0263 256.8018);
+  --secondary-foreground: oklch(0.3211 0 0);
   --secondary-hover: oklch(0.9516 0.0017 247.84);
   --secondary-active: oklch(0.8943 0.0029 264.54);
   --muted: oklch(0.9516 0.0017 247.84);
   --muted-foreground: oklch(0.556 0 0);
 
-  --border: oklch(0.9276 0.0058 264.5313);
-  --input-border: oklch(0.9276 0.0058 264.5313);
-  --input-background: transparent;
+  --border: oklch(0.9 0 0);
+  --input-border: oklch(0.9 0 0);
+  --input-background: oklch(1 0 0);
   --ring: oklch(0.6231 0.188 259.8145);
 
   --negative: oklch(0.6268 0.2133 19.36);
@@ -51,7 +54,7 @@
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-secondary: oklch(0.9276 0.0058 264.5313);
   --sidebar-secondary-foreground: oklch(0.3211 0 0);
-  --sidebar-border: oklch(0.9276 0.0058 264.5313);
+  --sidebar-border: oklch(0.9 0 0);
 
   --object-header: oklch(0.9754 0.0011 197.14);
   --object-header-foreground: oklch(0.3211 0 0);
@@ -61,9 +64,9 @@
   --table-hover: oklch(0.9754 0.0011 197.14);
   --table-hover-foreground: oklch(0.3211 0 0);
 
-  --font-sans: Open Sans, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Merriweather, ui-serif, serif;
-  --font-mono: Fragment Mono, ui-monospace, monospace;
+  --font-sans: Open Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: Merriweather, ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono: Fragment Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --tracking-normal: -0.025em;
 
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);

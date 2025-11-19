@@ -28,11 +28,14 @@ export default function (Alpine) {
       case 'lead':
         el.classList.add('text-muted-foreground', 'text-xl');
         break;
-      case 'large':
+      case 'lg':
         el.classList.add('text-lg', 'font-semibold');
         break;
-      case 'small':
+      case 'sm':
         el.classList.add('text-sm', 'leading-none', 'font-medium');
+        break;
+      case 'xs':
+        el.classList.add('text-xs', 'leading-none', 'font-medium');
         break;
       case 'muted':
         el.classList.add('text-muted-foreground', 'text-sm');

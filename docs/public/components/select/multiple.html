@@ -1,0 +1,34 @@
+<div x-h-select x-data="selectData">
+  <button x-h-select-trigger :placeholder="placeholder" x-model="selected"></button>
+  <div x-h-select-content>
+    <div x-h-select-search></div>
+    <div x-h-select-group>
+      <div x-h-select-label>Fruits</div>
+      <template x-for="option in items">
+        <div x-h-select-option="option.label" :value="option.value"></div>
+      </template>
+    </div>
+  </div>
+</div>
+<script>
+  const originalItems = [
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+    { label: 'Blueberry', value: 'blueberry' },
+    { label: 'Grapes', value: 'grapes' },
+    { label: 'Pineapple', value: 'pineapple' },
+    { label: 'Jamaican tangelo', value: 'jamaicanTangelo' },
+  ];
+  Alpine.data('selectData', () => ({
+    selected: ['apple', 'banana'],
+    placeholder: 'Select',
+    items: structuredClone(originalItems),
+    addFromSearch(event) {
+      let nItems = structuredClone(originalItems);
+      nItems.forEach((element) => {
+        element.label = `${event.target.value}${element.label}`;
+      });
+      this.items = nItems;
+    },
+  }));
+</script>

@@ -8,7 +8,6 @@ import checkbox from './components/checkbox';
 import popover from './components/popover';
 import avatar from './components/avatar';
 import badge from './components/badge';
-import command from './components/command';
 import select from './components/select';
 import alert from './components/alert';
 import radio from './components/radio';
@@ -20,17 +19,23 @@ import skeleton from './components/skeleton';
 import collapsible from './components/collapsible';
 import tile from './components/tile';
 import tag from './components/tag';
-import information from './components/information';
+import icon from './components/icon';
+import infoPage from './components/info-page';
 import spinner from './components/spinner';
 import fieldset from './components/fieldset';
 import tooltip from './components/tooltip';
 import progress from './components/progress';
 import pagination from './components/pagination';
 import tabs from './components/tabs';
+import text from './components/text';
 import dialog from './components/dialog';
 import table from './components/table';
 import menu from './components/menu';
 import toolbar from './components/toolbar';
+
+import { setColorScheme } from './utils/theme';
+
+window.Harmonia = { setColorScheme };
 
 document.addEventListener('alpine:init', () => {
   window.Alpine.plugin(accordion);
@@ -43,7 +48,6 @@ document.addEventListener('alpine:init', () => {
   window.Alpine.plugin(popover);
   window.Alpine.plugin(avatar);
   window.Alpine.plugin(badge);
-  window.Alpine.plugin(command);
   window.Alpine.plugin(select);
   window.Alpine.plugin(alert);
   window.Alpine.plugin(radio);
@@ -55,13 +59,15 @@ document.addEventListener('alpine:init', () => {
   window.Alpine.plugin(collapsible);
   window.Alpine.plugin(tile);
   window.Alpine.plugin(tag);
-  window.Alpine.plugin(information);
+  window.Alpine.plugin(icon);
+  window.Alpine.plugin(infoPage);
   window.Alpine.plugin(spinner);
   window.Alpine.plugin(fieldset);
   window.Alpine.plugin(tooltip);
   window.Alpine.plugin(progress);
   window.Alpine.plugin(pagination);
   window.Alpine.plugin(tabs);
+  window.Alpine.plugin(text);
   window.Alpine.plugin(dialog);
   window.Alpine.plugin(table);
   window.Alpine.plugin(menu);

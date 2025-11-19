@@ -1,6 +1,6 @@
 export default function (Alpine) {
   Alpine.directive('h-fieldset', (el) => {
-    el.classList.add('flex', 'flex-col', 'gap-6', 'has-[>[data-slot=checkbox-group]]:gap-3', 'has-[>[data-slot=radio-group]]:gap-3');
+    el.classList.add('vbox', 'gap-6', 'has-[>[data-slot=checkbox-group]]:gap-3', 'has-[>[data-slot=radio-group]]:gap-3');
     el.setAttribute('data-slot', 'fieldset');
   });
 
@@ -10,19 +10,19 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-field-group', (el) => {
-    el.classList.add('group/field-group', '@container/field-group', 'flex', 'w-full', 'flex-col', 'gap-7', 'data-[slot=checkbox-group]:gap-3', '[&>[data-slot=field-group]]:gap-4');
+    el.classList.add('group/field-group', '@container/field-group', 'vbox', 'w-full', 'gap-7', 'data-[slot=checkbox-group]:gap-3', '[&>[data-slot=field-group]]:gap-4');
     el.setAttribute('data-slot', 'field-group');
   });
 
   Alpine.directive('h-field', (el) => {
-    el.classList.add('group/field', 'flex', 'w-full', 'gap-3', 'data-[invalid=true]:text-destructive');
+    el.classList.add('group/field', 'w-full', 'gap-3', 'data-[invalid=true]:text-negative');
     switch (el.getAttribute('data-orientation')) {
       case 'horizontal':
-        el.classList.add('flex-row', 'items-center', '[&>[data-slot=field-label]]:flex-auto', 'has-[>[data-slot=field-content]]:items-start', 'has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px');
+        el.classList.add('hbox', 'items-center', '[&>[data-slot=field-label]]:flex-auto', 'has-[>[data-slot=field-content]]:items-start', 'has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px');
         break;
       case 'responsive':
         el.classList.add(
-          'flex-col',
+          'vbox',
           '[&>*]:w-full',
           '[&>.sr-only]:w-auto',
           '@md/field-group:flex-row',
@@ -34,14 +34,14 @@ export default function (Alpine) {
         );
         break;
       default:
-        el.classList.add('flex-col', '[&>*]:w-full', '[&>.sr-only]:w-auto');
+        el.classList.add('vbox', '[&>*]:w-full', '[&>.sr-only]:w-auto');
     }
     el.setAttribute('role', 'group');
     el.setAttribute('data-slot', 'field');
   });
 
   Alpine.directive('h-field-content', (el) => {
-    el.classList.add('group/field-content', 'flex', 'flex-1', 'flex-col', 'gap-1.5', 'leading-snug');
+    el.classList.add('group/field-content', 'vbox', 'flex-1', 'gap-1.5', 'leading-snug');
     el.setAttribute('data-slot', 'field-content');
   });
 

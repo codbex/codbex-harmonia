@@ -8,6 +8,7 @@ export default function (Alpine) {
     el.classList.add(
       'group/tab-bar',
       'flex',
+      'gap-1.5',
       'bg-object-header',
       'text-object-header-foreground',
       'group-data-[orientation=horizontal]/tabs:flex-row',
@@ -16,9 +17,9 @@ export default function (Alpine) {
       'data-[style=inline]:group-data-[orientation=vertical]/tabs:inset-shadow-[-.063rem_0_var(--border)]',
       'data-[style=inline]:group-data-[orientation=horizontal]/tabs:h-11',
       'data-[style=inline]:data-[size=sm]:group-data-[orientation=horizontal]/tabs:h-8',
-      'data-[style=default]:border',
-      'data-[style=default]:rounded-lg',
-      'data-[style=default]:p-[3px]'
+      'data-[style=float]:border',
+      'data-[style=float]:rounded-lg',
+      'data-[style=float]:p-[3px]'
     );
     el.setAttribute('data-slot', 'tab-bar');
   });
@@ -33,7 +34,7 @@ export default function (Alpine) {
       'group-data-[orientation=vertical]/tabs:flex-col',
       'group-data-[orientation=vertical]/tabs:h-fit',
       'group-data-[style=inline]/tab-bar:gap-2',
-      'group-data-[style=default]/tab-bar:gap-1'
+      'group-data-[style=float]/tab-bar:gap-1'
     );
     el.setAttribute('role', 'tablist');
     el.setAttribute('data-slot', 'tab-list');
@@ -62,18 +63,18 @@ export default function (Alpine) {
       'font-medium',
       'whitespace-nowrap',
       'transition-[color,box-shadow]',
-      'group-data-[style=default]/tab-bar:rounded-md',
-      'group-data-[style=default]/tab-bar:border',
-      'group-data-[style=default]/tab-bar:border-transparent',
-      'group-data-[style=default]/tab-bar:aria-selected:bg-background',
-      'group-data-[style=default]/tab-bar:aria-selected:border-border',
-      'group-data-[style=default]/tab-bar:hover:bg-background',
-      'group-data-[style=default]/tab-bar:hover:border-border',
-      'group-data-[style=inline]/tab-bar:py-3',
+      'group-data-[style=float]/tab-bar:rounded-md',
+      'group-data-[style=float]/tab-bar:border',
+      'group-data-[style=float]/tab-bar:border-transparent',
+      'group-data-[style=float]/tab-bar:aria-selected:bg-background',
+      'group-data-[style=float]/tab-bar:aria-selected:border-border',
+      'group-data-[style=float]/tab-bar:hover:bg-background',
+      'group-data-[style=float]/tab-bar:hover:border-border',
       'group-data-[style=inline]/tab-bar:border-0',
       'group-data-[style=inline]/tab-bar:group-data-[orientation=horizontal]/tabs:hover:inset-shadow-[0_-.188rem_var(--border)]',
       'group-data-[style=inline]/tab-bar:group-data-[orientation=horizontal]/tabs:aria-selected:inset-shadow-[0_-.125rem_var(--primary)]',
       'group-data-[style=inline]/tab-bar:group-data-[orientation=horizontal]/tabs:hover:aria-selected:inset-shadow-[0_-.188rem_var(--primary)]',
+      'group-data-[style=inline]/tab-bar:group-data-[orientation=vertical]/tabs:px-3.5',
       'group-data-[style=inline]/tab-bar:group-data-[orientation=vertical]/tabs:hover:inset-shadow-[-.188rem_0_var(--border)]',
       'group-data-[style=inline]/tab-bar:group-data-[orientation=vertical]/tabs:aria-selected:inset-shadow-[-.125rem_0_var(--primary)]',
       'group-data-[style=inline]/tab-bar:group-data-[orientation=vertical]/tabs:hover:aria-selected:inset-shadow-[-.188rem_0_var(--primary)]',
@@ -87,8 +88,8 @@ export default function (Alpine) {
     );
     el.setAttribute('role', 'tab');
     el.setAttribute('data-slot', 'tab');
-    if (!el.hasAttribute('id')) console.error('h-tab: Tabs must have an id');
-    if (!el.hasAttribute('aria-controls')) console.error('h-tab: aria-controls must be set to the tab-content id.');
+    if (!el.hasAttribute('id')) throw new Error('h-tab: Tabs must have an id');
+    if (!el.hasAttribute('aria-controls')) throw new Error('h-tab: aria-controls must be set to the tab-content id.');
   });
 
   Alpine.directive('h-tab-action', (el) => {
@@ -99,7 +100,13 @@ export default function (Alpine) {
 
   Alpine.directive('h-tab-list-actions', (el, { modifiers }) => {
     el.classList.add('flex', 'gap-1.5', 'items-center', 'justify-center');
-    if (modifiers.includes('end')) el.classList.add('group-data-[orientation=horizontal]/tabs:ml-auto', 'group-data-[orientation=vertical]/tabs:mt-auto');
+    if (modifiers.includes('end'))
+      el.classList.add(
+        'group-data-[orientation=horizontal]/tabs:ml-auto',
+        'group-data-[style=inline]/tab-bar:group-data-[orientation=horizontal]/tabs:mr-1.5',
+        'group-data-[orientation=vertical]/tabs:mt-auto',
+        'group-data-[style=inline]/tab-bar:group-data-[orientation=vertical]/tabs:mb-1.5'
+      );
     el.setAttribute('data-slot', 'tab-list-actions');
   });
 
@@ -108,7 +115,7 @@ export default function (Alpine) {
     el.setAttribute('role', 'tabpanel');
     el.setAttribute('tabindex', '0');
     el.setAttribute('data-slot', 'tabs-content');
-    if (!el.hasAttribute('id')) console.error('h-tabs-content: Tab content must have an id');
-    if (!el.hasAttribute('aria-labelledby')) console.error('h-tabs-content: aria-labelledby must be set to the tab id.');
+    if (!el.hasAttribute('id')) throw new Error('h-tabs-content: Tab content must have an id');
+    if (!el.hasAttribute('aria-labelledby')) throw new Error('h-tabs-content: aria-labelledby must be set to the tab id.');
   });
 }

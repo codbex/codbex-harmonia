@@ -16,8 +16,7 @@ export default function (Alpine) {
     const accordion = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_accordion'));
 
     if (!accordion) {
-      console.error('h-accordion-item must be inside an h-accordion');
-      return;
+      throw new Error('h-accordion-item must be inside an h-accordion');
     }
 
     el.classList.add('border-b', 'last:border-b-0');
@@ -28,7 +27,7 @@ export default function (Alpine) {
     function getIsExpanded() {
       if (accordion._accordion.single) {
         if (accordion._accordion.expandedId !== '') {
-          return accordion._accordion.expandedId === expression;
+          return accordion._accordion.expandedId === itemId;
         } else if (modifiers.includes('default')) {
           accordion._accordion.expandedId = itemId;
           return true;
@@ -55,16 +54,14 @@ export default function (Alpine) {
 
   Alpine.directive('h-accordion-trigger', (el, { expression }, { effect, evaluateLater, Alpine, cleanup }) => {
     if (el.tagName.length !== 2 && !el.tagName.startsWith('H')) {
-      console.error('h-accordion-trigger must be a header element');
-      return;
+      throw new Error('h-accordion-trigger must be a header element');
     }
     const accordion = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_accordion'));
 
     const accordionItem = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_accordionItem'));
 
     if (!accordionItem || !accordion) {
-      console.error('h-accordion-trigger must be inside an h-accordion-item, which must be inside an h-accordion');
-      return;
+      throw new Error('h-accordion-trigger must be inside an h-accordion-item, which must be inside an h-accordion');
     }
 
     el.classList.add('flex');

@@ -3,6 +3,6 @@ export default function (Alpine) {
     el.classList.add('size-4', 'border-2', 'border-x-primary', 'border-b-primary', 'border-t-transparent', 'rounded-full', 'animate-spin');
     el.setAttribute('role', 'status');
     el.setAttribute('data-slot', 'spinner');
-    el.setAttribute('aria-label', 'Loading');
+    if (!el.hasAttribute('aria-label')) el.setAttribute('aria-label', 'Loading');
   });
 }

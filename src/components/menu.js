@@ -8,19 +8,18 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-menu', (el, { modifiers }, { cleanup, Alpine }) => {
-    el.classList.add('hidden', 'fixed', 'bg-popover', 'text-popover-foreground', 'z-50', 'min-w-[8rem]', 'overflow-x-hidden', 'overflow-y-auto', 'rounded-md', 'p-1', 'shadow-md', 'border', 'outline-none');
+    el.classList.add('hidden', 'fixed', 'bg-popover', 'text-popover-foreground', 'font-normal', 'z-50', 'min-w-[8rem]', 'overflow-x-hidden', 'overflow-y-auto', 'rounded-md', 'p-1', 'shadow-md', 'border', 'outline-none');
     el.setAttribute('role', 'menu');
     el.setAttribute('aria-orientation', 'vertical');
     el.setAttribute('tabindex', '-1');
     el.setAttribute('data-slot', 'menu');
     if (!el.hasAttribute('aria-labelledby') && !el.hasAttribute('aria-label')) {
-      console.error('h-menu: must have an "aria-label" or "aria-labelledby" attribute');
+      throw new Error('h-menu: must have an "aria-label" or "aria-labelledby" attribute');
     }
 
     const menuTrigger = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_menu_trigger'));
     if (!menuTrigger) {
-      console.error('h-menu: menu must be inside an h-menu-trigger');
-      return;
+      throw new Error('h-menu: menu must be inside an h-menu-trigger');
     }
 
     let isSubmenu = modifiers.includes('sub');
@@ -161,44 +160,46 @@ export default function (Alpine) {
     }
 
     function open(parent) {
-      el.classList.remove('hidden');
-      el.pauseKeyEvents = false;
-      function getPlacement() {
-        if (isSubmenu) {
+      if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+        el.pauseKeyEvents = false;
+        function getPlacement() {
+          if (isSubmenu) {
+            return 'right-start';
+          } else if (menuTrigger._menu_trigger.isDropdown) {
+            return el.getAttribute('data-align') || 'bottom-start';
+          }
           return 'right-start';
-        } else if (menuTrigger._menu_trigger.isDropdown) {
-          return el.getAttribute('data-align') || 'bottom-start';
         }
-        return 'right-start';
-      }
-      computePosition(parent, el, {
-        placement: getPlacement(),
-        strategy: 'fixed',
-        middleware: [
-          offset(isSubmenu ? 0 : 4),
-          flip(),
-          shift({ padding: 4 }),
-          size({
-            apply({ availableWidth, availableHeight, elements }) {
-              Object.assign(elements.floating.style, {
-                maxWidth: `${Math.max(0, availableWidth) - 4}px`,
-                maxHeight: `${Math.max(0, availableHeight) - 4}px`,
-              });
-            },
-          }),
-        ],
-      }).then(({ x, y }) => {
-        Object.assign(el.style, {
-          left: `${x}px`,
-          top: `${y}px`,
+        computePosition(parent, el, {
+          placement: getPlacement(),
+          strategy: 'fixed',
+          middleware: [
+            offset(isSubmenu ? 0 : 4),
+            flip(),
+            shift({ padding: 4 }),
+            size({
+              apply({ availableWidth, availableHeight, elements }) {
+                Object.assign(elements.floating.style, {
+                  maxWidth: `${Math.max(0, availableWidth) - 4}px`,
+                  maxHeight: `${Math.max(0, availableHeight) - 4}px`,
+                });
+              },
+            }),
+          ],
+        }).then(({ x, y }) => {
+          Object.assign(el.style, {
+            left: `${x}px`,
+            top: `${y}px`,
+          });
+          if (!isSubmenu) Alpine.nextTick(() => el.focus());
+          setTimeout(() => {
+            top.addEventListener('contextmenu', onClick);
+            top.addEventListener('click', onClick);
+            el.addEventListener('keydown', onKeydown);
+          }, 0);
         });
-        if (!isSubmenu) Alpine.nextTick(() => el.focus());
-        setTimeout(() => {
-          top.addEventListener('contextmenu', onClick);
-          top.addEventListener('click', onClick);
-          el.addEventListener('keydown', onKeydown);
-        }, 0);
-      });
+      }
     }
 
     function openDropdown() {
@@ -234,6 +235,7 @@ export default function (Alpine) {
     cleanup(() => {
       listenForTrigger(false);
       top.removeEventListener('click', onClick);
+      top.removeEventListener('contextmenu', onClick);
       el.removeEventListener('keydown', onKeydown);
     });
   });
@@ -320,12 +322,12 @@ export default function (Alpine) {
       "[&_svg:not([class*='size-'])]:size-4",
       'after:block',
       'after:bg-transparent',
-      'after:border-t-2',
-      'after:border-r-2',
+      'after:border-t-[0.063rem]',
+      'after:border-r-[0.063rem]',
       'after:border-muted-foreground',
       'after:pointer-events-none',
-      'after:size-2',
-      'after:rounded-[0.125rem]',
+      'after:size-[0.438rem]',
+      'after:rounded-[0.063rem]',
       'after:rotate-45',
       'after:ml-auto',
       'after:-translate-x-0.75'
@@ -337,7 +339,7 @@ export default function (Alpine) {
     el.setAttribute('data-slot', 'menu-sub');
 
     const parentMenu = Alpine.findClosest(el.parentElement, (parent) => parent.getAttribute('role') === 'menu');
-    if (!parentMenu) console.error('h-menu-sub: Menu sub item must have a parent');
+    if (!parentMenu) throw new Error('h-menu-sub: Menu sub item must have a parent');
 
     el._menu_sub = {
       open: undefined,
@@ -430,7 +432,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-menu-label', (el) => {
-    el.classList.add('text-foreground', 'px-2', 'py-1.5', 'text-sm', 'font-medium', 'text-left', 'data-[inset=true]:pl-8');
+    el.classList.add('text-foreground', 'px-2', 'py-1.5', 'text-sm', 'font-semibold', 'text-left', 'data-[inset=true]:pl-8');
     el.setAttribute('data-slot', 'menu-label');
   });
 

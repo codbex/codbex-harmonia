@@ -28,8 +28,7 @@ export default function (Alpine) {
     const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
 
     if (!select) {
-      console.error('h-select-trigger must be inside an h-select element');
-      return;
+      throw new Error('h-select-trigger must be inside an h-select element');
     } else if (el.hasOwnProperty('_x_model')) {
       select._select.multiple = Array.isArray(el._x_model.get());
       select._select.model = el._x_model.get();
@@ -200,7 +199,7 @@ export default function (Alpine) {
     const handler = () => {
       select._select.expanded = !select._select.expanded;
       if (select._select.expanded) {
-        if (!content) content = document.getElementById(select._select.controls);
+        if (!content) content = select.querySelector(`#${select._select.controls}`);
         options = content.querySelectorAll('[role=option]');
       }
       Alpine.nextTick(() => {
@@ -239,8 +238,7 @@ export default function (Alpine) {
   Alpine.directive('h-select-content', (el, {}, { effect, Alpine }) => {
     const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
     if (!select) {
-      console.error('h-select-content must be inside an h-select element');
-      return;
+      throw new Error('h-select-content must be inside an h-select element');
     }
     el.classList.add('absolute', 'bg-popover', 'text-popover-foreground', 'data-[state=closed]:hidden', 'p-1', 'top-0', 'left-0', 'z-50', 'min-w-[1rem]', 'overflow-x-hidden', 'overflow-y-auto', 'rounded-control', 'border', 'shadow-md');
     el.setAttribute('data-slot', 'select-content');
@@ -251,7 +249,10 @@ export default function (Alpine) {
     el.setAttribute('aria-labelledby', select._select.id);
     el.setAttribute('data-state', select._select.expanded ? 'open' : 'closed');
 
-    const control = document.getElementById(select._select.id);
+    const control = select.querySelector(`#${select._select.id}`);
+    if (!control) {
+      throw new Error('h-select-content: trigger not found');
+    }
 
     let autoUpdateCleanup;
 
@@ -296,8 +297,7 @@ export default function (Alpine) {
   Alpine.directive('h-select-search', (el, { modifiers }, { effect, cleanup }) => {
     const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
     if (!select) {
-      console.error('h-select-search must be inside an h-select element');
-      return;
+      throw new Error('h-select-search must be inside an h-select element');
     } else select._select.filterType = FilterType[modifiers[0]] ?? FilterType['starts-with'];
     el.classList.add('flex', 'h-8', 'items-center', 'gap-2', 'border-b', 'px-2');
     el.setAttribute('data-slot', 'select-search');
@@ -324,7 +324,7 @@ export default function (Alpine) {
     el.addEventListener('click', handler);
     el.addEventListener('keydown', handler);
 
-    if (modifiers[0] !== FilterType.none) {
+    if (select._select.filterType !== FilterType.none) {
       function onInput() {
         select._select.search = searchInput.value.toLowerCase();
       }
@@ -340,7 +340,7 @@ export default function (Alpine) {
     cleanup(() => {
       el.removeEventListener('click', handler);
       el.removeEventListener('keydown', handler);
-      if (modifiers[0] !== FilterType.none) searchInput.removeEventListener('keyup', onInput);
+      if (select._select.filterType !== FilterType.none) searchInput.removeEventListener('keyup', onInput);
     });
   });
 
@@ -372,8 +372,7 @@ export default function (Alpine) {
   Alpine.directive('h-select-option', (el, { expression }, { effect, evaluateLater, cleanup }) => {
     const select = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_select'));
     if (!select) {
-      console.error('h-select-option must be inside an h-select element');
-      return;
+      throw new Error('h-select-option must be inside an h-select element');
     }
 
     el.classList.add(
@@ -523,5 +522,6 @@ export default function (Alpine) {
     el.classList.add('bg-border', 'pointer-events-none', '-mx-1', 'my-1', 'h-px');
     el.setAttribute('data-slot', 'select-separator');
     el.setAttribute('aria-hidden', 'true');
+    el.setAttribute('role', 'none');
   });
 }

@@ -7,7 +7,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-pagination-content', (el) => {
-    el.classList.add('flex', 'flex-row', 'items-center', 'gap-1');
+    el.classList.add('hbox', 'items-center', 'gap-1');
     el.setAttribute('data-slot', 'pagination-content');
   });
 

@@ -7,16 +7,17 @@ export default function (Alpine) {
     }
     el.setAttribute('data-slot', 'table');
 
-    if (el.getAttribute('data-border')) {
-      el.classList.add('border', 'rounded-md', '[&_caption]:pb-4');
+    if (el.getAttribute('data-border') === 'true') {
+      el.classList.add('border', 'rounded-md');
     }
   });
 
   Alpine.directive('h-table', (el) => {
-    el.classList.add('w-full', 'caption-bottom', 'text-sm', 'border-separate', 'border-spacing-0');
+    el.classList.add('group', 'w-full', 'caption-bottom', 'text-sm', 'border-separate', 'border-spacing-0');
+    if (el.getAttribute('data-fixed') === 'true') el.classList.add('table-fixed');
     el.setAttribute('data-slot', 'table');
 
-    switch (el.getAttribute('data-border')) {
+    switch (el.getAttribute('data-borders')) {
       case 'rows':
         el.classList.add('[&_tr_td]:border-b', '[&_tr_th]:border-b', 'first:[&_tfoot_tr_td]:border-t', 'first:[&_tfoot_tr_th]:border-t');
         break;
@@ -55,7 +56,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-table-caption', (el) => {
-    el.classList.add('text-muted-foreground', 'mt-4', 'text-sm');
+    el.classList.add('text-muted-foreground', 'py-2', 'text-sm', 'border-t');
     el.setAttribute('data-slot', 'table-caption');
   });
 

@@ -3,8 +3,7 @@ export default function (Alpine) {
     el.classList.add(
       'bg-object-header',
       'text-object-header-foreground',
-      'flex',
-      'flex-row',
+      'hbox',
       'shrink-0',
       'items-center',
       'px-2',
@@ -19,6 +18,11 @@ export default function (Alpine) {
     el.setAttribute('data-slot', 'toolbar');
   });
 
+  Alpine.directive('h-toolbar-image', (el) => {
+    el.classList.add('size-8', '[[data-size=sm]_&]:size-6');
+    el.setAttribute('data-slot', 'toolbar-image');
+  });
+
   Alpine.directive('h-toolbar-title', (el) => {
     el.classList.add('text', '[[data-size=sm]_&]:text-sm', 'font-medium', 'whitespace-nowrap', 'text-ellipsis', 'overflow-hidden');
     el.setAttribute('data-slot', 'toolbar-title');
@@ -30,7 +34,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-toolbar-separator', (el) => {
-    el.classList.add('w-px', 'h-full', 'border-l');
+    el.classList.add('w-px', 'h-8', '[[data-size=sm]_&]:h-6', 'border-l');
     el.setAttribute('data-slot', 'toolbar-separator');
   });
 }

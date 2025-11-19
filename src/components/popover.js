@@ -23,18 +23,15 @@ export default function (Alpine) {
 
   Alpine.directive('h-popover-trigger', (el, { modifiers }, { effect, Alpine, cleanup }) => {
     const popover = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_popover'));
-
     if (!popover) {
-      console.error('h-popover-trigger must be inside an h-popover element');
-      return;
+      throw new Error('h-popover-trigger must be inside an h-popover element');
     }
     el.setAttribute('type', 'button');
-    el.classList.add('w-full', 'h-full');
     if (modifiers.includes('chevron')) {
       el.classList.add('[&_svg]:transition-transform', '[&[data-state=open]>svg:not(:first-child):last-child]:rotate-180');
     }
 
-    el.setAttribute('data-slot', 'popover-trigger');
+    if (!el.hasAttribute('data-slot')) el.setAttribute('data-slot', 'popover-trigger');
 
     if (el.hasAttribute('id')) {
       popover._popover.id = el.getAttribute('id');
@@ -82,8 +79,7 @@ export default function (Alpine) {
   Alpine.directive('h-popover-content', (el, { modifiers }, { effect, Alpine }) => {
     const popover = Alpine.findClosest(el.parentElement, (parent) => parent.hasOwnProperty('_popover'));
     if (!popover) {
-      console.error('h-popover-content must be inside an h-popover element');
-      return;
+      throw new Error('h-popover-content must be inside an h-popover element');
     }
     el.classList.add('absolute', 'bg-popover', 'text-popover-foreground', 'data-[state=closed]:hidden', 'top-0', 'left-0', 'z-50', 'min-w-[1rem]', 'rounded-control', 'border', 'shadow-md', 'outline-hidden', 'overflow-scroll');
     el.setAttribute('data-slot', 'popover-content');
@@ -99,7 +95,10 @@ export default function (Alpine) {
       el.classList.add('overflow-none');
     }
 
-    const control = document.getElementById(popover._popover.id);
+    const control = popover.querySelector(`#${popover._popover.id}`);
+    if (!control) {
+      throw new Error('h-popover-content: trigger not found');
+    }
 
     let autoUpdateCleanup;
 
@@ -132,6 +131,7 @@ export default function (Alpine) {
     effect(() => {
       el.setAttribute('data-state', popover._popover.expanded ? 'open' : 'closed');
       if (popover._popover.expanded) {
+        // debugger;
         autoUpdateCleanup = autoUpdate(control, el, updatePosition);
       } else {
         if (autoUpdateCleanup) autoUpdateCleanup();

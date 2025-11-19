@@ -59,7 +59,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-alert-description', (el) => {
-    el.classList.add('text-muted-foreground', 'col-start-2', 'flex', 'flex-col', 'gap-1', 'text-sm', '[&_p]:leading-relaxed');
+    el.classList.add('text-muted-foreground', 'col-start-2', 'vbox', 'gap-1', 'text-sm', '[&_p]:leading-relaxed');
     el.setAttribute('data-slot', 'alert-description');
   });
   Alpine.directive('h-alert-actions', (el) => {

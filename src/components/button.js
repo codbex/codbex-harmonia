@@ -42,13 +42,22 @@ export default function (Alpine) {
 
     const sizes = {
       default: ['h-9', 'px-4', 'py-2', 'has-[>svg]:px-3'],
-      xs: inGroup ? ['h-6', 'gap-1', 'px-2', 'rounded-[calc(var(--radius)-5px)]', "[&>svg:not([class*='size-'])]:size-3.5", 'has-[>svg]:px-2'] : ['h-6.5', 'gap-1.5', 'px-2.5', 'has-[>svg]:px-2.5'],
-      sm: inGroup ? ['h-8', 'px-2.5', 'gap-1.5', 'rounded-md', 'has-[>svg]:px-2.5'] : ['h-8', 'gap-1.5', 'px-3', 'has-[>svg]:px-2.5'],
+      xs: inGroup ? ['h-6', 'gap-1', 'px-2', "[&>svg:not([class*='size-'])]:size-3.5", 'has-[>svg]:px-2'] : ['h-6.5', 'gap-1.5', 'px-2.5', 'has-[>svg]:px-2.5'],
+      sm: inGroup ? ['h-8', 'px-2.5', 'gap-1.5', 'has-[>svg]:px-2.5'] : ['h-8', 'gap-1.5', 'px-3', 'has-[>svg]:px-2.5'],
       lg: ['h-10', 'px-6', 'has-[>svg]:px-4'],
-      'icon-xs': inGroup ? ['size-6', 'rounded-[calc(var(--radius)-5px)]', 'p-0', 'has-[>svg]:p-0'] : ['size-6.5'],
+      'icon-xs': inGroup ? ['size-6', 'p-0', 'has-[>svg]:p-0'] : ['size-6.5'],
       'icon-sm': inGroup ? ['size-8', 'p-0', 'has-[>svg]:p-0'] : ['size-8'],
       icon: ['size-9'],
       'icon-lg': ['size-10'],
+      'icon-tab': [
+        'group-data-[orientation=horizontal]/tabs:aspect-square',
+        'group-data-[orientation=horizontal]/tabs:w-auto',
+        'group-data-[style=float]/tab-bar:group-data-[orientation=horizontal]/tabs:h-full',
+        'group-data-[style=inline]/tab-bar:group-data-[orientation=horizontal]/tabs:h-[80%]',
+        'group-data-[orientation=vertical]/tabs:h-9',
+        'group-data-[style=float]/tab-bar:group-data-[orientation=vertical]/tabs:w-full',
+        'group-data-[style=inline]/tab-bar:group-data-[orientation=vertical]/tabs:w-[80%]',
+      ],
     };
 
     function setVariant(variant) {
@@ -62,6 +71,9 @@ export default function (Alpine) {
       if (sizes.hasOwnProperty(size)) {
         el.classList.add(...sizes[size]);
         el.setAttribute('data-size', size);
+        if (size.startsWith('icon') && !el.hasAttribute('aria-labelledby') && !el.hasAttribute('aria-label')) {
+          console.error('h-button: Icon-only buttons must have an "aria-label" or "aria-labelledby" attribute', el);
+        }
       }
     }
 
@@ -123,17 +135,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-button-group-separator', (el) => {
-    el.classList.add(
-      'bg-secondary-active',
-      'shrink-0',
-      'data-[orientation=horizontal]:h-px',
-      'data-[orientation=horizontal]:w-full',
-      'data-[orientation=vertical]:h-auto',
-      'data-[orientation=vertical]:w-px',
-      'relative',
-      '!m-0',
-      'self-stretch'
-    );
+    el.classList.add('bg-foreground/20', 'shrink-0', '[[data-orientation=vertical]_&]:h-px', '[[data-orientation=vertical]_&]:w-full', 'h-auto', 'w-px', 'relative', '!m-0', 'self-stretch');
     el.setAttribute('role', 'none');
     el.setAttribute('data-slot', 'button-group-separator');
   });

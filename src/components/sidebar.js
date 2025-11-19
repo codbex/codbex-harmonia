@@ -1,6 +1,6 @@
 export default function (Alpine) {
   Alpine.directive('h-sidebar', (el, { modifiers }) => {
-    el.classList.add('group/sidebar', 'bg-sidebar', 'text-sidebar-foreground', 'border-sidebar-border', 'flex', 'h-full', 'w-(--sidebar-width,16rem)', 'flex-col');
+    el.classList.add('group/sidebar', 'bg-sidebar', 'text-sidebar-foreground', 'border-sidebar-border', 'vbox', 'h-full', 'w-(--sidebar-width,16rem)');
     if (modifiers.includes('floating')) {
       el.classList.add('border', 'rounded-lg', 'shadow-sm', 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]');
     } else el.classList.add('group-data-[collapsible=icon]:w-(--sidebar-width-icon)');
@@ -11,17 +11,17 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-sidebar-header', (el) => {
-    el.classList.add('flex', 'flex-col', 'gap-2', 'p-2');
+    el.classList.add('vbox', 'gap-2', 'p-2');
     el.setAttribute('data-slot', 'sidebar-header');
   });
 
   Alpine.directive('h-sidebar-content', (el) => {
-    el.classList.add('flex', 'min-h-0', 'flex-1', 'flex-col', 'gap-2', 'overflow-auto', 'group-data-[collapsible=icon]:overflow-hidden');
+    el.classList.add('vbox', 'min-h-0', 'flex-1', 'gap-2', 'overflow-auto', 'group-data-[collapsible=icon]:overflow-hidden');
     el.setAttribute('data-slot', 'sidebar-content');
   });
 
   Alpine.directive('h-sidebar-group', (el) => {
-    el.classList.add('relative', 'flex', 'w-full', 'min-w-0', 'flex-col', 'p-2');
+    el.classList.add('relative', 'vbox', 'w-full', 'min-w-0', 'p-2');
     el.setAttribute('data-slot', 'sidebar-group');
   });
 
@@ -86,7 +86,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-sidebar-menu', (el) => {
-    el.classList.add('flex', 'w-full', 'min-w-0', 'flex-col', 'gap-1');
+    el.classList.add('vbox', 'w-full', 'min-w-0', 'gap-1');
     el.setAttribute('data-slot', 'sidebar-menu');
   });
 
@@ -134,7 +134,7 @@ export default function (Alpine) {
       '[&>svg]:shrink-0',
       '[&>svg:not(:first-child):last-child]:ml-auto'
     );
-    el.setAttribute('data-slot', 'sidebar-menu-button');
+    if (!el.hasAttribute('data-slot')) el.setAttribute('data-slot', 'sidebar-menu-button');
 
     const sizes = {
       default: ['h-8', 'text-sm'],
@@ -180,7 +180,7 @@ export default function (Alpine) {
       'peer-data-[size=lg]/menu-button:top-2.5',
       'group-data-[collapsible=icon]:hidden'
     );
-    if (modifiers.includes('showOnHover')) {
+    if (modifiers.includes('autohide')) {
       el.classList.add('peer-data-[active=true]/menu-button:text-sidebar-secondary-foreground', 'group-focus-within/menu-item:opacity-100', 'group-hover/menu-item:opacity-100', 'data-[state=open]:opacity-100', 'md:opacity-0');
     }
     el.setAttribute('data-slot', 'sidebar-menu-action');
@@ -234,7 +234,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-sidebar-menu-sub', (el, { modifiers }) => {
-    el.classList.add('flex', 'min-w-0', 'translate-x-px', 'flex-col', 'gap-1', 'py-0.5', 'group-data-[collapsible=icon]:hidden');
+    el.classList.add('vbox', 'min-w-0', 'translate-x-px', 'gap-1', 'py-0.5', 'group-data-[collapsible=icon]:hidden');
     if (!modifiers.includes('flat')) {
       el.classList.add('border-sidebar-border', 'mx-3.5', 'border-l', 'px-2.5');
     }
@@ -297,7 +297,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-sidebar-footer', (el) => {
-    el.classList.add('flex', 'flex-col', 'gap-2', 'p-2');
+    el.classList.add('vbox', 'gap-2', 'p-2');
     el.setAttribute('data-slot', 'sidebar-footer');
   });
 }

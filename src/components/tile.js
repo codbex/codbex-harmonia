@@ -5,7 +5,7 @@ export default function (Alpine) {
     el.setAttribute('data-slot', 'tile-group');
   });
 
-  Alpine.directive('h-tile', (el, { modifiers }) => {
+  Alpine.directive('h-tile', (el) => {
     el.classList.add(
       'group/tile',
       'flex',
@@ -35,14 +35,23 @@ export default function (Alpine) {
       el.setAttribute('data-size', size);
     }
 
-    if (modifiers.includes('outline')) {
-      el.classList.add('border', 'border-border');
-    } else if (modifiers.includes('shadow')) {
-      el.classList.add('border', 'shadow-sm');
-    } else if (modifiers.includes('muted')) {
-      el.classList.add('bg-muted');
-    } else el.classList.add('border', 'bg-transparent', 'border-transparent');
-    setSize(modifiers.includes('sm') ? 'sm' : 'default');
+    switch (el.getAttribute('data-variant')) {
+      case 'outline':
+        el.classList.add('border', 'border-border');
+        break;
+      case 'shadow':
+        el.classList.add('border', 'shadow-sm');
+        break;
+      case 'muted':
+        el.classList.add('bg-muted');
+        break;
+      default:
+        el.classList.add('border', 'bg-transparent', 'border-transparent');
+    }
+
+    if (el.getAttribute('data-size') === 'sm') {
+      setSize('sm');
+    } else setSize('sm');
   });
 
   Alpine.directive('h-tile-header', (el) => {
@@ -68,7 +77,7 @@ export default function (Alpine) {
   });
 
   Alpine.directive('h-tile-content', (el) => {
-    el.classList.add('flex', 'flex-1', 'flex-col', 'gap-1', '[&+[data-slot=tile-content]]:flex-none');
+    el.classList.add('vbox', 'flex-1', 'gap-1', '[&+[data-slot=tile-content]]:flex-none');
     el.setAttribute('data-slot', 'tile-content');
   });
 

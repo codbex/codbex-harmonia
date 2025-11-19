@@ -77,9 +77,6 @@ export default function (Alpine) {
     el.classList.add(
       'ring-offset-background',
       'focus:ring-ring',
-      // 'absolute',
-      // 'top-4',
-      // 'right-4',
       'rounded-xs',
       'opacity-70',
       'transition-opacity',

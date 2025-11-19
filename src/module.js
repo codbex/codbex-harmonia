@@ -8,7 +8,6 @@ import checkbox from './components/checkbox';
 import popover from './components/popover';
 import avatar from './components/avatar';
 import badge from './components/badge';
-import command from './components/command';
 import select from './components/select';
 import alert from './components/alert';
 import radio from './components/radio';
@@ -20,50 +19,97 @@ import skeleton from './components/skeleton';
 import collapsible from './components/collapsible';
 import tile from './components/tile';
 import tag from './components/tag';
-import information from './components/information';
+import icon from './components/icon';
+import infoPage from './components/info-page';
 import spinner from './components/spinner';
 import fieldset from './components/fieldset';
 import tooltip from './components/tooltip';
 import progress from './components/progress';
 import pagination from './components/pagination';
 import tabs from './components/tabs';
+import text from './components/text';
 import dialog from './components/dialog';
 import table from './components/table';
 import menu from './components/menu';
 import toolbar from './components/toolbar';
 
+import { setColorScheme } from './utils/theme';
+
 export {
-  accordion,
-  button,
-  input,
-  card,
-  label,
-  textarea,
-  checkbox,
-  popover,
-  avatar,
-  badge,
-  command,
-  select,
-  alert,
-  radio,
-  range,
-  _switch,
-  sidebar,
-  separator,
-  skeleton,
-  collapsible,
-  tile,
-  tag,
-  information,
-  spinner,
-  fieldset,
-  tooltip,
-  progress,
-  pagination,
-  tabs,
-  dialog,
-  table,
-  menu,
-  toolbar,
+  accordion as Accordion,
+  alert as Alert,
+  avatar as Avatar,
+  badge as Badge,
+  button as Button,
+  card as Card,
+  checkbox as Checkbox,
+  collapsible as Collapsible,
+  dialog as Dialog,
+  fieldset as Fieldset,
+  icon as Icon,
+  infoPage as InfoPage,
+  input as Input,
+  label as Label,
+  menu as Menu,
+  pagination as Pagination,
+  popover as Popover,
+  progress as Progress,
+  radio as Radio,
+  range as Range,
+  select as Select,
+  separator as Separator,
+  sidebar as Sidebar,
+  skeleton as Skeleton,
+  spinner as Spinner,
+  _switch as Switch,
+  table as Table,
+  tabs as Tabs,
+  tag as Tag,
+  textarea as Textarea,
+  text as Text,
+  tile as Tile,
+  toolbar as Toolbar,
+  tooltip as Tooltip,
 };
+
+const Harmonia = {
+  init(registerPlugin) {
+    registerPlugin(accordion);
+    registerPlugin(alert);
+    registerPlugin(avatar);
+    registerPlugin(badge);
+    registerPlugin(button);
+    registerPlugin(card);
+    registerPlugin(checkbox);
+    registerPlugin(collapsible);
+    registerPlugin(dialog);
+    registerPlugin(fieldset);
+    registerPlugin(icon);
+    registerPlugin(infoPage);
+    registerPlugin(input);
+    registerPlugin(label);
+    registerPlugin(menu);
+    registerPlugin(pagination);
+    registerPlugin(popover);
+    registerPlugin(progress);
+    registerPlugin(radio);
+    registerPlugin(range);
+    registerPlugin(select);
+    registerPlugin(separator);
+    registerPlugin(sidebar);
+    registerPlugin(skeleton);
+    registerPlugin(spinner);
+    registerPlugin(_switch);
+    registerPlugin(table);
+    registerPlugin(tabs);
+    registerPlugin(tag);
+    registerPlugin(textarea);
+    registerPlugin(text);
+    registerPlugin(tile);
+    registerPlugin(toolbar);
+    registerPlugin(tooltip);
+  },
+  setColorScheme,
+};
+
+export default Harmonia;
