@@ -5,6 +5,7 @@ import card from './components/card';
 import label from './components/label';
 import textarea from './components/textarea';
 import checkbox from './components/checkbox';
+import datepicker from './components/datepicker';
 import popover from './components/popover';
 import avatar from './components/avatar';
 import badge from './components/badge';
@@ -44,6 +45,7 @@ export {
   card as Card,
   checkbox as Checkbox,
   collapsible as Collapsible,
+  datepicker as DatePicker,
   dialog as Dialog,
   fieldset as Fieldset,
   icon as Icon,
@@ -82,6 +84,7 @@ const Harmonia = {
     registerPlugin(card);
     registerPlugin(checkbox);
     registerPlugin(collapsible);
+    registerPlugin(datepicker);
     registerPlugin(dialog);
     registerPlugin(fieldset);
     registerPlugin(icon);

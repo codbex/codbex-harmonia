@@ -26,3 +26,6 @@ dist-ssr
 github_pages
 docs/public/harmonia
 docs/public/fonts
+
+# VitePress
+**/.vitepress/cache

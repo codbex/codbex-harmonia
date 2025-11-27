@@ -23,9 +23,14 @@ export default function (Alpine) {
       'focus-visible:ring-[3px]',
       'aria-invalid:ring-negative/20',
       'dark:aria-invalid:ring-negative/40',
-      'aria-invalid:border-negative'
+      'aria-invalid:border-negative',
+      'invalid:ring-negative/20',
+      'dark:invalid:ring-negative/40',
+      'invalid:border-negative'
     );
-    el.setAttribute('data-slot', 'button');
+    if (!el.hasAttribute('data-slot')) {
+      el.setAttribute('data-slot', 'button');
+    }
 
     const inGroup = modifiers.includes('group');
 
@@ -82,7 +87,7 @@ export default function (Alpine) {
       el.classList.remove('shadow-control', 'inline-flex');
       el.classList.add('shadow-none', 'flex');
       setSize(el.getAttribute('data-size') ?? 'xs');
-    } else setSize(el.getAttribute('data-size') ?? 'default');
+    } else setSize((el.getAttribute('data-size') ?? el.getAttribute('data-slot') === 'date-picker-trigger') ? 'icon-xs' : 'default');
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {

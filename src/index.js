@@ -5,6 +5,7 @@ import card from './components/card';
 import label from './components/label';
 import textarea from './components/textarea';
 import checkbox from './components/checkbox';
+import datepicker from './components/datepicker';
 import popover from './components/popover';
 import avatar from './components/avatar';
 import badge from './components/badge';
@@ -42,6 +43,7 @@ document.addEventListener('alpine:init', () => {
   window.Alpine.plugin(button);
   window.Alpine.plugin(input);
   window.Alpine.plugin(card);
+  window.Alpine.plugin(datepicker);
   window.Alpine.plugin(label);
   window.Alpine.plugin(textarea);
   window.Alpine.plugin(checkbox);

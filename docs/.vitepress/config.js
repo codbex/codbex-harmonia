@@ -29,6 +29,7 @@ export default defineConfig({
           { text: 'Card', link: '/components/card' },
           { text: 'Checkbox', link: '/components/checkbox' },
           { text: 'Collapsible', link: '/components/collapsible' },
+          { text: 'Date Picker', link: '/components/datepicker' },
           { text: 'Dialog', link: '/components/dialog' },
           { text: 'Fieldset', link: '/components/fieldset' },
           { text: 'Info Page', link: '/components/info-page' },
