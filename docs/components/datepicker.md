@@ -16,13 +16,7 @@ x-h-calendar
 
 #### x-h-calendar
 
-| Attribute            | Values                                                                                                                                                                        | Required | Description                                                          |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------- |
-| data-aria-prev-year  | string                                                                                                                                                                        | false    | Sets the `aria-label` attribute value for the previous year button.  |
-| data-aria-prev-month | string                                                                                                                                                                        | false    | Sets the `aria-label` attribute value for the previous month button. |
-| data-aria-next-month | string                                                                                                                                                                        | false    | Sets the `aria-label` attribute value for the next month button.     |
-| data-aria-next-year  | string                                                                                                                                                                        | false    | Sets the `aria-label` attribute value for the next year button.      |
-| data-align           | `bottom-start`<br/>`bottom`<br/>`bottom-end`<br/>`right-start`<br/>`right`<br/>`right-end`<br/>`left-start`<br/>`left`<br/>`left-end`<br/>`top-start`<br/>`top`<br/>`top-end` | false    | Aligns the calendar popover relative to the trigger.                 |
+See [Calendar](/components/calendar)
 
 ## Examples
 

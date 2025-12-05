@@ -4,74 +4,42 @@ outline: deep
 
 # Components
 
-[accordion](/components/accordion)
-
-[avatar](/components/avatar)
-
-[button-group](/components/button-group)
-
-[card](/components/card)
-
-[collapsible](/components/collapsible)
-
-[fieldset](/components/fieldset)
-
-[input-group](/components/input-group)
-
-[label](/components/label)
-
-[pagination](/components/pagination)
-
-[progress](/components/progress)
-
-[range](/components/range)
-
-[separator](/components/separator)
-
-[skeleton](/components/skeleton)
-
-[switch](/components/switch)
-
-[tabs](/components/tabs)
-
-[textarea](/components/textarea)
-
-[tile](/components/tile)
-
-[tooltip](/components/tooltip)
-
-[alert](/components/alert)
-
-[badge](/components/badge)
-
-[button](/components/button)
-
-[checkbox](/components/checkbox)
-
-[dialog](/components/dialog)
-
-[icon](/components/icon)
-
-[info-page](/components/info-page)
-
-[input](/components/input)
-
-[menu](/components/menu)
-
-[popover](/components/popover)
-
-[radio](/components/radio)
-
-[select](/components/select)
-
-[sidebar](/components/sidebar)
-
-[spinner](/components/spinner)
-
-[table](/components/table)
-
-[tag](/components/tag)
-
-[text](/components/text)
-
-[toolbar](/components/toolbar)
+[Accordion](/components/accordion)<br />
+[Alert](/components/alert)<br />
+[Avatar](/components/avatar)<br />
+[Badge](/components/badge)<br />
+[Button](/components/button)<br />
+[Button Group](/components/button-group)<br />
+[Calendar](/components/calendar)<br />
+[Card](/components/card)<br />
+[Checkbox](/components/checkbox)<br />
+[Collapsible](/components/collapsible)<br />
+[Date Picker](/components/datepicker)<br />
+[Dialog](/components/dialog)<br />
+[Fieldset](/components/fieldset)<br />
+[Icon](/components/icon)<br />
+[Info Page](/components/info-page)<br />
+[Input](/components/input)<br />
+[Input Group](/components/input-group)<br />
+[Label](/components/label)<br />
+[Menu](/components/menu)<br />
+[Pagination](/components/pagination)<br />
+[Popover](/components/popover)<br />
+[Progress](/components/progress)<br />
+[Radio](/components/radio)<br />
+[Range](/components/range)<br />
+[Select](/components/select)<br />
+[Separator](/components/separator)<br />
+[Sidebar](/components/sidebar)<br />
+[Skeleton](/components/skeleton)<br />
+[Spinner](/components/spinner)<br />
+[Switch](/components/switch)<br />
+[Table](/components/table)<br />
+[Tabs](/components/tabs)<br />
+[Tag](/components/tag)<br />
+[Text](/components/text)<br />
+[Textarea](/components/textarea)<br />
+[Tile](/components/tile)<br />
+[Toolbar](/components/timepicker)<br />
+[Toolbar](/components/toolbar)<br />
+[Tooltip](/components/tooltip)<br />

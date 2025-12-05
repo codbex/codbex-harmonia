@@ -25,13 +25,13 @@ x-h-icon
 
 <ClientOnly>
 <component-container data-class="!p-1 hbox justify-center">
-<svg x-h-icon data-link="/logo/harmonia.svg" role="img" aria-label="Harmonia UI logo"></svg>
+<svg x-h-icon data-link="/harmonia/logo/harmonia.svg" role="img" aria-label="Harmonia UI logo"></svg>
 </component-container>
 </ClientOnly>
 
 <!-- prettier-ignore -->
 ```html
-<svg x-h-icon data-link="/logo/harmonia.svg" role="img" aria-label="Harmonia UI logo"></svg>
+<svg x-h-icon data-link="/harmonia/logo/harmonia.svg" role="img" aria-label="Harmonia UI logo"></svg>
 ```
 
 ### SVG icon
@@ -40,13 +40,13 @@ x-h-icon
 
 <ClientOnly>
 <component-container>
-<svg x-h-icon class="size-8" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
 </component-container>
 </ClientOnly>
 
 <!-- prettier-ignore -->
 ```html
-<svg x-h-icon class="size-8" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
 ```
 
 ### SVG icon with custom fill color
@@ -55,17 +55,17 @@ x-h-icon
 
 <ClientOnly>
 <component-container data-class="flex gap-3">
-<svg x-h-icon class="size-8 fill-positive" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
-<svg x-h-icon class="size-8 fill-negative" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
-<svg x-h-icon class="size-8 fill-warning" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
-<svg x-h-icon class="size-8 fill-information" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-positive" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-negative" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-warning" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-information" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
 </component-container>
 </ClientOnly>
 
 <!-- prettier-ignore -->
 ```html
-<svg x-h-icon class="size-8 fill-positive" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
-<svg x-h-icon class="size-8 fill-negative" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
-<svg x-h-icon class="size-8 fill-warning" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
-<svg x-h-icon class="size-8 fill-information" data-link="/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-positive" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-negative" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-warning" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
+<svg x-h-icon class="size-8 fill-information" data-link="/harmonia/logo/harmonia-symbolic.svg" role="presentation"></svg>
 ```

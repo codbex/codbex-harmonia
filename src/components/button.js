@@ -87,7 +87,17 @@ export default function (Alpine) {
       el.classList.remove('shadow-control', 'inline-flex');
       el.classList.add('shadow-none', 'flex');
       setSize(el.getAttribute('data-size') ?? 'xs');
-    } else setSize((el.getAttribute('data-size') ?? el.getAttribute('data-slot') === 'date-picker-trigger') ? 'icon-xs' : 'default');
+    } else {
+      if (el.hasAttribute('data-size')) {
+        setSize(el.getAttribute('data-size'));
+      } else {
+        if (['date-picker-trigger', 'time-picker-trigger'].includes(el.getAttribute('data-slot'))) {
+          setSize('icon-xs');
+        } else {
+          setSize('default');
+        }
+      }
+    }
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {

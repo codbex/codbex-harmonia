@@ -1,9 +1,12 @@
 import { defineConfig } from 'vitepress';
 
+const basePath = '/harmonia/';
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Harmonia UI',
   description: 'Harmonia UI Component Library',
+  base: basePath,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo/harmonia-circle.svg',
@@ -26,14 +29,15 @@ export default defineConfig({
           { text: 'Badge', link: '/components/badge' },
           { text: 'Button', link: '/components/button' },
           { text: 'Button Group', link: '/components/button-group' },
+          { text: 'Calendar', link: '/components/calendar' },
           { text: 'Card', link: '/components/card' },
           { text: 'Checkbox', link: '/components/checkbox' },
           { text: 'Collapsible', link: '/components/collapsible' },
           { text: 'Date Picker', link: '/components/datepicker' },
           { text: 'Dialog', link: '/components/dialog' },
           { text: 'Fieldset', link: '/components/fieldset' },
-          { text: 'Info Page', link: '/components/info-page' },
           { text: 'Icon', link: '/components/icon' },
+          { text: 'Info Page', link: '/components/info-page' },
           { text: 'Input', link: '/components/input' },
           { text: 'Input Group', link: '/components/input-group' },
           { text: 'Label', link: '/components/label' },
@@ -52,9 +56,10 @@ export default defineConfig({
           { text: 'Table', link: '/components/table' },
           { text: 'Tabs', link: '/components/tabs' },
           { text: 'Tag', link: '/components/tag' },
-          { text: 'Textarea', link: '/components/textarea' },
           { text: 'Text', link: '/components/text' },
+          { text: 'Textarea', link: '/components/textarea' },
           { text: 'Tile', link: '/components/tile' },
+          { text: 'Time Picker', link: '/components/timepicker' },
           { text: 'Toolbar', link: '/components/toolbar' },
           { text: 'Tooltip', link: '/components/tooltip' },
         ],
@@ -83,10 +88,11 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/codbex/codbex-harmonia' }],
   },
   head: [
-    ['script', { src: '/js/component-container.js', type: 'module' }],
-    ['script', { src: '/node_modules/lucide/dist/umd/lucide.min.js', type: 'text/javascript' }],
-    ['link', { href: '/harmonia/harmonia.css', rel: 'stylesheet' }],
-    ['link', { href: '/fonts.css', rel: 'stylesheet' }],
+    ['link', { rel: 'icon', href: `${basePath}favicon.ico` }],
+    ['script', { src: `${basePath}js/component-container.js`, type: 'module' }],
+    ['script', { src: `${basePath}node_modules/lucide/dist/umd/lucide.min.js`, type: 'text/javascript' }],
+    ['link', { href: `${basePath}harmonia/harmonia.css`, rel: 'stylesheet' }],
+    ['link', { href: `${basePath}fonts.css`, rel: 'stylesheet' }],
   ],
   vue: {
     template: {

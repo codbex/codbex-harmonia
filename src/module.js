@@ -1,38 +1,40 @@
 import accordion from './components/accordion';
-import button from './components/button';
-import input from './components/input';
-import card from './components/card';
-import label from './components/label';
-import textarea from './components/textarea';
-import checkbox from './components/checkbox';
-import datepicker from './components/datepicker';
-import popover from './components/popover';
+import alert from './components/alert';
 import avatar from './components/avatar';
 import badge from './components/badge';
-import select from './components/select';
-import alert from './components/alert';
-import radio from './components/radio';
-import range from './components/range';
-import _switch from './components/switch';
-import sidebar from './components/sidebar';
-import separator from './components/separator';
-import skeleton from './components/skeleton';
+import button from './components/button';
+import calendar from './components/calendar';
+import card from './components/card';
+import checkbox from './components/checkbox';
 import collapsible from './components/collapsible';
-import tile from './components/tile';
-import tag from './components/tag';
+import datepicker from './components/datepicker';
+import dialog from './components/dialog';
+import fieldset from './components/fieldset';
 import icon from './components/icon';
 import infoPage from './components/info-page';
-import spinner from './components/spinner';
-import fieldset from './components/fieldset';
-import tooltip from './components/tooltip';
-import progress from './components/progress';
-import pagination from './components/pagination';
-import tabs from './components/tabs';
-import text from './components/text';
-import dialog from './components/dialog';
-import table from './components/table';
+import input from './components/input';
+import label from './components/label';
 import menu from './components/menu';
+import pagination from './components/pagination';
+import popover from './components/popover';
+import progress from './components/progress';
+import radio from './components/radio';
+import range from './components/range';
+import select from './components/select';
+import separator from './components/separator';
+import sidebar from './components/sidebar';
+import skeleton from './components/skeleton';
+import spinner from './components/spinner';
+import _switch from './components/switch';
+import table from './components/table';
+import tabs from './components/tabs';
+import tag from './components/tag';
+import text from './components/text';
+import textarea from './components/textarea';
+import tile from './components/tile';
+import timepicker from './components/timepicker';
 import toolbar from './components/toolbar';
+import tooltip from './components/tooltip';
 
 import { setColorScheme } from './utils/theme';
 
@@ -42,6 +44,7 @@ export {
   avatar as Avatar,
   badge as Badge,
   button as Button,
+  calendar as Calendar,
   card as Card,
   checkbox as Checkbox,
   collapsible as Collapsible,
@@ -67,9 +70,10 @@ export {
   table as Table,
   tabs as Tabs,
   tag as Tag,
-  textarea as Textarea,
   text as Text,
+  textarea as Textarea,
   tile as Tile,
+  timepicker as TimePicker,
   toolbar as Toolbar,
   tooltip as Tooltip,
 };
@@ -81,6 +85,7 @@ const Harmonia = {
     registerPlugin(avatar);
     registerPlugin(badge);
     registerPlugin(button);
+    registerPlugin(calendar);
     registerPlugin(card);
     registerPlugin(checkbox);
     registerPlugin(collapsible);
@@ -106,9 +111,10 @@ const Harmonia = {
     registerPlugin(table);
     registerPlugin(tabs);
     registerPlugin(tag);
-    registerPlugin(textarea);
     registerPlugin(text);
+    registerPlugin(textarea);
     registerPlugin(tile);
+    registerPlugin(timepicker);
     registerPlugin(toolbar);
     registerPlugin(tooltip);
   },
