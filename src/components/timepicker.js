@@ -523,6 +523,7 @@ export default function (Alpine) {
     footer.appendChild(okButton);
 
     el.appendChild(footer);
+    Alpine.initTree(footer);
 
     let selectedHour;
     let selectedMinute;
@@ -687,5 +688,5 @@ export default function (Alpine) {
         periodList.children[p].removeEventListener('click', setPeriod);
       }
     });
-  }).before('h-button');
+  });
 }
