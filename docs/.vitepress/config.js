@@ -85,7 +85,7 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/codbex/codbex-harmonia' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/codbex/harmonia' }],
   },
   head: [
     ['link', { rel: 'icon', href: `${basePath}favicon.ico` }],

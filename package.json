@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "Harmonia UI",
   "repository": {
-    "url": "https://github.com/codbex/codbex-harmonia.git",
+    "url": "https://github.com/codbex/harmonia.git",
     "type": "git"
   },
   "type": "module",
